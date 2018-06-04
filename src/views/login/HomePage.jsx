@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getName } from '$redux/actions'
 import Cookies from 'js-cookie'
-import electric from '../../assets/images/electric.png'
+// import electric from '../../assets/images/electric.png'
 import './HomePage.scss'
 const FormItem = Form.Item
 // import WrappedNormalLoginForm from './LoginTable'
@@ -44,13 +44,13 @@ export class HomePageForm extends Component {
     const { getFieldDecorator } = this.props.form
     return (
       <div className='login'>
-        <h2>云南公安</h2>
+        <h2>大数据</h2>
         <div className='login-content'>
-          <img src={electric} alt='pic' style={{width: '609px', position: 'absolute', left: '188px', top: '245px', height: '400px'}} />
+          {/* <img src={electric} alt='pic' style={{width: '609px', position: 'absolute', left: '188px', top: '245px', height: '400px'}} /> */}
           <Form onSubmit={this.handleSubmit} className='login-form'>
-            <h1>盘龙分局</h1>
+            <h1>大数据</h1>
             <BorderBox style={{ padding: '20px 47px', backgroundColor: '#092431' }}>
-              <p>电动车案件档案管理平台</p>
+              <p>大数据</p>
               <FormItem>
                 {getFieldDecorator('Username', {
                   rules: [{ required: true, message: '请输入用户名!' }]
