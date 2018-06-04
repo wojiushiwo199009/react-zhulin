@@ -1,0 +1,38 @@
+/*---------------日期范围选择---------------*/
+
+  .date-select{
+    .ant-input{
+      border-color: rgba(45,183,245,0.5);
+      color: #0099cc;
+    }
+  }
+  
+  .ant-calendar-disabled-cell {
+    background-color: transparent;
+    .ant-calendar-date {
+      color: rgba(141, 161, 187, 0.4)!important;
+      background-color: transparent !important;
+      &:hover {
+        background: transparent!important;
+      }
+    }
+  }
+  .ant-calendar-picker-clear {
+    &:hover {
+      background-color: #14374C;
+      color: #1978A8;
+      font-size: 14px;
+    }
+    background-color: #14374C!important;
+    color: #1978A8;
+    font-size: 14px;
+  }
+  .ant-calendar-picker-icon:after {
+    background-color: #14374C;
+    color: #1978A8;
+    font-size: 14px;
+  }
+  .sep{
+    margin: 0px 6px;
+    color:#5b739b;
+  }

@@ -1,0 +1,62 @@
+#root{
+  height: 100%;
+  .App{
+    height: 100%;
+    .login{
+      padding-top: 2%;
+      .login-content{
+        width: 78%;
+        position: relative;
+        margin: 0 auto;
+        height: 90%;
+      }
+      h2{
+        margin-left: 5%;
+        padding-left: 40px;
+        color: #2DB7F5;
+        font-family: Microsoft YaHei;
+        background: url('../../assets/images/logo-login.png') no-repeat left center;
+        background-size: 30px 30px;
+      }
+      h1{
+        color: #2DB7F5;
+        text-align: center;
+        padding-top: 52px;
+        font-weight: bold;
+        background: url('../../assets/images/logo.png') no-repeat center top;
+        background-size: 50px 50px;
+      }
+      height: 100%;
+      background: url('../../assets/images/login-bg.png') no-repeat center top;
+      background-size: 100% 100%;
+      .login-form{
+        width: 400px;
+        height: 300px;
+        position: absolute;
+        left: 900px;
+        top: 146px;
+        input[type='text'],input[type='password']{
+          padding: 20px 30px;
+        }
+        .ant-btn{
+          height: 40px;
+        }
+        p{
+          font-size: 24px;
+          font-weight: bold;
+          color: #2DB7F5;
+          text-align: center
+        }
+        .ant-checkbox-wrapper{
+          color: #2DB7F5;
+        }
+        .ant-btn-primary{
+          width: 100%;
+        }
+        .login-form-forgot{
+          float: right;
+        }
+      }
+    }
+  }
+}

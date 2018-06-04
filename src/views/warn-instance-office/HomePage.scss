@@ -1,0 +1,212 @@
+.warn-instance-office{
+  height: 100%;
+
+  .normal-color{
+    color:#5b739b;
+  }
+  h3{
+    color: #f2f2f2;
+    margin-left: 1vw;
+    font-weight: 700;
+    font-family: 'Microsoft YaHei';
+    font-size: 18px;
+    margin-bottom: 0;
+    
+  }
+  .badge{
+    .ant-badge-not-a-wrapper{
+      float: right;
+      margin-right: 2vw;
+      .ant-badge-status-text{
+        color: #7F90B7;
+      }
+    }
+  }
+  .ant-badge{
+    color: #0099ff;
+  }
+  .ant-badge-status-error{
+    background-color: #ff3300;
+  }
+  #map{
+    height: 53vh;
+    padding: 1vh 2vw;
+  }
+  .police{
+    background: #122346; 
+    height: 100%;
+    padding: 1vh 1vw;
+    h3{
+      padding-left: -1vw;
+      margin-left: 0;
+    }
+    .ant-btn{
+      margin-left: 3vw;
+    }
+    .ant-badge-status-dot{
+      width: 10px;
+      height: 10px;
+    }
+    .case-title{
+      color:#85a7df;
+      font-size: 16px;
+      padding-bottom: 1vh;
+    }
+    .case-num{
+      color:#ffcc00;
+      padding-left: 1.5vw;
+      height: 4vh;
+      line-height: 4vh;
+      margin-bottom: 1vh;
+      .num{
+        padding-left: 0.5vw;
+        background: #162d5a;
+        font-size: 16px;
+      }
+    }
+    .case{
+      color: #7f90b7;
+    }
+    .inter-case,.case-percentage{
+      width: 13vw;
+    }
+    .ant-list-split{
+       .ant-list-item{
+         border-bottom-color: #1d3a73 !important;
+       }
+    }
+    
+  }
+  .case-num-police{
+      background: #122346;
+      padding-right: 1vw;
+      padding-top: 1vh;
+      padding-bottom: 1vh;
+      position: relative;
+      height: 30vh;
+      .show-details{
+        position: absolute;
+        top: 1vh;
+        right: 2vw;
+        width: 70px;
+        color: #0099ff;
+        cursor: pointer;
+      }
+      .show-police-details{
+        position: absolute;
+        left: 12.2vw;
+        bottom: 6vh;
+        cursor: pointer;
+        background: #1890ff;
+        color:white;
+        font-weight:400;
+        padding: 0 8px;
+        border-radius: 4px;
+    }
+    }
+    .ant-divider-horizontal{
+      margin: 1vh 0;
+    }
+  .show-more-return{
+    color: #0099ff;
+    float: right;
+    height: 4vh;
+    padding: 1vh;
+    cursor:pointer
+  }
+  .case-num-office{
+    h3{
+      margin-top: 1vh;
+    }
+    .ant-list-item{
+      text-align: center;
+      color: #7f90b7;
+      border-bottom-color: #162d5a;
+      border-bottom-style: dashed;
+    }
+    h3{
+      .end-time{
+        font-size: 12px;
+        color: #5b739b;
+        font-weight: normal;
+      }
+    }
+    .status{
+      width: 8%;
+    }
+    .branch-office-name{
+      width: 45%;
+    }
+    .case-percentage{
+      width: 28%;
+    }
+    .case-count{
+      width: 26%;
+    }
+  }
+}
+
+.ant-modal{
+  // width: 80% !important;
+  margin-top: -30px !important;
+  margin-left: 1% !important;
+  position: relative;
+  .ant-list-bordered{
+    border: none;
+    .ant-list-item{
+      border-bottom: none;
+    }
+  }
+  .ant-list{
+    color:#4c84dc;
+    width: 86%;
+    left: 10px;
+  }
+  .ant-list-split {
+    .ant-list-header{
+      color:#F2F2F2;
+      background: transparent;
+      border-bottom-color: #1d3a73;
+    }
+  }
+}
+
+.infoWindowThrough{
+  min-width: 280px;
+  .ant-list-item{
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+body{
+  .ant-modal-wrap{
+    .ant-modal-close-x:before {
+      color: #bad0e4;
+    }
+    .ant-modal-header{
+      background-color: #143551 !important;
+      border-bottom:1px dashed #1b3d74;
+      .ant-modal-title{
+        color: #f2f2f2 !important;
+        font-weight: bold
+      }
+    } 
+    .ant-modal-content{
+      background-color: #143551 !important;
+      .modal-map{
+        height: 54vh;
+        overflow: hidden;
+        margin-top: 4vh;
+      }
+    }
+  }
+  .ant-table-tbody tr:nth-child(2n+1),.ant-table-tbody tr:nth-child(2n){
+    background: transparent;
+  }
+  .ant-table-tbody tr, .ant-table-tbody tr a{
+    color:#f2f2f2;
+  }
+  .ant-table-tbody > tr > td,.ant-table-thead > tr > th,.ant-modal-wrap .ant-modal-header{
+    border-bottom: 1px dashed #1b3d74;
+  }
+}

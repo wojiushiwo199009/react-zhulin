@@ -1,0 +1,40 @@
+/*-----------带四个小角的盒子----------*/
+
+.border-box-div {
+  border: 1px solid #165472;
+  position: relative;
+  width: 100%;
+  .lt,
+  .rt,
+  .rb,
+  .lb {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(1, 1, 1, 0);
+  }
+  .lt {
+    top: 0;
+    left: 0;
+    border-top: 2px solid #00b6ff;
+    border-left: 2px solid #00b6ff;
+  }
+  .rt {
+    top: 0;
+    right: 0;
+    border-top: 2px solid #00b6ff;
+    border-right: 2px solid #00b6ff;
+  }
+  .rb {
+    bottom: 0;
+    right: 0;
+    border-bottom: 2px solid #00b6ff;
+    border-right: 2px solid #00b6ff;
+  }
+  .lb {
+    bottom: 0;
+    left: 0;
+    border-bottom: 2px solid #00b6ff;
+    border-left: 2px solid #00b6ff;
+  }
+}

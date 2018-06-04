@@ -1,0 +1,62 @@
+.personnel-file{
+  h3{
+    color:#f2f2f2;
+    font-weight: bold;
+    padding: 1vh 1vw;
+  }
+  .search-top{
+    .search-ipt{
+      background: #122346;
+      border-radius: 4px;
+      padding: 1vh 1vw;
+      .ant-form-item-label {
+        label{
+          color:#5B739B;
+        }
+      }
+      .ant-select-arrow:before{
+        color:#0099cc;
+      }
+      .anticon-question-circle-o{
+        margin-left: 0.5vw;
+      }
+    }
+    .search-result{
+      overflow: hidden;
+      margin-top: 1vh;
+      margin-bottom: 1vh;
+      padding: 4vh 1vw;
+      background: #122346;
+    }
+  }
+  .file-name{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width:13vw;
+  }
+  .search-bottom{
+    margin-top: 1vh;
+    // background: #122346;
+    .ant-table-tbody tr:nth-child(2n){
+      background: transparent;
+    }
+    .ant-table-tbody tr:nth-child(2n+1){
+      background: transparent;
+    }
+    .ant-table-row {
+      color:#C9C9C9
+    }
+    .case-num-police{
+      position: relative;
+      .show-details{
+            position: absolute;
+          right: 10px;
+          top: 10px;
+      }
+    }
+  }
+}
+.ant-table-tbody > tr.ant-table-row-selected td{
+  background-color: #110f5d
+}

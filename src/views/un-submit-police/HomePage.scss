@@ -1,0 +1,81 @@
+.unSubmit{
+  background-color: #1d2d47;
+  margin:0 0.5%;
+  width: 99%;
+  min-height:900px; 
+  .unSubmitHeader{
+    color: #f2f2f2;
+    font-size: 18px;
+    padding-left: 1%;
+  }
+  .unSubmitMain{
+    .MainHeader{
+      height: 50px;
+      line-height: 50px;
+      padding-left: 2%;
+      color: #0099ff;
+      .moreTimeBox{
+        margin-left: 3%;
+        position: relative;
+        &:hover .moreTime{
+          display: block;
+          position: absolute;
+          z-index: 3;
+          width: 200px;
+          height: 25px;
+          line-height: 25px;
+          background-color: #0099ff;
+          color: #f2f2f2;
+          font-size: 6px;
+          left: -160px;
+          text-align: center;
+          top:25px;
+        }
+        .moreTime{
+          display: none;
+        }
+        
+      }
+      .nextMoreTimeBox{
+        margin-left: 1%;
+        position: relative;
+        &:hover .nextMoreTime{
+          display: block;
+          position: absolute;
+          z-index: 3;
+          width: 200px;
+          height: 25px;
+          line-height: 25px;
+          background-color: #0099ff;
+          color: #f2f2f2;
+          font-size: 6px;
+          left: -150px;
+          text-align: center;
+          top:25px;
+        }
+        .nextMoreTime{
+          display: none;
+        }
+        
+      }
+    }
+    .MainMiddle{
+      margin-top:10px;
+      height: 30px;
+      line-height: 30px; 
+      padding-left: 2%;
+      .serachBoxMargin{
+        padding-right:10px;
+      }
+      .serachBeginBox{
+        text-align: right;
+        padding-right: 5%;
+      }
+    }
+    .MiddleTableBox{
+      margin-top: 50px;
+      height: 700px;
+      overflow-y:auto;
+    }
+  }
+}

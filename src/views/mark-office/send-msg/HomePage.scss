@@ -1,0 +1,39 @@
+.send-msg{
+  .ant-breadcrumb-link{
+    color: #5B739B;
+  }
+  .ant-breadcrumb-separator{
+    color: #5B739B;
+  }
+  .ant-breadcrumb a{
+    color: #5B739B;
+  }
+  .search-ipt{
+    background: #122346;
+    border-radius: 4px;
+    padding: 2vh 2vw;
+    margin-bottom: 1vh;
+    h3{
+      color: #f2f2f2;
+      margin-bottom: 2vh;
+    }
+    .ant-form-item-label {
+      label{
+        color:#5B739B;
+      }
+    }
+    .ant-select-arrow:before{
+      color:#0099cc;
+    }
+    .anticon-question-circle-o{
+      margin-left: 0.5vw;
+    }
+  }
+  .search-result{
+    overflow: hidden;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    padding: 4vh 1vw;
+    background: #122346;
+  }
+}

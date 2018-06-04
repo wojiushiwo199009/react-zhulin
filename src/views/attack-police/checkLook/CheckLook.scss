@@ -1,0 +1,17 @@
+.checkLook{
+  color: #c3dcec !important;
+  .ant-tabs-bar{
+    border-bottom: none;
+    background: #122346;
+    .ant-tabs-nav-container{
+      line-height: 3;
+    }
+  }
+  .ant-tabs-nav .ant-tabs-tab{
+    color: #c3dcec;
+  }
+  .downloadFileBox{
+    margin-top: 10px;
+    text-align: center;
+  }
+}

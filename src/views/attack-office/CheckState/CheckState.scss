@@ -1,0 +1,75 @@
+.dajiMain .MainLeft .MainLeftUp{
+    margin-bottom: 10px;
+    background-color: #1d2d47;
+}
+.dajiMain .MainLeft .MainLeftUnder{
+    background-color: #1d2d47;
+}
+.dajiMain .MainLeft .MainLeftUnder div{
+    background-color: #1d2d47;
+}
+.dajiMain .MainLeft .MainLeftUp .checkCrimeHeader{
+    margin-bottom: 15px;
+    padding-left: 10px;
+    height: 30px;
+    line-height: 30px;
+    color: #f2f2f2;
+    width: 100%;
+    overflow: hidden;;
+}
+.dajiMain .MainLeft .MainLeftUp .checkCrimeHeader .checkCrimeHeaderTitle{
+    color: #f2f2f2;
+    font-size: 18px;
+}
+.dajiMain .MainLeft .MainLeftUp .checkCrimeHeader .checkCrimeHeaderText{
+    font-size: 14px;
+    color: #7f90b7;
+}
+.dajiMain .MainLeft .MainLeftUp div div .checkCrimeBox{
+    float: none;
+}
+.dajiMain .MainLeft .MainLeftUp div div .checkCrimeBox .checkCrimeTime{
+    color: #7f90b7;
+    font-size: 14px;
+}
+.checkSelect{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}    
+.officeCheckTable{
+    >div{
+        .ant-table-wrapper{
+            .ant-spin-nested-loading{
+                .ant-spin-container{
+                    .ant-table{
+                        .ant-table-content{
+                            .ant-table-body{
+                                table{
+                                    thead{
+                                     > tr{
+                                          >th{
+                                             padding: 0;
+                                             line-height: 40px;
+                                             height: 40px;
+                                           }
+                                       } 
+                                    }
+                                    tbody{
+                                        tr{
+                                            td{
+                                            padding: 0;
+                                             line-height: 40px;
+                                             height: 40px;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

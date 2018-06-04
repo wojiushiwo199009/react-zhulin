@@ -1,0 +1,27 @@
+  /*--------搜索框下方提示文字组件样式---------*/
+  .search-tips {
+    height: 32px;
+    line-height: 32px;
+    margin: 20px 0;
+    padding: 0 30px;
+    border: 1px solid rgb(14, 42, 80);
+    border-radius: 3px;
+    background: rgb(9, 19, 33);
+    .icon {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      margin-right: 10px;
+      line-height: 18px;
+      font-size: 14px;
+      vertical-align: baseline;
+      text-align: center;
+      font-style: normal;
+      border-radius: 10px;
+      background: rgb(20, 116, 220);
+      color: #fff;
+    }
+    span {
+      vertical-align: baseline;
+    }
+  }

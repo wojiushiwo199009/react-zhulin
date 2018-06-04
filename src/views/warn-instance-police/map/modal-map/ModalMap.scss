@@ -1,0 +1,13 @@
+.ant-modal .ant-list-split .ant-list-header,.ant-modal .ant-list .ant-spin-container .ant-list-item:nth-child(2n+1),.ant-modal .ant-list .ant-spin-container .ant-list-item:nth-child(2n){
+  background-color: transparent !important;
+  color:#f2f2f2;
+}
+.ant-modal .ant-list-split .ant-list-header{
+  color: #f2f2f2 !important;
+  font-weight: bold;
+  font-size: 18px;
+}
+.ant-modal .ant-list{
+  top: -10px !important;
+  left: -10px !important;
+}

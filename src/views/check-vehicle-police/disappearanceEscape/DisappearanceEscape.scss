@@ -1,0 +1,17 @@
+.DisappearanceEscapeTable{
+  max-height: 800px;
+  overflow-y: auto;
+}
+.DisappearanceEscapeMap{
+  .signal{
+    text-align: right;
+    margin-right: 10px;
+    margin-top: 15px;
+    .ant-badge{
+      margin-right: 20px;
+    }
+    .ant-badge-status-text{
+      color: #0099ff;
+    }
+  }
+}

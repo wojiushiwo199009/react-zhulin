@@ -1,0 +1,25 @@
+.serachBox-NewsPolice{
+  height: 100px;
+  line-height: 100px;
+  color: #5b739b;
+
+ 
+  .serachCrimeBox{
+    padding-left: 10px;
+    .serachCrime{
+      margin-right: 1.5%;
+      .serachCrimeSelect{
+        margin:0 1%;
+        // width: 120px;
+      }
+      .serachCrimeButton{
+        margin-left: 20px;
+      }
+    }
+  }
+ 
+  
+}
+.ant-table-tbody > tr > td{
+  cursor: text !important;
+}

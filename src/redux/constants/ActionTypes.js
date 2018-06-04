@@ -1,0 +1,8 @@
+export const INCREMENT = 'INCREMENT'
+export const DECREMENT = 'DECREMENT'
+export const GET_NAME = 'GET_NAME'
+export const SEARCH = 'SEARCH'
+export const USER_LOGIN_LOADING = 'USER_LOGIN_LOADING'
+export const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS'
+export const USER_LOGIN_FAILURE = 'USER_LOGIN_FAILURE'
+export const SET_USER_EXT_INFO = 'SET_USER_EXT_INFO'

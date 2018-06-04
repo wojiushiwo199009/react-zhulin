@@ -1,0 +1,57 @@
+.clearfix:after {
+  content: "";
+  display: block;
+  height: 0;
+  visibility: hidden;
+  clear: both;
+}
+.searchTableMainBox{
+  line-height: 40px;
+  height: 40px;
+  font-size: 12px;
+  color: #99AECA;
+}
+.EveryMainBox,.EveryTitleBox{
+  display: flex;
+  justify-content: center;
+  border-top: 1px dashed rgba(5, 64, 104, 0.986);
+}
+.EveryMainBox{
+  text-align: center;
+}
+.EveryTitleBox{
+  line-height: 40px;
+  height: 40px;
+  font-size: 16px;
+  color:#F2F2F2;
+}    
+.searchTable{
+  div{
+    .ant-table-wrapper{
+      .ant-spin-nested-loading{
+        .ant-spin-container{
+          .ant-table{
+            .ant-table-content{
+              .ant-table-scroll{
+                .ant-table-header{
+                  background-color: #1d2d47;
+                }
+                .ant-table-body{
+                  background-color: #1d2d47;
+                  table{
+                    .ant-table-row{
+                      td:first-child{
+                        text-align: left;
+                        padding-left: 6%;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

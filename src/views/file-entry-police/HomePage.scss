@@ -1,0 +1,340 @@
+.fileEntryHeader{
+  color: #85A7DF;
+  height: 30px;
+  line-height: 30px
+}
+.temporaryStorage{
+  position:fixed;
+  top:400px;
+  right:20px;
+}
+.archivalInformationBox{
+  height: 200px;
+  width: 100%;
+  background-color: rgba(29, 45, 71, 1);
+  color: #7F90B7;
+  margin-top: 20px;
+  .archivalInformation{
+    height: 50px;
+    line-height: 50px;
+    .archivalInformationText{
+      font-size: 16px;
+      color: #f2f2f2;
+      margin:0 10px 0 20px;
+     
+    }
+  }
+  .archivalInformationInput{
+    height: 50px;
+    line-height: 50px;
+    padding: 0 1%;
+    .caseName{
+      margin-right: 1.5%;
+    }
+  }
+ 
+}
+.uploadCaseBox{
+ height: 900px;
+  width: 100%;
+  border:2px solid  rgba(0, 153, 255, 1);
+  background-color: rgba(29, 45, 71, 1);
+  color: #7F90B7;
+  margin-top: 10px;
+  .uploadCaselInformation{
+    height: 50px;
+    line-height: 50px;
+    .uploadCaseText{
+      font-size: 16px;
+      color: #f2f2f2;
+      margin:0 10px 0 20px;
+    }
+  }
+  .uploadCaseImg{
+    width: 100%;
+    height: 285px;
+    border-bottom: 1px solid #7F90B7;
+    .uploadCaseImgBox{
+      // text-align: center;
+      padding-top: 20px;
+      .uploadCasePicture{
+        // height: 250px;
+        // text-align: center;
+        // line-height: 250px;
+        // width: 350px;
+        color: #f2f2f2;
+        margin-left: 1%;
+        .wirteMap{
+          height: 200px;
+          line-height: 200px;
+          width:200px; 
+          text-align: center;
+          border: 1px solid #7F90B7;
+          float: left;
+          margin-right: 30px;
+          cursor: pointer;
+        }
+        // background:rgba(0, 153, 255, 1);
+      }
+      .registrationForm{
+        padding: 0 0 20px 2%;
+
+      }
+    }
+    color: #0099FF;
+  }
+ 
+
+}
+.writeAttackBox{
+  height: 350px;
+  width: 100%;
+  background-color: rgba(29, 45, 71, 1);
+  color: #7F90B7;
+  margin-top: 10px;
+  .writeAttackInformation{
+    height: 50px;
+    line-height: 50px;
+    .writeAttackText{
+      font-size: 16px;
+      color: #f2f2f2;
+      margin:0 10px 0 20px;
+    }
+    .specificArea{
+      position: relative;
+      .locationMapBox{
+        height: 700px;
+        width: 800px;
+      }
+    }
+   
+  }
+  .writeAttackInput{
+    height: 50px;
+    line-height: 50px;
+    padding: 0 1%;
+    .caseName{
+      margin-right: 1.5%;
+    }
+  }
+  .specificArea{
+    height: 200px;
+    // line-height: 150px;
+    margin-top: 15px;
+    position: relative;
+    .specificAreaText{
+      text-align: center;
+      color: #0099FF;
+    }
+    .locationMapBox{
+      float: left;
+      .locationMapB{
+        width: 200px;
+        height: 200px;
+        border-radius: 4px;
+        line-height: 200px;
+        border: 1px solid #7F90B7;
+        text-align: center;
+        // margin-top: 10px;
+
+      }
+      .locationMap{
+        height: 900px;
+        position: absolute;
+        z-index: 6;
+        width: 900px;
+        top:-100px;
+      }
+    }
+  }
+ 
+}
+.attackResultBox{
+  height: 300px;
+  width: 100%;
+  background-color: rgba(29, 45, 71, 1);
+  color: #7F90B7;
+  margin-top: 10px;
+  .attackResulInformation{
+    height: 50px;
+    line-height: 50px;
+    .writeAttackText{
+      font-size: 16px;
+      color: #f2f2f2;
+      margin:0 10px 0 20px;
+    }
+  }
+  .attackResultInput{
+    height: 50px;
+    line-height: 50px;
+    padding: 0 1%;
+    width: 100%;
+    .caseName{
+      margin-right: 1.5%;
+    }
+  }
+  .ResultWhyBox{
+   height: 150px;
+   margin-top: 20px;
+   padding: 0 1%;
+   ResultWhy{
+     margin-right: 30px;
+    }
+    .ResultWhyInput{
+      height: 100px;
+      width: 80%;
+    }
+  }
+ 
+}
+.collectPinBox{
+  height: 150px;
+  width: 100%;
+  background-color: rgba(29, 45, 71, 1);
+  color: #7F90B7;
+  margin-top: 10px;
+  .attackResulInformation{
+    height: 50px;
+    line-height: 50px;
+    .writeAttackText{
+      font-size: 16px;
+      color: #f2f2f2;
+      margin:0 10px 0 20px;
+    }
+  }
+  .attackResultInput{
+    height: 50px;
+    line-height: 50px;
+    padding: 0 1%;
+    width: 100%;
+    .caseName{
+      margin-right: 1.5%;
+    }
+    .collectPinNum{
+      color: #0099FF;
+    }
+  }
+ 
+}
+.caseToolsBox{
+  height: 200px;
+  width: 100%;
+  background-color: rgba(29, 45, 71, 1);
+  color: #7F90B7;
+  margin-top: 10px;
+  .attackResulInformation{
+    height: 50px;
+    line-height: 50px;
+    .writeAttackText{
+      font-size: 16px;
+      color: #f2f2f2;
+      margin:0 10px 0 20px;
+    }
+  }
+  .caseToolsWhyBox{
+   height: 150px;
+   margin-top: 20px;
+   padding: 0 1%;
+   .caseTools{
+     margin-right: 30px;
+    }
+    .caseToolsInput{
+      height: 100px;
+      width: 80%;
+    }
+  }
+ 
+}
+.biologicalCollectionBox{
+  height: 130px;
+  width: 100%;
+  background-color: rgba(29, 45, 71, 1);
+  color: #7F90B7;
+  margin-top: 10px;
+  .attackResulInformation{
+    height: 50px;
+    line-height: 50px;
+    .writeAttackText{
+      font-size: 16px;
+      color: #f2f2f2;
+      margin:0 10px 0 20px;
+    }
+  }
+  .attackResultInput{
+    height: 50px;
+    line-height: 50px;
+    padding: 0 1%;
+    width: 100%;
+    .caseName{
+      margin-right: 1.5%;
+    }
+    .collectPinNum{
+      color: #0099FF;
+    }
+  }
+}
+.carryOutVideo{
+  height: 50px;
+  line-height: 50px;
+  font-size: 16px;
+  color: #f2f2f2;
+}
+.trackMapBox{
+  height: 400px;
+  width: 100%;
+  background-color: rgba(29, 45, 71, 1);
+  color: #7F90B7;
+  margin-top: 10px;
+  .attackResulInformation{
+    height: 50px;
+    line-height: 50px;
+    .writeAttackText{
+      font-size: 16px;
+      color: #f2f2f2;
+      margin:0 10px 0 20px;
+    }
+    .nonePicture{
+      color: #0099FF;
+    }
+  }
+  .attackResultInput{
+    height: 50px;
+    line-height: 50px;
+    padding: 0 1%;
+    width: 100%;
+    .caseName{
+      margin-right: 1.5%;
+    }
+    .collectPinNum{
+      color: #0099FF;
+    }
+  }
+}
+.report{
+  margin-top: 30px;
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+  width: 100%;
+}
+
+
+.ant-radio-wrapper{
+  color: #0099FF;
+}
+.ant-radio-inner:after {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  left: 3px;
+  top: 3px;
+  border-radius: 4px;
+  display: table;
+  border-top: 0;
+  border-left: 0;
+  content: '';
+  background-color: #1890ff;
+  // opacity: 0;
+  transform: scale(0);
+  transition: all 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+}

@@ -1,0 +1,203 @@
+.main-view{
+  overflow-x: hidden;
+  height: 100%;
+  //margin: 0 auto;
+  width: 100%;
+  .ant-layout-header{
+    height: 85px;
+    padding-left: 1vw;
+  }
+  .ant-layout-content{
+     padding: 0 1vw;
+     height: calc(100% - 85px)
+  }
+  .ant-menu-item{
+    //width: 15%;
+    text-align: center;
+    height: 45px;
+    line-height: 45px;
+    padding: 0px;
+    //position: absolute;
+    //top: 0;
+    color: #08c !important;
+    &:hover{
+      color:#99ccff;
+    }
+  }
+  .ant-menu{
+    line-height: 30px;
+    position: relative;
+    .warn-instance{
+      // left: 3.6%;
+      width: 10.8%;
+    }
+    .mark{
+      left: -1.3%;
+      width: 10.8%;
+    }
+    .attack{
+      left: -2.6%;
+      width: 10.8%;
+    }
+    .personnel-file{
+      left: -3.9%;
+      width: 10.8%;
+    }
+    .logo{
+      background: url('../../assets/images/logo-bg.png') no-repeat center top;
+      background-size: 100% 100%;
+      //left: 510px;
+      //width: 387px;
+      height: 70px;
+      line-height: 60px;
+      padding: 0 37px;
+      width: 20.8%;
+      left: -3.9%;
+    }
+    .suspicion{
+      width: 10.8%;
+      left: -3.9%;
+    }
+    .un-submit{
+      left: -5.2%;
+      width: 10.8%;
+    }
+    .admin{
+      width: 10.8%;
+      left: 25%;
+      top: -45px;
+      &:hover{
+        color: #99ccff;
+        background: url('../../assets/images/admin-hover.png') no-repeat 0 106%;
+        background-size: 100% 8px;
+      }
+    }
+    .list-normal-left{
+      background: url('../../assets/images/list-normal-left.png') no-repeat center top;
+      background-size: 100% 100%;
+    }
+    .list-normal-right{
+      background: url('../../assets/images/list-normal-right.png') no-repeat center top;
+      background-size: 100% 100%;
+    }
+    .ant-menu-item-selected{
+      z-index: 2;
+      background: transparent url('../../assets/images/list-active-left.png') no-repeat center top;
+      background-size: 100% 100%;
+      color: #fff;
+      .anticon{
+        color: orange;
+      }
+    }
+    .logo.ant-menu-item-selected{
+      z-index: 2;
+      background: url('../../assets/images/logo-bg.png') no-repeat center top;
+      background-size: 100% 100%;
+      color: #fff;
+      .anticon{
+        color: orange;
+      }
+    }
+    .suspicion.ant-menu-item-selected{
+      z-index: 2;
+      background: transparent url('../../assets/images/list-active-right.png') no-repeat center top;
+      background-size: 100% 100%;
+      color: #fff;
+      .anticon{
+        color: orange;
+      }
+    }
+    .un-submit.ant-menu-item-selected{
+      z-index: 2;
+      background:transparent url('../../assets/images/list-active-right.png') no-repeat center top;
+      background-size: 100% 100%;
+      color: #fff;
+      .anticon{
+        color: orange;
+      }
+    }
+    .tips.ant-menu-item-selected{
+      z-index: 2;
+      background:transparent url('../../assets/images/list-active-right.png') no-repeat center top;
+      background-size: 100% 100%;
+    }
+    .admin.ant-menu-item-selected{
+      z-index: 2;
+      background:transparent url('../../assets/images/admin-hover.png') no-repeat 0 113%;
+    }
+    .tips{
+      width: 10.8%;
+      left: -6.5%;
+      .ant-badge{
+        width: 55px;
+        padding-top: 10px;
+        height: 45px;
+        display: inline-block;
+        vertical-align: baseline;
+        background: url('../../assets/images/tips-bg.png') no-repeat center top;
+        background-size: 100% 100%;
+        //position: absolute;
+        //left: 62px;
+        &:hover{
+          background-image: url('../../assets/images/tips-bg-hover.png');
+        }
+      }
+      .anticon{
+        //margin-right: 4px;
+        font-size: 18px;
+        // color: #08c
+      }
+      .ant-badge-count{
+        top: 3px;
+        right: 1px;
+        height: 16px;
+        line-height: 16px;
+        padding: 0 4px;
+        min-width: 16px;
+        background: orange;
+      }
+      .anticon-poweroff{
+        //position: absolute;
+        //width: 55px;
+        //left: 25px;
+        font-size: 18px;
+        color: #08c !important;
+        padding: 10px 15px;
+        height: 45px;
+        display: inline-block;
+        background: url('../../assets/images/tips-bg.png') no-repeat 0 100%;
+        background-size: 100% 100%;
+        &:hover{
+          background-image: url('../../assets/images/tips-bg-hover.png');
+        }
+      }
+      .anticon-bell{
+        font-size: 20px;
+        color: #08c !important;
+        margin-left: 14px;
+      }
+        .admin{
+          width: 10.8%;
+          left: 25%;
+          top:-45px;
+          &:hover{
+            color: #99ccff;
+            background: url('../../assets/images/admin-hover.png') no-repeat 0 113%;
+          }
+        }
+        .admin-click{
+          color: orange !important;
+          background: url('../../assets/images/tips-bg-hover.png') no-repeat !important;
+          z-index: 3;
+        }
+        .tips-click{
+          .anticon-bell{
+            color: orange !important;
+          }
+          background: url('../../assets/images/tips-bg-hover.png') no-repeat !important;
+          z-index: 3;
+        }
+      
+    } 
+  }
+}

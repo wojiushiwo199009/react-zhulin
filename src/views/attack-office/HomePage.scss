@@ -1,0 +1,265 @@
+.dajiMain{
+  margin-left: 15px;
+  width: 100%;
+  min-height: 800px;
+  .MainLeft{
+    font-size:18px;
+    // background-color: rgba(29, 45, 71, 1);
+    
+    .MainLeftHeader{
+      padding-left: 10px;
+      height: 30px;
+      line-height: 30px;
+      color: #f2f2f2;
+      width: 100%;
+      overflow:hidden; /* 内容超出宽度时隐藏超出部分的内容 */ 
+      // border-bottom: 1px solid #0099CC;
+
+      .MainLeftText{
+        font-size:14px;
+        color: #7f90b7;
+      }
+  
+    }
+    .MainLeftConter{
+      float: left;
+      padding: 10px 0 10px 30px;
+      width: 100%;
+    border-bottom: 1px dashed #7f90b7;
+      
+      .LeftConterImg{
+      //  padding-top: 10px;
+       height: 135px;
+       font-size: 14px;
+       float: left;
+      //  display: flex;
+      }
+      .LeftConterMain-office{
+        width: 60%;
+        height: 135px;
+        float: left;
+        padding: 10px 0 10px 0px;
+        // min-width: 170px;
+        // max-width: 300px;
+        word-break:keep-all; /* 不换行 */ 
+       white-space:nowrap; /* 不换行 */ 
+       overflow:hidden; /* 内容超出宽度时隐藏超出部分的内容 */ 
+      
+
+        .ConterMainText{
+          height: 30px;
+          line-height: 30px;
+          font-size: 14px;
+          // min-width: 170px;
+          max-width: 300px;
+        
+          .MainTextLeft{
+            width: 40%;
+            color: #7f90b7;
+            text-align: left;
+            box-sizing: border-box;
+          }
+          .MainTextRight{
+            color: #0099ff;
+            text-align: left;
+          }
+        }
+    
+      }
+    }
+  }
+  .MainRight{
+    margin:0 1%;
+ 
+    .MainRightHeader{
+      height: 190px;
+      background-color: rgba(29, 45, 71, 1);
+      div{
+        .RightHeaderMain-upload{
+          .ant-col-6{
+            padding: 1.5% 4%;
+            .MiddleViewBtn:focus{
+                  background-color: #0099ff;
+                      color: #ffffff;;
+            }
+          }
+        }
+        
+        .displayNone{
+          display:none;
+        }
+       
+
+      }
+      .RightHeaderAn{
+        font-size: 16px;
+        color: #f2f2f2;
+        padding: 20px;
+       
+      }
+      .RightHeaderMain{
+
+        .RightHeaderImgBox{
+          text-align: right;
+          padding: 20px 20px; 
+
+          .RightHeaderImg{
+            height: 52px;
+            width: 52px;
+          }
+        }
+       .RightHeaderTextBox{
+         color: #7f90b7;
+         .RightHeaderText{
+           padding-top: 12px;
+         }
+         .RightHeaderText2{
+           color: #ffffff;
+           margin-top: 10px;
+             
+           .RightHeaderTextConcer{
+             font-size: 28px;
+            //  color: #f2f2f2;
+             margin-right: 10px;
+           }
+         }
+       }
+
+      }
+
+      // background: url('../../assets/images/list-active-right.png') no-repeat center top;
+      // background-size: 100% 100%;
+    }
+    .MainRightMiddle{
+      margin-top: 10px;
+      background-color: rgba(29, 45, 71, 1);
+      .MiddleHeader{
+        .MiddleHeaderConter{
+          font-size: 16px;
+          color: #F2F2F2;
+          padding: 20px 0 0 1%;
+        }
+      .MiddleHeaderConterL{
+        text-align: right;
+        padding-right: 1%;
+      }
+      }
+      .MiddleMiddle{
+        padding: 10px 6% 30px 6%;
+        // margin-top: 5px;
+        border-bottom: 1px dashed #7f90b7;
+        .carloadDiscoverBox{
+          height: 40px;
+          width: 100%;
+          line-height: 40px;
+          border-bottom: 1px dashed #7f90b7;
+           .carloadDiscover{
+             text-align: right;
+           }
+           .carloadDiscoverText{
+             padding-left: 10%;
+           }
+           .carloadDiscoverText2{
+             padding-left: 5%;
+           }
+           
+        }
+      }
+    }
+  }
+  .upload-btn{
+  vertical-align: top;
+    margin-top: 1px;
+    width: 28px;
+    height: 27px;
+    background: #032B42;
+    border: none;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+    color: #0099CC;
+    outline: none;
+    cursor: pointer;
+  }
+
+}
+.ant-modal-wrap{
+  > .ant-modal{
+    margin: 0 auto !important;
+  }
+}
+.ant-modal-content{
+  .ant-modal-body{
+    div{
+      .label{
+        height: 40px;
+        line-height: 40px;
+      }
+      .upload-input-con{
+        position: relative;
+        .close{
+                position: absolute;
+                top: 0%;
+                right: 0%;
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+                height: 100%;
+                border: none;
+                width: 50px;
+              }
+              .upload-btn.close .anticon {
+                color: #025E82;
+                transform: rotate(45deg);
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+                }
+        span{
+          .ant-upload-select{
+            .ant-upload{
+              .upload-btn{
+                position: absolute;
+                top: 0;
+                right: 0px;
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+                height: 38px;
+                border: none;
+                width: 50px;
+                vertical-align: top;
+                margin-top: 1px;
+                margin-right: 1px;
+                background: #032B42;
+                color: #0099CC;
+                outline: none;
+                cursor: pointer;
+                &:hover .anticon,
+                &.close:hover .anticon {
+                text-shadow: 0px 0px 5px;
+                margin-right: 1px;
+                }
+              }
+            }
+          }
+          // .ant-upload-list{
+          //   .ant-upload-list-item{
+          //     .ant-upload-list-item-info{
+          //       background-color: #163c69;
+          //       span{
+          //         .action-paper-clip{
+          //           .ant-upload-list-item-name{
+          //             color:#2288f5;
+          //           }
+          //         }
+          //       }
+          //     }
+          //     .anticon-cross{
+          //       color:#2288f5;
+          //     }
+          //   }
+          // }
+        }
+      }
+    }
+  }
+  
+
+}
