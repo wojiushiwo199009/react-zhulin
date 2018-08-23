@@ -7,18 +7,19 @@ body {
   background-color: #fff;
   #root .App{
     background: none;
+    width: 1200px;
+    margin: 0 auto;
   }
   .app {
     display: inline-block;
     width: 100%;
   }
-  .ant-layout{
-    background: #0e152f;
-  }
   .ant-layout-header{
     background: transparent;
     padding: 0;
-    height: 100%;
+  }
+  .ant-layout-sider{
+    background: #304156;
   }
   .ant-menu-dark.ant-menu-horizontal{
     border-bottom: none;
@@ -311,29 +312,4 @@ body {
   .ant-divider{
     background: #1d3a73;
   }
-}
-/*ant公共类 select、input框的颜色*/
-.ant-select-selection {
-    background: rgba(19, 94, 140, 0.7) !important;
-    border: 1px solid #2DB7F5 !important;;
-    color:#0099CC !important;
-    opacity: 0.5;
-}
-.ant-select-dropdown-menu-item-active {
-  background: rgba(25, 74, 104, 1);
-  color:#0099CC !important;
-}
-.ant-select-dropdown-menu-item{
-  background:rgb(25, 74, 104) !important;
-  color:#0099CC !important;
-}
-.ant-select-dropdown-menu-item:hover {
-  color:#0099CC !important;
-  background: #FFFFFF !important;
-}
-
-.ant-input {
-  opacity: 0.5;
-  border: 1px solid #2DB7F5 !important;
-  color: #0099CC !important;
 }

@@ -1,6 +1,7 @@
 import Login from '../views/login/HomePage' // 登陆页面
 import Home from '../views/home/Home'
-import ceshi from '../views/ceshi/ceshi'
+import Content from '../views/content/Content'
+import Course from '../views/course/Course'
 import { Redirect } from 'react-router-dom'
 import React from 'react'
 
@@ -22,11 +23,17 @@ export default [
     component: Login
   },
   {
-    path: '/home',
-    component: Home
-  },
-  {
-    path: '/ceshi',
-    component: ceshi
+    path: '/platform',
+    component: Home,
+    childRoutes: [
+      {
+        path: '/platform/all',
+        component: Content
+      },
+      {
+        path: '/platform/course',
+        component: Course
+      }
+    ]
   }
 ]

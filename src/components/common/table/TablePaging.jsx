@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Table } from 'antd'
-import './TablePaging.scss'
 
 export default class CustomPagingTable extends React.Component {
   constructor (props) {

@@ -2,9 +2,14 @@ import React, { Component } from 'react'
 // import Cookies from 'js-cookie'
 
 export default class Home extends Component {
+  state = {
+
+  };
   render () {
     return (
-      <div>ceshi</div>
+      <div className='course' >
+course
+      </div>
     )
   }
 }

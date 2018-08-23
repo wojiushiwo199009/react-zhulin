@@ -3,7 +3,10 @@
   .App{
     height: 100%;
     .login{
+      height: 100%;
       padding-top: 2%;
+      background: rgba(0,0,0,0.5) url('../../assets/images/bg.jpg') no-repeat center top;
+      background-size: 100% 100%;
       .login-content{
         width: 78%;
         position: relative;
@@ -18,25 +21,13 @@
         background: url('../../assets/images/logo-login.png') no-repeat left center;
         background-size: 30px 30px;
       }
-      h1{
-        color: #2DB7F5;
-        text-align: center;
-        padding-top: 52px;
-        font-weight: bold;
-        background: url('../../assets/images/logo.png') no-repeat center top;
-        background-size: 50px 50px;
-      }
-      height: 100%;
-      background: url('../../assets/images/login-bg.png') no-repeat center top;
-      background-size: 100% 100%;
       .login-form{
         width: 400px;
-        height: 300px;
         position: absolute;
         left: 900px;
         top: 146px;
         input[type='text'],input[type='password']{
-          padding: 20px 30px;
+          padding: 20px 40px;
         }
         .ant-btn{
           height: 40px;
@@ -45,7 +36,8 @@
           font-size: 24px;
           font-weight: bold;
           color: #2DB7F5;
-          text-align: center
+          margin-bottom: 40px;
+          text-align: center;
         }
         .ant-checkbox-wrapper{
           color: #2DB7F5;

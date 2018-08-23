@@ -1,13 +1,12 @@
 // 登陆页面
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import BorderBox from '../../components/common/borderBox/BorderBox'
-import { Form, Icon, Input, Button, Checkbox } from 'antd'
+import { Form, Icon, Input, Button } from 'antd'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getName } from '$redux/actions'
 import Cookies from 'js-cookie'
-// import electric from '../../assets/images/electric.png'
+import leftLogo from '../../assets/images/left-logo.png'
 import './HomePage.scss'
 const FormItem = Form.Item
 // import WrappedNormalLoginForm from './LoginTable'
@@ -35,7 +34,7 @@ export class HomePageForm extends Component {
         }, () => {
           Cookies.set('type', self.props.getName(values.Username).userName)
           // self.props.history.push('/' + self.props.getName(values.Username).userName + '/warn-instance')
-          self.props.history.push('/home')
+          self.props.history.push('/platform/all')
         })
       }
     })
@@ -44,40 +43,37 @@ export class HomePageForm extends Component {
     const { getFieldDecorator } = this.props.form
     return (
       <div className='login'>
-        <h2>大数据</h2>
+        <h2>云区大人物</h2>
         <div className='login-content'>
-          {/* <img src={electric} alt='pic' style={{width: '609px', position: 'absolute', left: '188px', top: '245px', height: '400px'}} /> */}
+          <img src={leftLogo} alt='pic' style={{position: 'absolute', left: '64px', top: '100px'}} />
           <Form onSubmit={this.handleSubmit} className='login-form'>
-            <h1>大数据</h1>
-            <BorderBox style={{ padding: '20px 47px', backgroundColor: '#092431' }}>
-              <p>大数据</p>
-              <FormItem>
-                {getFieldDecorator('Username', {
-                  rules: [{ required: true, message: '请输入用户名!' }]
-                })(
-                  <Input prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder='用户名' />
-                )}
-              </FormItem>
-              <FormItem>
-                {getFieldDecorator('Password', {
-                  rules: [{ required: true, message: '请输入密码!' }]
-                })(
-                  <Input prefix={<Icon type='lock' style={{ color: 'rgba(0,0,0,.25)' }} />} type='password' placeholder='初始密码为身份证后6位' />
-                )}
-              </FormItem>
-              <FormItem>
-                {getFieldDecorator('remember', {
-                  valuePropName: 'checked',
-                  initialValue: true
-                })(
-                  <Checkbox>记住密码</Checkbox>
-                )}
-                <a className='login-form-forgot' href=''>忘记密码</a>
-              </FormItem>
-              <FormItem>
-                <Button type='primary' htmlType='submit' className='login-form-button'>登陆</Button>
-              </FormItem>
-            </BorderBox>
+            <p>互联网新技术实训平台</p>
+            <FormItem>
+              {getFieldDecorator('Username', {
+                rules: [{ required: true, message: '请输入用户名!' }]
+              })(
+                <Input prefix={<Icon type='user' style={{color: '#2DB7F5', fontSize: '20px'}} />} placeholder='用户名' />
+              )}
+            </FormItem>
+            <FormItem>
+              {getFieldDecorator('Password', {
+                rules: [{ required: true, message: '请输入密码!' }]
+              })(
+                <Input prefix={<Icon type='lock' style={{color: '#2DB7F5', fontSize: '20px'}} />} type='password' placeholder='请输入密码' />
+              )}
+            </FormItem>
+            <FormItem>
+              {/* {getFieldDecorator('remember', {
+                valuePropName: 'checked',
+                initialValue: true
+              })(
+                <Checkbox>记住密码</Checkbox>
+              )} */}
+              <a className='login-form-forgot' href='/#/registe'>没有账号？请注册</a>
+            </FormItem>
+            <FormItem>
+              <Button type='primary' htmlType='submit' className='login-form-button'>登陆</Button>
+            </FormItem>
           </Form>
         </div>
       </div>
