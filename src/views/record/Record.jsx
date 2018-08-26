@@ -1,15 +1,10 @@
 import React, { Component } from 'react'
 // import Cookies from 'js-cookie'
 
-export default class Home extends Component {
-  state = {
-
-  };
+export default class Record extends Component {
   render () {
     return (
-      <div className='course' >
-course
-      </div>
+      <div className='reocrd'>上传记录</div>
     )
   }
 }

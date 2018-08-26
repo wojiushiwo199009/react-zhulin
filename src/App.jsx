@@ -8,7 +8,6 @@ import routes from 'routes'
 // import { getName } from '$redux/actions'
 // import axios from './api/axios'
 // import { Config } from './config'
-import './assets/index.scss'
 class App extends React.Component {
   // constructor () {
   // console.log(props, 'ppp')

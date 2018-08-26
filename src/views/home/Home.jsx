@@ -1,41 +1,21 @@
 import React, { Component } from 'react'
 import { renderRoutes } from 'react-router-config'
 import PropTypes from 'prop-types'
-import { Layout, Menu, Breadcrumb } from 'antd'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { getName } from '$redux/actions'
+import { Layout, Menu, message } from 'antd'
+import ajax from '../../api'
 import './Home.scss'
 const { Header, Content, Footer } = Layout
-const SubMenu = Menu.SubMenu
 // import Cookies from 'js-cookie'
 
-export default class Home extends Component {
+export class Home extends Component {
   state = {
     collapsed: false,
     noBreadcrumb: true,
     breadcrumbItem1: '',
-    current: 'index',
-    submenuList: [
-      {
-        keyItem: 'cloud',
-        title: '云计算'
-      },
-      {
-        keyItem: 'bigdata',
-        title: '大数据'
-      },
-      {
-        keyItem: 'artificial',
-        title: '人工智能'
-      },
-      {
-        keyItem: 'blockchain',
-        title: '区块链'
-      },
-      {
-        keyItem: 'internet',
-        title: '物联网'
-      }
-    ]
-
+    current: 'index'
   };
   toggle = () => {
     this.setState({
@@ -47,43 +27,65 @@ export default class Home extends Component {
     this.setState({
       current: e.key
     }, () => {
-      this.props.history.push(`/platform/${e.key}`)
+      this.props.history.push(`/${e.key}`)
+    })
+  }
+  logout=() => {
+    console.log('退出')
+    ajax.logout({}, response => {
+      if (response.code === 106) {
+        message.success('退出成功')
+        this.props.history.push('/login')
+      } else {
+        message.error('退出失败，请重试')
+      }
+    }, error => {
+      console.log(error)
+      message.error('退出失败，请重试')
     })
   }
   render () {
+    console.log(this.props)
     return (
       <div className='bgwrap'>
         <Layout className='layout'>
-          <Header>
+          <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
             <div className='logo' />
             <Menu
-              theme='light'
+              theme='dark'
+              mode='horizontal'
               onClick={this.handleClick}
               selectedKeys={[this.state.current]}
-              mode='horizontal'
+              style={{
+                lineHeight: '64px',
+                float: 'left'}}
             >
               <Menu.Item key='index'>首页</Menu.Item>
-              <SubMenu title={<span onClick={(e) => this.handleClick(e)}>全部课程</span>}>
-                {
-                  this.state.submenuList.map((item) => {
-                    return <Menu.Item key={item.keyItem}>{item.title}</Menu.Item>
-                  })
-                }
-
-              </SubMenu>
-              <Menu.Item key='my-course'>我的课程</Menu.Item>
-              <Menu.Item key='experiment'>实验任务</Menu.Item>
+              <Menu.Item key='record'>我的记录</Menu.Item>
+              <Menu.Item key='dealt'>待办</Menu.Item>
+              <Menu.Item key='authority'>权限</Menu.Item>
             </Menu>
-
+            <div className='user'>
+              <span>欢迎{this.props.data.getname.userName}</span>
+              <span className='logout' onClick={this.logout}>退出</span>
+            </div>
           </Header>
-          <Content style={{padding: 24, background: '#fff'}}>
+          <Content style={{ margin: '90px 50px 0 50px',
+            background: '#fff',
+            overflow: 'hidden',
+            paddingBottom: '60px'}}>
 
             {
               renderRoutes(this.props.route.childRoutes)
             }
           </Content>
-          <Footer style={{ textAlign: 'center' }}>
-              Big Data Practical Training Platform ©2018 Created by Yin&Gao
+          <Footer style={{
+            textAlign: 'center',
+            position: 'absolute',
+            bottom: 0,
+            height: '60px',
+            width: '100%'}}>
+              版权所有
           </Footer>
         </Layout>
       </div>
@@ -91,6 +93,20 @@ export default class Home extends Component {
   }
 }
 Home.propTypes = {
+  data: PropTypes.object,
   history: PropTypes.object,
   route: PropTypes.object
 }
+const mapStateToProps = state => ({
+  data: state,
+  loginLoading: state.login.loginLoading
+})
+
+const mapDispatchToProps = dispatch => ({
+  getName: bindActionCreators(getName, dispatch)
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Home)

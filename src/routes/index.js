@@ -1,7 +1,9 @@
-import Login from '../views/login/HomePage' // 登陆页面
+import Login from '../views/login/Login' // 登陆页面
 import Home from '../views/home/Home'
-import Content from '../views/content/Content'
-import Course from '../views/course/Course'
+import Record from '../views/record/Record'
+import Dealt from '../views/dealt/Dealt'
+import Index from '../views/index/Index'
+import Authority from '../views/authority/Authority'
 import { Redirect } from 'react-router-dom'
 import React from 'react'
 
@@ -9,7 +11,6 @@ import React from 'react'
 // const AsyncView = Imported(() =>
 //   import('views/async-view/AsyncView'))
 
-// const Redirection = () => <Redirect to='/index' />
 const Redirection = () => <Redirect to='/login' />
 
 export default [
@@ -23,16 +24,24 @@ export default [
     component: Login
   },
   {
-    path: '/platform',
+    path: '/',
     component: Home,
     childRoutes: [
       {
-        path: '/platform/all',
-        component: Content
+        path: '/index',
+        component: Index
       },
       {
-        path: '/platform/course',
-        component: Course
+        path: '/record',
+        component: Record
+      },
+      {
+        path: '/dealt',
+        component: Dealt
+      },
+      {
+        path: '/authority',
+        component: Authority
       }
     ]
   }

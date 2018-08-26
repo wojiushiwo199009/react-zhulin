@@ -1,32 +1,11 @@
 
-.bgwrap{width:100%;height:100%;background: url("../../assets/images/bg.jpg") no-repeat left top; background-size: 100% 100%;}
-.toptit{ text-align: center; color: #fff;}
-.toptit em{ display: block; font-weight: normal; font-size: 12px; padding-top: 5px;}
-.toptit .icologo{ width: 50px; height: 39px; display: block; margin: 0 auto; background: url("../../assets/images/logo.png"); background-size: 100% 100%; margin-bottom: 10px; }
-.topul{ overflow: hidden; padding: 70px 0 0 0; display: flex; justify-content: space-between; }
-.topul li{ float: left;  margin: 0 6%; text-align: center; margin-bottom: 20px; list-style:none; }
-.topul li span{ display: block; color: #4D9BFD; font-size: 16px; border-bottom: 2px solid #4D9BFD; line-height: 30px; margin-bottom: 20px;}
-.topul li.li02 span{color: #4BE65C; border-bottom: 2px solid #4BE65C;}
-.topul li.li03 span{color: #EB9926; border-bottom: 2px solid #EB9926;}
-.topul li a{ display: block; width: 86%; height: 15vh; padding-top: 30px; margin: 0 auto;  background-size: 100% 100%;text-decoration: none;}
-.topul li em{ width: 40px; height: 40px; display: block; margin: 0 auto; margin-bottom: 20px; }
-.topul li.li01 a{background: url("../../assets/images/iconblue.png") no-repeat; background-size: 100% 100%; color: #4D9BFD; }
-.topul li.li01 a:hover{background: url("../../assets/images/iconblue_on.png") no-repeat; background-size: 100% 100%; color: #fff;}
-.topul li.li01 em{background: url("../../assets/images/iconblue01.png") no-repeat; background-size: 100% 100%;}
-.topul li.li01 a:hover em{background: url("../../assets/images/iconblue01_on.png") no-repeat; background-size: 100% 100%;}
-.topul li.li02 a{background: url("../../assets/images/icongreen.png") no-repeat; background-size: 100% 100%; color: #4BE65C; }
-.topul li.li02 a:hover{background: url("../../assets/images/icongreen_on.png") no-repeat; background-size: 100% 100%; color: #fff;}
-.topul li.li02 em{background: url("../../assets/images/icongreen01.png") no-repeat; background-size: 100% 100%;}
-.topul li.li02 a:hover em{background: url("../../assets/images/icongreen01_on.png") no-repeat; background-size: 100% 100%;}
-.topul li.li03 a{background: url("../../assets/images/iconorg.png") no-repeat; background-size: 100% 100%; color: #EB9926; }
-.topul li.li03 a:hover{background: url("../../assets/images/iconorg_on.png") no-repeat; background-size: 100% 100%; color: #fff;}
-.topul li.li03 em{background: url("../../assets/images/iconorg01.png") no-repeat; background-size: 100% 100%;}
-.topul li.li03 a:hover em{background: url("../../assets/images/iconorg01_on.png") no-repeat; background-size: 100% 100%;}
-.topul li a{ width: 9vw; height: 7.5vw;}
-
-
-
-
+.bgwrap{
+   height:100%;
+   .ant-layout{
+      min-height:100%;
+      position:relative;
+   }
+}
 /* customization Margin */
 .mt0 { margin-top:0!important; }
 .mr0 { margin-right:0!important; }
@@ -111,10 +90,29 @@
 .bgwrap .ant-layout{
   height: 100%;
 }
-.layout .logo {
-  width: 120px;
-  height: 31px;
-  background: rgba(255,255,255,.2);  
-  margin: 16px 24px 16px 0;
-  float: left;
+.layout {
+  .logo {
+    width: 120px;
+    height: 31px;
+    margin: 16px 24px 16px 0;
+    float: left;
+  }
+  .index{
+    padding: 24px;
+  }
+  .dealt{
+    padding: 24px;
+  }
+  .reocrd{
+    padding: 24px;
+  }
+  .user{
+    float: right;
+    color: #fff;
+    .logout{
+      cursor: pointer;
+      margin-left: 10px;
+      color:#f5222d;
+    }
+  }
 }

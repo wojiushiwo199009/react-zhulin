@@ -1,0 +1,87 @@
+#root{
+  height: 100%;
+  min-width: 1200px;
+  .App{
+   height:100%;
+    .show-loading{
+      height: 100%;
+      .login{
+        height: 100%;
+        padding-top: 2%;
+        .login-content{
+          width: 78%;
+          position: relative;
+          margin: 0 auto;
+          height: 90%;
+          .left-logo{
+            position: absolute;
+            left: 100px;
+            top: 105px;
+            width: 330px;
+            height: 380px;
+          }
+        }
+        h2{
+          margin-left: 5%;
+          padding-left: 40px;
+          font-family: Microsoft YaHei;
+        }
+        .switching{
+          transform: perspective(2000px) rotateY(-90deg);
+          animation: reg .4s linear,notreg .4s .41s linear;
+        }
+        .login-form{
+          width: 340px;
+          position: absolute;
+          right: 130px;
+          top: 146px;
+          backface-visibility: hidden;
+          p{
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            text-align: center;
+          }
+          .ant-btn-primary{
+            width: 100%;
+          }
+          .login-form-forgot{
+            float: right;
+          }
+          .register{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+          }
+          #gologin{
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+          }
+          .login{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+          }
+          @keyframes reg{
+            from{
+              transform: perspective(2000px) rotateY(0deg);
+            }to{
+              transform: perspective(2000px) rotateY(90deg);
+            }
+          }
+          @keyframes notreg{
+            from{
+              transform: perspective(2000px) rotateY(-90deg);
+            }to{
+                  transform: perspective(2000px) rotateY(0deg);
+            }
+          }
+        }
+      }
+    }
+    
+  }
+}

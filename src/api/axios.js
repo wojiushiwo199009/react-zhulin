@@ -1,10 +1,14 @@
 import axios from 'axios'
 
-export const axiosUrl = 'http://172.16.20.52:8080/casefile'
+// export const axiosUrl = 'http://172.16.20.52:8080/casefile'
+export const axiosUrl = 'http://localhost:21201/'
 // axios.defaults.baseURL = 'http://172.16.74.105:8080' // 蔡莉娟
 // axios.defaults.baseURL = 'http://172.16.74.95:8080' //谷立庆
 // axios.defaults.baseURL = 'http://172.16.61.23:8080' // 杨凯
-axios.defaults.baseURL = 'http://172.16.20.52:8080/casefile'
+// axios.defaults.baseURL = 'http://172.16.20.52:8080/casefile'
+
+axios.defaults.baseURL = 'http://localhost:21201/'
+axios.defaults.timeout = 50000
 axios.defaults.headers['Content-Type'] = 'application/json'
 // 使用下边的请求头，不能跨域
 // axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
