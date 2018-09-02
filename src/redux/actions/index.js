@@ -1,5 +1,6 @@
 import * as actionType from '../constants/ActionTypes'
 import axios from 'axios'
+import Cookies from 'js-cookie'
 import {Config} from '../../config'
 
 export const increment = (count) => ({type: actionType.INCREMENT, count: count})
@@ -22,6 +23,11 @@ export const getName = (userName) => ({
   type: actionType.GET_NAME,
   userName: userName
 })
+export const logOut = (userName) => {
+  return (dispatch) => {
+    Cookies.remove('phoneNumber')
+  }
+}
 
 export const login = () => {
   return (dispatch) => {

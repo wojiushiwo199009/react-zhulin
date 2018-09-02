@@ -1,18 +1,19 @@
 import axios from 'axios'
-
+import { message } from 'antd'
 // export const axiosUrl = 'http://172.16.20.52:8080/casefile'
-export const axiosUrl = 'http://localhost:21201/'
+export const axiosUrl = 'http://localhost:21200/'
 // axios.defaults.baseURL = 'http://172.16.74.105:8080' // 蔡莉娟
 // axios.defaults.baseURL = 'http://172.16.74.95:8080' //谷立庆
 // axios.defaults.baseURL = 'http://172.16.61.23:8080' // 杨凯
 // axios.defaults.baseURL = 'http://172.16.20.52:8080/casefile'
 
-axios.defaults.baseURL = 'http://localhost:21201/'
+axios.defaults.baseURL = 'http://localhost:21200/'
 axios.defaults.timeout = 50000
 axios.defaults.headers['Content-Type'] = 'application/json'
 // 使用下边的请求头，不能跨域
 // axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
 axios.defaults.headers['Accept'] = 'application/json'
+// axios.defaults.headers['Accept'] = 'application/x-www-form-urlencoded'
 // 是否携带cookie
 // axios.defaults.withCredentials = true // 貌似加上不能访问mock
 
@@ -31,6 +32,7 @@ function responseFilter (response) {
 
 // 添加响应拦截器
 axios.interceptors.response.use((response) => {
+  console.log(response, 'response')
   // 如果是开发模式
   if (process.env.NODE_ENV === 'development') {
     return response
@@ -38,7 +40,32 @@ axios.interceptors.response.use((response) => {
     return responseFilter(response)
   }
 }, function (error) {
-  console.log('request response failure!')
+  console.log('err:', error, error.response) // for debug
+  if (error.response) {
+    let errorMsg = error.message
+    // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+    /* console.log(error.response.data);
+    console.log(error.response.status);
+    console.log(error.response.headers); */
+    if (error.response.status === 401) {
+      console.log(error.response.data)
+      console.log(error.response.status)
+      console.log(error.response.headers)
+      message.error(errorMsg)
+      // location.href = '/login'
+    } else {
+      message.error(errorMsg)
+    }
+  } else {
+    // Something happened in setting up the request that triggered an Error
+    console.log('Error', error.message)
+    if (error.message === 'CancelToken') {
+    } else {
+      message.error('连接超时，请稍后重试')
+    }
+  }
+  /* console.log(error.config); */
+
   return Promise.reject(error)
 })
 

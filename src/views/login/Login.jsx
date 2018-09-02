@@ -57,78 +57,82 @@ export class HomePageForm extends Component {
       console.log('Received values of form: ', values)
 
       if (!err) {
-        self.props.history.push('/index')
-
         // 发送请求
-        // if (self.state.showRegister) {
-        // let params = {
-        //   phoneNumber: values.mobilephone,
-        //   password: values.password,
-        //   code: values.code,
-        //   type: values.role,
-        //   validCode: values.captcha,
-        //   msgid: this.state.msgid
-        // }
-        //   ajax.regist(params, response => {
-        //     self.setState({
-        //       showLoading: true
-        //     })
-        //     if (response.code === 106) {
-        //       message.success(response.msg)
-        //       self.setState({
-        //         showLoading: false,
-        //         user: self.props.getName(values.phoneNumber),
-        //         hasUser: true
-        //       }, () => {
-        //         Cookies.set('phoneNumber', self.props.getName(values.phoneNumber).phoneNumber)
-        //         self.props.history.push('/index')
-        //       })
-        //     } else {
-        //       message.error('注册失败，请重新填写')
-        //       self.setState({
-        //         showLoading: false
-        //       })
-        //     }
-        //   }, error => {
-        //     console.log(error)
-        //       message.error('注册失败，请重新填写')
-        //     self.setState({
-        //       showLoading: false
-        //     })
-        //   })
-        // } else {
-        // let params = {
-        //   phoneNumber: values.mobilephone,
-        //   password: values.password
-        // }
-        //   ajax.login(params, response => {
-        //     self.setState({
-        //       showLoading: true
-        //     })
-        //     if (response.code === 106) {
-        //       message.success(response.msg)
-        //       self.setState({
-        //         showLoading: false,
-        //         user: self.props.getName(values.phoneNumber),
-        //         hasUser: true
-        //       }, () => {
-        //         Cookies.set('phoneNumber', self.props.getName(values.phoneNumber).phoneNumber)
-        //         self.props.history.push('/index')
-        //       })
-        //     } else {
-        //       message.error('登陆失败，请重新登陆')
-        //       self.setState({
-        //         showLoading: false
-        //       })
-        //     }
-        //   }, error => {
-        //     console.log(error)
-        //       message.error('登陆失败，请重新登陆')
-        //     self.setState({
-        //       showLoading: false
-        //     })
-        //   })
-        // }
+        if (self.state.showRegister) {
+          let params = {
+            phoneNumber: values.phoneNumber,
+            password: values.password,
+            code: values.code,
+            type: values.role,
+            validCode: values.captcha,
+            msgid: this.state.msgid
+          }
+          ajax.regist(params, response => {
+            self.setState({
+              showLoading: true
+            })
+            if (response.code === 106) {
+              message.success(response.msg)
+              self.setState({
+                showLoading: false,
+                user: self.props.getName(values.phoneNumber),
+                hasUser: true
+              }, () => {
+                // Cookies.set('phoneNumber', self.props.getName(values.phoneNumber).phoneNumber)
+                sessionStorage.setItem('phoneNumber', values.phoneNumber)
+                localStorage.setItem('phoneNumber', values.phoneNumber)
+                self.props.history.push('/index')
+              })
+            } else {
+              message.error('注册失败，请重新填写')
+              self.setState({
+                showLoading: false
+              })
+            }
+          }, error => {
+            console.log(error)
+            message.error('注册失败，请重新填写')
+            self.setState({
+              showLoading: false
+            })
+          })
+        } else {
+          let params = {
+            phoneNumber: values.phoneNumber,
+            password: values.password
+          }
+          ajax.login(params, response => {
+            console.log(response, 'res')
+            self.setState({
+              showLoading: true
+            })
+            if (response.state.stateCode === 0) {
+              let sucMes = response.state.stateMessage || '登陆成功'
+              message.success(sucMes)
+              self.setState({
+                showLoading: false,
+                user: self.props.getName(values.phoneNumber),
+                hasUser: true
+              }, () => {
+                // Cookies.set('phoneNumber', self.props.getName(values.phoneNumber).phoneNumber)
+                sessionStorage.setItem('phoneNumber', values.phoneNumber)
+                localStorage.setItem('phoneNumber', values.phoneNumber)
+                self.props.history.push('/index')
+              })
+            } else if (response.state.stateCode === 1) {
+              let errMes = response.state.stateMessage || '登陆失败'
+              message.error(errMes)
+              self.setState({
+                showLoading: false
+              })
+            }
+          }, error => {
+            console.log(error)
+            self.setState({
+              showLoading: false
+            })
+          })
+        }
       }
     })
   }

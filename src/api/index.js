@@ -52,5 +52,25 @@ export default {
   // 管理员更新
   updateUser: (params, sucFn, errFn) => {
     ajax('post', '/user/update', params, sucFn, errFn)
+  },
+  // 发布订单
+  publicOrder: (params, sucFn, errFn) => {
+    ajax('post', '/merchant/order/create', params, sucFn, errFn)
+  },
+  // 订单查询
+  getOrder: (params, sucFn, errFn) => {
+    ajax('get', '/merchant/order/list', params, sucFn, errFn)
+  },
+  // 订单详情
+  detailOrder: (params, sucFn, errFn) => {
+    ajax('get', '/merchant/order/detail', params, sucFn, errFn)
+  },
+  // z删除订单
+  deleteOrder: (params, sucFn, errFn) => {
+    ajax('post', '/merchant/order/delete', params, sucFn, errFn)
+  },
+  // 订单修改
+  updateOrder: (params, sucFn, errFn) => {
+    ajax('post', '/merchant/order/update', params, sucFn, errFn)
   }
 }

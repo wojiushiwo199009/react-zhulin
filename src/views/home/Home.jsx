@@ -24,6 +24,10 @@ export class Home extends Component {
   }
   handleClick = (e) => {
     console.log('click ', e)
+    if (!localStorage.getItem('phoneNumber')) {
+      this.props.history.push('/login')
+      return
+    }
     this.setState({
       current: e.key
     }, () => {
@@ -32,6 +36,8 @@ export class Home extends Component {
   }
   logout=() => {
     console.log('退出')
+    sessionStorage.removeItem('phoneNumber')
+    localStorage.removeItem('phoneNumber')
     ajax.logout({}, response => {
       if (response.code === 106) {
         message.success('退出成功')
@@ -43,6 +49,14 @@ export class Home extends Component {
       console.log(error)
       message.error('退出失败，请重试')
     })
+  }
+  isLogin=() => {
+    if (!localStorage.getItem('phoneNumber')) {
+      this.props.history.push('/login')
+    }
+  }
+  componentWillMount () {
+    this.isLogin()
   }
   render () {
     console.log(this.props)

@@ -1,7 +1,7 @@
 import { GET_NAME } from '../constants/ActionTypes'
 
 const initialState = {
-  userName: 'police'
+  userName: ''
 }
 
 export default function login (state = initialState, action) {

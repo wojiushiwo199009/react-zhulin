@@ -1,6 +1,7 @@
 import Login from '../views/login/Login' // 登陆页面
 import Home from '../views/home/Home'
 import Record from '../views/record/Record'
+import DetailOrder from '../views/record/DetailOrder'
 import Dealt from '../views/dealt/Dealt'
 import Index from '../views/index/Index'
 import Authority from '../views/authority/Authority'
@@ -23,6 +24,7 @@ export default [
     path: '/login',
     component: Login
   },
+
   {
     path: '/',
     component: Home,
@@ -42,6 +44,10 @@ export default [
       {
         path: '/authority',
         component: Authority
+      },
+      {
+        path: '/detailOrder',
+        component: DetailOrder
       }
     ]
   }

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, Input, InputNumber, Popconfirm, Form, Button, Modal, message } from 'antd'
+import { Table, Input, InputNumber, Popconfirm, Form, Button, Modal, message, Divider } from 'antd'
 import AddRow from './AddRow'
 import ajax from '../../api'
 import './authority.scss'
@@ -135,7 +135,7 @@ export default class EditableTable extends React.Component {
                         onClick={() => this.save(form, record.key)}
                         style={{ marginRight: 8 }}
                       >
-                        保存
+                        保存<Divider type='vertical' />
                       </a>
                     )}
                   </EditableContext.Consumer>
@@ -143,11 +143,12 @@ export default class EditableTable extends React.Component {
                     title='确定取消吗?'
                     onConfirm={() => this.cancel(record.key)}
                   >
-                    <a>取消</a>
+                    <a>取消<Divider type='vertical' /></a>
                   </Popconfirm>
                 </span>
               ) : (
-                <a onClick={() => this.edit(record.key)}>编辑</a>
+                <a onClick={() => this.edit(record.key)}>编辑<Divider type='vertical' /></a>
+
               )}
               {
                 <Popconfirm title='确定删除吗?' onConfirm={() => this.handleDelete(record)}>
@@ -331,6 +332,7 @@ export default class EditableTable extends React.Component {
         </Button>
         <Modal title='添加管理员'
           visible={visible}
+          onCancel={this.handleCancel}
           footer={null}
         >
           <AddRow handleOk={this.handleOk} onCancel={this.handleCancel} />
