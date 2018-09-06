@@ -39,7 +39,7 @@ export class Home extends Component {
     sessionStorage.removeItem('phoneNumber')
     localStorage.removeItem('phoneNumber')
     ajax.logout({}, response => {
-      if (response.code === 106) {
+      if (response.state.stateCode === 1) {
         message.success('退出成功')
         this.props.history.push('/login')
       } else {

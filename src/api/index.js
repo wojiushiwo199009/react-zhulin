@@ -37,6 +37,7 @@ export default {
   logout: (params, sucFn, errFn) => {
     ajax('post', '/user/sign_out', {}, sucFn, errFn)
   },
+
   // 管理员添加
   addUser: (params, sucFn, errFn) => {
     ajax('post', '/user/add', {}, sucFn, errFn)
@@ -72,5 +73,11 @@ export default {
   // 订单修改
   updateOrder: (params, sucFn, errFn) => {
     ajax('post', '/merchant/order/update', params, sucFn, errFn)
+  },
+
+  // 查询用户接口
+  getUserInfo: (params, sucFn, errFn) => {
+    ajax('get', '/user/info', params, sucFn, errFn)
   }
+
 }

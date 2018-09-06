@@ -269,6 +269,7 @@ export class RecordForm extends Component {
       visible: true,
       modalTitle: '修改订单',
       modalObj: {
+        order_status: record.order_status,
         id: record.id,
         total: record.total,
         merchantPrice: record.merchantPrice,
