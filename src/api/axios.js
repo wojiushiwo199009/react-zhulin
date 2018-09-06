@@ -16,7 +16,7 @@ axios.defaults.timeout = 50000
 axios.defaults.headers['Content-Type'] = 'application/json'
 // 使用下边的请求头，不能跨域
 // axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
-axios.defaults.headers['Accept'] = 'application/json'
+axios.defaults.headers['Accept'] = 'application/json,text/plain,*/*'
 // axios.defaults.headers['Accept'] = 'application/x-www-form-urlencoded'
 // 是否携带cookie
 // axios.defaults.withCredentials = true // 貌似加上不能访问mock
