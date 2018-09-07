@@ -189,8 +189,8 @@ export class AddOrderForm extends Component {
             }]
           })(
             <RadioGroup>
-              <Radio value='0' disabled={this.state.isEdit && !!(this.state.modalObj['order_status'] === 1 || 2)} >流量文</Radio>
-              <Radio value='1' disabled={this.state.isEdit && !!(this.state.modalObj['order_status'] === 1 || 2)} >养号文</Radio>
+              <Radio value={0} disabled={this.state.isEdit && !!(this.state.modalObj['order_status'] === 1 || 2)} >流量文</Radio>
+              <Radio value={1} disabled={this.state.isEdit && !!(this.state.modalObj['order_status'] === 1 || 2)} >养号文</Radio>
             </RadioGroup>
           )}
         </FormItem>

@@ -248,13 +248,12 @@ export class MessageForm extends Component {
           </FormItem>
           <FormItem {...formItemLayout} label='支付宝二维码图片'>
             {getFieldDecorator('payPicture', {
-              valuePropName: 'fileList',
               getValueFromEvent: this.normFile,
               rules: [{
                 required: true, message: '请上传支付宝二维码图片!'
               }]
             })(
-              <Upload name='payPicture' action='/upload.do' listType='picture' >
+              <Upload name='payPicture' action='/upload.do' >
                 <Button>
                   <Icon type='upload' /> 点击上传图片
                 </Button>
