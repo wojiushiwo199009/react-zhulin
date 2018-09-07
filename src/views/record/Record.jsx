@@ -263,7 +263,6 @@ export class RecordForm extends Component {
   }
 
   edit (record) {
-    console.log(record)
     this.setState({
       isEdit: true,
       visible: true,
@@ -385,7 +384,7 @@ export class RecordForm extends Component {
           footer={null}
           onCancel={this.onCancel}
         >
-          <AddOrder modalObj={this.state.modalObj} onCancel={this.onCancel} isEdit getOrder={this.getOrder} />
+          <AddOrder modalObj={this.state.modalObj} onCancel={this.onCancel} isEdit={this.state.isEdit} getOrder={this.getOrder} />
         </Modal>
       </div>
     )

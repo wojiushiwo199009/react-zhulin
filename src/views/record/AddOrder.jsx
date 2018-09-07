@@ -20,7 +20,8 @@ export class AddOrderForm extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err && !this.state.isEdit) {
         // let endTime = moment(values.endTime).format('YYYY-MM-DD')
-        let params = {...values, endTime: this.state.endTime}
+        let params = {...values, endTime: moment(values.endTime).format('YYYY-MM-DD') || this.state.endTime}
+        console.log(params)
         ajax.publicOrder(params, response => {
           if (response.code === 106) {
             message.success(response.msg)
@@ -90,7 +91,6 @@ export class AddOrderForm extends Component {
     })
   }
   componentWillReceiveProps (nextprops) {
-    console.log(this.props, 'pppppp')
     if (this.props.modalObj) {
       this.setState({
         modalObj: nextprops.modalObj,
@@ -130,7 +130,7 @@ export class AddOrderForm extends Component {
               }
             ]
           })(
-            <Input placeholder='请输入定价' disabled={!!(this.state.modalObj['order_status'] === 1 || 2)} />
+            <Input placeholder='请输入定价' disabled={this.state.isEdit && !!(this.state.modalObj['order_status'] === 1 || 2)} />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label='文章领域'>
@@ -140,7 +140,7 @@ export class AddOrderForm extends Component {
               required: true, message: '请输入文章领域!'
             }]
           })(
-            <Input placeholder='请输入文章领域' disabled={!!(this.state.modalObj['order_status'] === 1 || 2)} />
+            <Input placeholder='请输入文章领域' disabled={this.state.isEdit && !!(this.state.modalObj['order_status'] === 1 || 2)} />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label='备注'>
@@ -148,7 +148,7 @@ export class AddOrderForm extends Component {
             initialValue: this.state.modalObj.notes,
             rules: []
           })(
-            <Input placeholder='请输入备注' disabled={!!(this.state.modalObj['order_status'] === 1 || 2)} />
+            <Input placeholder='请输入备注' disabled={this.state.isEdit && !!(this.state.modalObj['order_status'] === 1 || 2)} />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label='订单标题'>
@@ -158,7 +158,7 @@ export class AddOrderForm extends Component {
               required: true, message: '请输入订单标题!'
             }]
           })(
-            <Input placeholder='请输入订单标题' disabled={!!(this.state.modalObj['order_status'] === 1 || 2)} />
+            <Input placeholder='请输入订单标题' disabled={this.state.isEdit && !!(this.state.modalObj['order_status'] === 1 || 2)} />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label='原创度要求'>
@@ -168,7 +168,7 @@ export class AddOrderForm extends Component {
               required: true, message: '请输入原创度要求!'
             }]
           })(
-            <Input placeholder='请输入原创度要求' disabled={!!(this.state.modalObj['order_status'] === 1 || 2)} />
+            <Input placeholder='请输入原创度要求' disabled={this.state.isEdit && !!(this.state.modalObj['order_status'] === 1 || 2)} />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label='图片数量要求'>
@@ -178,7 +178,7 @@ export class AddOrderForm extends Component {
               required: true, message: '请输入图片数量要求!'
             }]
           })(
-            <InputNumber min={1} max={10} disabled={!!(this.state.modalObj['order_status'] === 1 || 2)} />
+            <InputNumber min={1} max={10} disabled={this.state.isEdit && !!(this.state.modalObj['order_status'] === 1 || 2)} />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label='类型'>
@@ -189,8 +189,8 @@ export class AddOrderForm extends Component {
             }]
           })(
             <RadioGroup>
-              <Radio value='0' disabled={!!(this.state.modalObj['order_status'] === 1 || 2)} >流量文</Radio>
-              <Radio value='1' disabled={!!(this.state.modalObj['order_status'] === 1 || 2)} >养号文</Radio>
+              <Radio value='0' disabled={this.state.isEdit && !!(this.state.modalObj['order_status'] === 1 || 2)} >流量文</Radio>
+              <Radio value='1' disabled={this.state.isEdit && !!(this.state.modalObj['order_status'] === 1 || 2)} >养号文</Radio>
             </RadioGroup>
           )}
         </FormItem>
@@ -201,7 +201,7 @@ export class AddOrderForm extends Component {
               required: true, message: '请选择截止交稿时间!'
             }]
           })(
-            <DatePicker onChange={this.onChange} disabled={!!(this.state.modalObj['order_status'] === 1 || 2)} />
+            <DatePicker onChange={this.onChange} disabled={this.state.isEdit && !!(this.state.modalObj['order_status'] === 1 || 2)} />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label='要求'>
@@ -211,7 +211,7 @@ export class AddOrderForm extends Component {
               required: true, message: '请输入要求!'
             }]
           })(
-            <Input placeholder='请输入要求' disabled={!!(this.state.modalObj['order_status'] === 1 || 2)} />
+            <Input placeholder='请输入要求' disabled={this.state.isEdit && !!(this.state.modalObj['order_status'] === 1 || 2)} />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label='字数要求'>
@@ -220,7 +220,7 @@ export class AddOrderForm extends Component {
               required: true, message: '请输入字数要求!'
             }]
           })(
-            <InputNumber min={1} disabled={!!(this.state.modalObj['order_status'] === 1 || 2)} />
+            <InputNumber min={1} disabled={this.state.isEdit && !!(this.state.modalObj['order_status'] === 1 || 2)} />
           )}
         </FormItem>
         <FormItem>

@@ -1,22 +1,33 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment'
 import ajax from '../../api'
-import { Form, Input, Button, Row, Col, message, DatePicker, Radio, InputNumber } from 'antd'
-// 商户修改订单的时候，根据订单字段order_status的状态判断修改哪些字段。当order_status为0或8时，可以修改所有的字段，当order_status为1或2时只能修改文章数量total
+import {Form, Input, Button, message, Radio, InputNumber, Upload, Icon, Row, Col} from 'antd'
+import './message.scss'
 const FormItem = Form.Item
 const RadioGroup = Radio.Group
 export class MessageForm extends Component {
     state = {
-      modalObj: this.props.modalObj,
-      isEdit: this.props.isEdit
+      modalObj: {
+        qq: '',
+        weChat: '',
+        email: '',
+        address: '',
+        sex: 0,
+        age: '',
+        profession: '',
+        good: '',
+        fullTime: 0,
+        payPicture: ''
+
+      }
     }
   handleSubmit = (e) => {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
+      console.log(values)
       if (!err && !this.state.isEdit) {
         // let endTime = moment(values.endTime).format('YYYY-MM-DD')
-        let params = { ...values, endTime: this.state.endTime }
+        let params = { ...values }
         ajax.publicOrder(params, response => {
           if (response.code === 106) {
             message.success(response.msg)
@@ -49,9 +60,7 @@ export class MessageForm extends Component {
       }
     })
   }
-  handleCancel = () => {
-    this.props.onCancel()
-  }
+
   validateMobilephone = (rule, value, callback) => {
     console.log(rule, value)
     if (value) {
@@ -66,33 +75,61 @@ export class MessageForm extends Component {
       callback()
     }
   }
-  handleNumberChange = (rule, value, callback) => {
-    console.log(rule, value)
-    const number = parseInt(value || 0, 10)
+
+  validateqq = (rule, value, callback) => {
     if (value) {
-      if (!isNaN(number)) {
+      let myreg = /[1-9][0-9]{4,}/
+      if (value && myreg.test(value)) {
+        this.setState({
+          qq: value
+        })
         callback()
       } else {
-        let validatemobile = '请输入价钱!'
+        let validatemobile = '请输入正确的qq号!'
         callback(validatemobile)
       }
     } else {
       callback()
     }
   }
-  onChange = (date, dateString) => {
-    this.setState({
-      endTime: dateString
-    })
-  }
-  componentWillReceiveProps (nextprops) {
-    console.log(this.props, 'pppppp')
-    if (this.props.modalObj) {
-      this.setState({
-        modalObj: nextprops.modalObj,
-        isEdit: nextprops.isEdit
-      })
+  validateemail = (rule, value, callback) => {
+    if (value) {
+      let myreg = /^[a-z\d]+(\.[a-z\d]+)*@([\da-z](-[\da-z])?)+(\.{1,2}[a-z]+)+$/
+      if (value && myreg.test(value)) {
+        this.setState({
+          mail: value
+        })
+        callback()
+      } else {
+        let validatemobile = '请输入正确的邮箱!'
+        callback(validatemobile)
+      }
+    } else {
+      callback()
     }
+  }
+  validateage = (rule, value, callback) => {
+    if (value) {
+      let myreg = /^[0-9]{1,2}$/
+      if (value && myreg.test(value)) {
+        this.setState({
+          age: value
+        })
+        callback()
+      } else {
+        let validatemobile = '请输入正确的年龄!'
+        callback(validatemobile)
+      }
+    } else {
+      callback()
+    }
+  }
+  normFile = (e) => {
+    console.log('Upload event:', e)
+    if (Array.isArray(e)) {
+      return e
+    }
+    return e && e.fileList
   }
   render () {
     const formItemLayout = {
@@ -110,125 +147,124 @@ export class MessageForm extends Component {
     return (
       <div className='message'>
         <Form onSubmit={this.handleSubmit} >
-          <FormItem {...formItemLayout} label='文章数量'>
-            {getFieldDecorator('total', {
-              initialValue: this.state.modalObj.total,
-              rules: [{ required: true, message: '请输入文章数量' }]
-            })(
-              <InputNumber min={1} max={10} />
-            )}
-          </FormItem>
-          <FormItem {...formItemLayout} label='定价'>
-            {getFieldDecorator('merchantPrice', {
-              initialValue: this.state.modalObj.merchantPrice,
-              rules: [{ required: true, message: '请输入定价!' },
+          <FormItem {...formItemLayout} label='qq号'>
+            {getFieldDecorator('qq', {
+              initialValue: this.state.modalObj.qq,
+              rules: [{ required: true, message: '请输入qq号!' },
                 {
-                  validator: this.handleNumberChange
-                }
-              ]
+                  validator: this.validateqq
+                }]
             })(
-              <Input placeholder='请输入定价' disabled={!!(this.state.modalObj['order_status'] === 1 || 2)} />
+              <Input placeholder='请输入qq号' />
             )}
           </FormItem>
-          <FormItem {...formItemLayout} label='文章领域'>
-            {getFieldDecorator('eassyType', {
-              initialValue: this.state.modalObj.eassyType,
+          <FormItem {...formItemLayout} label='微信号'>
+            {getFieldDecorator('weChat', {
+              initialValue: this.state.modalObj.weChat,
+              rules: [{ required: true, message: '请输入微信号!' }]
+            })(
+              <Input placeholder='请输入微信号' />
+            )}
+          </FormItem>
+          <FormItem {...formItemLayout} label='邮箱'>
+            {getFieldDecorator('email', {
+              initialValue: this.state.modalObj.email,
               rules: [{
-                required: true, message: '请输入文章领域!'
+                required: true, message: '请输入邮箱!'
+              }, {
+                validator: this.validateemail
               }]
             })(
-              <Input placeholder='请输入文章领域' disabled={!!(this.state.modalObj['order_status'] === 1 || 2)} />
+              <Input placeholder='请输入邮箱' />
             )}
           </FormItem>
-          <FormItem {...formItemLayout} label='备注'>
-            {getFieldDecorator('notes', {
-              initialValue: this.state.modalObj.notes,
-              rules: []
-            })(
-              <Input placeholder='请输入备注' disabled={!!(this.state.modalObj['order_status'] === 1 || 2)} />
-            )}
-          </FormItem>
-          <FormItem {...formItemLayout} label='订单标题'>
-            {getFieldDecorator('orderTitle', {
-              initialValue: this.state.modalObj.orderTitle,
+          <FormItem {...formItemLayout} label='地址'>
+            {getFieldDecorator('address', {
+              initialValue: this.state.modalObj.address,
               rules: [{
-                required: true, message: '请输入订单标题!'
+                required: true, message: '请输入地址!'
               }]
             })(
-              <Input placeholder='请输入订单标题' disabled={!!(this.state.modalObj['order_status'] === 1 || 2)} />
+              <Input placeholder='请输入地址' />
             )}
           </FormItem>
-          <FormItem {...formItemLayout} label='原创度要求'>
-            {getFieldDecorator('originalLevel', {
-              initialValue: this.state.modalObj.originalLevel,
+          <FormItem {...formItemLayout} label='性别'>
+            {getFieldDecorator('sex', {
+              initialValue: this.state.modalObj.sex,
               rules: [{
-                required: true, message: '请输入原创度要求!'
-              }]
-            })(
-              <Input placeholder='请输入原创度要求' disabled={!!(this.state.modalObj['order_status'] === 1 || 2)} />
-            )}
-          </FormItem>
-          <FormItem {...formItemLayout} label='图片数量要求'>
-            {getFieldDecorator('picture', {
-              initialValue: this.state.modalObj.picture,
-              rules: [{
-                required: true, message: '请输入图片数量要求!'
-              }]
-            })(
-              <InputNumber min={1} max={10} disabled={!!(this.state.modalObj['order_status'] === 1 || 2)} />
-            )}
-          </FormItem>
-          <FormItem {...formItemLayout} label='类型'>
-            {getFieldDecorator('type', {
-              initialValue: this.state.modalObj.type,
-              rules: [{
-                required: true, message: '请选择类型!'
+                required: true, message: '请选择性别!'
               }]
             })(
               <RadioGroup>
-                <Radio value='0' disabled={!!(this.state.modalObj['order_status'] === 1 || 2)} >流量文</Radio>
-                <Radio value='1' disabled={!!(this.state.modalObj['order_status'] === 1 || 2)} >养号文</Radio>
+                <Radio value={0} >男</Radio>
+                <Radio value={1} >女</Radio>
               </RadioGroup>
             )}
           </FormItem>
-          <FormItem {...formItemLayout} label='截止交稿时间'>
-            {getFieldDecorator('endTime', {
-              initialValue: moment(this.state.modalObj.endTime, 'YYYY-MM-DD'),
+          <FormItem {...formItemLayout} label='年龄'>
+            {getFieldDecorator('age', {
+              initialValue: this.state.modalObj.age,
               rules: [{
-                required: true, message: '请选择截止交稿时间!'
+                required: true, message: '请输入年龄!'
+              }, {
+                validator: this.validateage
               }]
             })(
-              <DatePicker onChange={this.onChange} disabled={!!(this.state.modalObj['order_status'] === 1 || 2)} />
+              <Input placeholder='请输入年龄' />
             )}
           </FormItem>
-          <FormItem {...formItemLayout} label='要求'>
-            {getFieldDecorator('require', {
-              initialValue: this.state.modalObj.require,
+          <FormItem {...formItemLayout} label='职业'>
+            {getFieldDecorator('profession', {
+              initialValue: this.state.modalObj.profession,
               rules: [{
-                required: true, message: '请输入要求!'
+                required: true, message: '请输入职业!'
               }]
             })(
-              <Input placeholder='请输入要求' disabled={!!(this.state.modalObj['order_status'] === 1 || 2)} />
+              <Input placeholder='请输入职业' />
             )}
           </FormItem>
-          <FormItem {...formItemLayout} label='字数要求'>
-            {getFieldDecorator('wordCount', {
-              initialValue: this.state.modalObj.wordCount,
+          <FormItem {...formItemLayout} label='擅长领域'>
+            {getFieldDecorator('good', {
+              initialValue: this.state.modalObj.good,
               rules: [{
-                required: true, message: '请输入字数要求!'
+                required: true, message: '请输入擅长领域!'
               }]
             })(
-              <InputNumber min={1} disabled={!!(this.state.modalObj['order_status'] === 1 || 2)} />
+              <Input placeholder='请输入擅长领域' />
+            )}
+          </FormItem>
+          <FormItem {...formItemLayout} label='工作类型'>
+            {getFieldDecorator('fullTime', {
+              initialValue: this.state.modalObj.fullTime,
+              rules: [{
+                required: true, message: '请选择工作类型!'
+              }]
+            })(
+              <RadioGroup>
+                <Radio value={0} >全职</Radio>
+                <Radio value={1} >兼职</Radio>
+              </RadioGroup>
+            )}
+          </FormItem>
+          <FormItem {...formItemLayout} label='支付宝二维码图片'>
+            {getFieldDecorator('payPicture', {
+              valuePropName: 'fileList',
+              getValueFromEvent: this.normFile,
+              rules: [{
+                required: true, message: '请上传支付宝二维码图片!'
+              }]
+            })(
+              <Upload name='payPicture' action='/upload.do' listType='picture' >
+                <Button>
+                  <Icon type='upload' /> 点击上传图片
+                </Button>
+              </Upload>
             )}
           </FormItem>
           <FormItem>
             <Row>
               <Col span={6} offset={6}>
-                <Button onClick={this.handleCancel}>取消
-                </Button>
-              </Col>
-              <Col span={6} offset={2}>
-                <Button type='primary' htmlType='submit' className='login-form-button'>确定</Button>
+                <Button type='primary' size='large' htmlType='submit' className='login-form-button'>提交</Button>
               </Col>
             </Row>
           </FormItem>
@@ -237,9 +273,9 @@ export class MessageForm extends Component {
     )
   }
 }
-const AddOrder = Form.create()(MessageForm)
+const Message = Form.create()(MessageForm)
 MessageForm.propTypes = {
   form: PropTypes.object,
   onCancel: PropTypes.func
 }
-export default AddOrder
+export default Message

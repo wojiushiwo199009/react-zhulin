@@ -26,7 +26,7 @@ export default [
     component: Login
   },
   {
-    path: 'message',
+    path: '/message',
     component: Message
   },
   {
