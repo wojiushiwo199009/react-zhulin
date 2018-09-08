@@ -25,16 +25,16 @@ export class ForgetPasswordForm extends Component {
           msgid: this.state.msgid
         }
         ajax.resetPassword(params, response => {
-          if (response.code === 106) {
-            message.success(response.msg)
-            self.handleOk()
+          if (response.state.stateCode === 0) {
+            message.success(response.state.stateMessage)
+            self.handleCancel()
           } else {
             message.error('重置失败，请重试')
           }
         }, error => {
           console.log(error)
           message.error('重置失败，请重试')
-          self.handleOk()
+          self.handleCancel()
         })
       }
     })
@@ -84,10 +84,13 @@ export class ForgetPasswordForm extends Component {
       phoneNumber: this.state.phoneNumber
     }
     ajax.forgetPassword(param, response => {
-      if (response.code === 106) {
-        message.success(response.msg)
+      if (response.state.stateCode === 0) {
+        message.success('验证码发送成功，请查收')
+        this.setState({
+          msgid: response.data
+        })
       } else {
-        message.error('获取验证码失败，请重试')
+        message.error(response.state.stateMessage)
       }
     }, error => {
       console.log(error)

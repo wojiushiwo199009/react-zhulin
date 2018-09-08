@@ -1,19 +1,14 @@
 import React, { Component } from 'react'
 // import Cookies from 'js-cookie'
 import PropTypes from 'prop-types'
-import {Table, Button, Form, Icon, Input, DatePicker, Modal, Select, Popconfirm, message, Divider} from 'antd'
+import {Table, Button, Form, Input, DatePicker, Modal, Select, Popconfirm, message, Divider} from 'antd'
 import AddOrder from './AddOrder'
 import moment from 'moment'
 import ajax from '../../api'
-import {axiosUrl} from '../../api/axios'
 import './record.scss'
 const Option = Select.Option
 const FormItem = Form.Item
 const RangePicker = DatePicker.RangePicker
-const EditableContext = React.createContext()
-function hasErrors (fieldsError) {
-  return Object.keys(fieldsError).some(field => fieldsError[field])
-}
 
 export class RecordForm extends Component {
   state = {
@@ -41,6 +36,7 @@ export class RecordForm extends Component {
     },
     isEdit: false,
     statusArr: [
+      // 0：待审核 1：发布中 2：已完成 3：待点评 4：商家已打款5：取消 6：关闭 7：管理员已完成（已打款）, 8 - 审核未通过
       {
         name: '待审核',
         value: 0
@@ -50,68 +46,59 @@ export class RecordForm extends Component {
         value: 1
       },
       {
-        name: '已接单',
+        name: '已完成',
         value: 2
+      },
+      {
+        name: '待点评',
+        value: 3
+      },
+      {
+        name: '商家已打款',
+        value: 4
+      },
+      {
+        name: '取消',
+        value: 5
+      },
+      {
+        name: '关闭',
+        value: 6
+      },
+      {
+        name: '管理员已完成(已打款)',
+        value: 7
       },
       {
         name: '审核未通过',
         value: 8
-      },
-      {
-        name: '已删除',
-        value: 6
-      },
-      {
-        name: '已完成',
-        value: 4
       }
     ],
     data: [
       {
         id: '1',
         key: '1',
-        order_status: 1,
-        orderNum: 'sss',
-        eassyType: 'ssc',
-        orderTitle: '是',
-        notes: '备注',
-        originalLevel: 'ssd',
+        orderStatus: 1,
+        orderCode: '',
+        eassyType: '',
+        orderTitle: '',
+        notes: '',
+        originalLevel: '',
         picture: 2,
         type: 0,
-        require: 'ss',
+        require: '',
         wordCount: 222,
         total: 2,
-        bespokeTotal: 1,
+        appointTotal: 1,
         merchantPrice: 33,
-        state: '一',
-        startTime: '一',
-        endTime: '2018-09-02',
-        result: '0'
-      }, {
-        id: '2',
-        key: '2',
-        order_status: 8,
-        orderNum: 'Jim Green',
-        eassyType: 'ssc',
-        orderTitle: 'fou',
-        notes: '备注',
-        originalLevel: 'ssd',
-        picture: 2,
-        type: 1,
-        require: 'ss',
-        wordCount: 222,
-        total: 3,
-        bespokeTotal: 2,
-        merchantPrice: 123,
-        state: 's',
-        startTime: 's',
-        endTime: '2018-09-02',
-        result: '0'
+        createdAt: '2018',
+        endTime: '',
+        result: ''
       }],
     columns: [
       {
         title: '订单号',
-        dataIndex: 'orderNum',
+        dataIndex: 'orderCode',
         render: text => <a href='javascript:;'>{text}</a>
       }, {
         title: '订单标题',
@@ -121,56 +108,48 @@ export class RecordForm extends Component {
         dataIndex: 'total'
       }, {
         title: '已预约数量',
-        dataIndex: 'bespokeTotal'
+        dataIndex: 'appointTotal',
+        render: text => <span>{text || 'null'}</span>
       }, {
         title: '商户定价',
         dataIndex: 'merchantPrice'
       }, {
         title: '发布状态',
-        dataIndex: 'state'
+        dataIndex: 'orderStatus',
+        render: (text, record) => {
+          // 0：待审核 1：发布中 2：已完成 3：待点评 4：商家已打款5：取消 6：关闭 7：管理员已完成（已打款）, 8 - 审核未通过
+          return (
+            <div>
+              {
+                text === 0 ? <span>待审核</span> : (text === 1) ? <span>发布中</span> : (text === 2) ? <span>已完成</span> : (text === 3) ? <span>待点评</span> : (text === 4) ? <span>商家已打款</span> : (text === 5) ? <span>取消</span> : (text === 6) ? <span>关闭</span> : (text === 7) ? <span>管理员已完成(已打款)</span> : (text === 8) ? <span>审核未通过</span> : ''
+                // <a href='javascript:;' onClick={() => this.handleDetail(record)}>查看详情<Divider type='vertical' /></a>
+              }
+            </div>
+          )
+        }
       }, {
         title: '发布时间',
-        dataIndex: 'startTime'
+        dataIndex: 'createdAt',
+        render: text => <span>{moment.unix(parseInt(text.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss')}</span>
       }, {
         title: '截稿时间',
-        dataIndex: 'endTime'
+        dataIndex: 'endTime',
+        render: text => <span>{moment.unix(parseInt(text.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss')}</span>
       }, {
         title: '审核结果',
-        dataIndex: 'result'
+        dataIndex: 'result',
+        render: text => (text || 'null')
       }, {
         title: '操作',
         dataIndex: 'operate',
         render: (text, record) => {
-          // const editable = this.isEditing(record)
           return (
             <div>
               {
                 <a href='javascript:;' onClick={() => this.handleDetail(record)}>查看详情<Divider type='vertical' /></a>
               }
               {
-              //   editable ? (
-              //   <span>
-              //     <EditableContext.Consumer>
-              //       {form => (
-              //         <a
-              //           href='javascript:;'
-              //           onClick={() => this.save(form, record.key)}
-              //           style={{ marginRight: 8 }}
-              //         >
-              //           保存<Divider type='vertical' />
-              //         </a>
-              //       )}
-              //     </EditableContext.Consumer>
-              //     <Popconfirm
-              //       title='确定取消吗?'
-              //       onConfirm={() => this.cancel(record.key)}
-              //     >
-              //       <a>取消<Divider type='vertical' /></a>
-              //     </Popconfirm>
-              //   </span>
-              // ) : (
                 <a onClick={() => this.edit(record)}>编辑<Divider type='vertical' /></a>
-              // )
               }
               {
                 <Popconfirm title='确定删除吗?' onConfirm={() => this.handleDelete(record)}>
@@ -199,7 +178,7 @@ export class RecordForm extends Component {
         originalLevel: '',
         picture: 2,
         type: 0,
-        endTime: '2018-09-02',
+        endTime: '',
         require: '',
         wordCount: 2000
       }
@@ -221,11 +200,16 @@ export class RecordForm extends Component {
       endTime: this.state.endTime
     }
     ajax.getOrder(params, response => {
-      if (response.code === 106) {
-        this.setState({
+      if (response.state.stateCode === 0) {
+        response.data.content.map((item, index) => {
+          item.key = index + ''
+        })
 
+        this.setState({
+          data: response.data.content
         })
       } else {
+        message.error(response.state.stateMessage || '请稍后再试')
       }
     }, error => {
       console.log(error)
@@ -247,8 +231,8 @@ export class RecordForm extends Component {
     console.log(record)
     // const dataSource = [...this.state.data]
     ajax.deleteOrder({ id: record.id }, response => {
-      if (response.code === 106) {
-        message.success(response.msg)
+      if (response.state.stateCode === 0) {
+        message.success(response.state.stateMessage || '删除成功')
         // this.setState({ data: dataSource.filter(item => item.key !== record.key) })
         this.getOrder()
       } else {
@@ -268,7 +252,7 @@ export class RecordForm extends Component {
       visible: true,
       modalTitle: '修改订单',
       modalObj: {
-        order_status: record.order_status,
+        orderStatus: record.orderStatus,
         id: record.id,
         total: record.total,
         merchantPrice: record.merchantPrice,
@@ -293,7 +277,7 @@ export class RecordForm extends Component {
         return
       }
       ajax.updateUser(row, response => {
-        if (response.code === 106) {
+        if (response.state.stateCode === 0) {
           message.success(response.msg)
         } else {
           message.error('修改失败，请重试')
@@ -384,7 +368,7 @@ export class RecordForm extends Component {
           footer={null}
           onCancel={this.onCancel}
         >
-          <AddOrder modalObj={this.state.modalObj} onCancel={this.onCancel} isEdit={this.state.isEdit} getOrder={this.getOrder} />
+          <AddOrder modalObj={this.state.modalObj} onCancel={this.onCancel} isEdit={this.state.isEdit} getOrder={this.getOrder} modalTitle={this.state.modalTitle} />
         </Modal>
       </div>
     )

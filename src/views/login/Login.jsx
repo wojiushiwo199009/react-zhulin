@@ -71,8 +71,9 @@ export class HomePageForm extends Component {
             self.setState({
               showLoading: true
             })
-            if (response.code === 106) {
-              message.success(response.msg)
+            if (response.state.stateCode === 0) {
+              let sucMes = response.state.stateMessage || '注册成功'
+              message.success(sucMes)
               self.setState({
                 showLoading: false,
                 user: self.props.getName(values.phoneNumber),
@@ -81,7 +82,8 @@ export class HomePageForm extends Component {
                 // Cookies.set('phoneNumber', self.props.getName(values.phoneNumber).phoneNumber)
                 sessionStorage.setItem('phoneNumber', values.phoneNumber)
                 localStorage.setItem('phoneNumber', values.phoneNumber)
-                self.props.history.push('/index')
+                // self.props.history.push('/index')
+                self.getUserInfo()
               })
             } else {
               message.error('注册失败，请重新填写')
@@ -117,7 +119,8 @@ export class HomePageForm extends Component {
                 // Cookies.set('phoneNumber', self.props.getName(values.phoneNumber).phoneNumber)
                 sessionStorage.setItem('phoneNumber', values.phoneNumber)
                 localStorage.setItem('phoneNumber', values.phoneNumber)
-                self.props.history.push('/index')
+                self.getUserInfo()
+                // self.props.history.push('/index')
               })
             } else if (response.state.stateCode === 1) {
               let errMes = response.state.stateMessage || '登陆失败'
@@ -134,6 +137,29 @@ export class HomePageForm extends Component {
           })
         }
       }
+    })
+  }
+  getUserInfo=() => {
+    let self = this
+    ajax.getUserInfo({}, response => {
+      if (response.state.stateCode === 0) {
+        if (response.data.status === 1 && (response.data.type === 3 || 4)) {
+          self.props.history.push('/fillmessage')
+        } else if (response.data.status === 2) {
+          message.info('信息已提交，请耐心等待审核')
+        } else if (response.data.status === 4) {
+          message.error('个人信息审核失败，请重新提交')
+          self.props.history.push('/fillmessage')
+        } else if (response.data.status === 3) {
+          self.props.history.push('/index')
+        } else if (response.data.status === 5) {
+          message.error('该个人信息已被禁用')
+        }
+      } else {
+        message.error('添加失败，请重新填写')
+      }
+    }, error => {
+      console.log(error)
     })
   }
 
@@ -334,7 +360,6 @@ export class HomePageForm extends Component {
   }
 }
 const HomePage = Form.create()(HomePageForm)
-
 HomePageForm.propTypes = {
   form: PropTypes.object
 }

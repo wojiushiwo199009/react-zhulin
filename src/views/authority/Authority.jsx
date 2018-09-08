@@ -79,19 +79,12 @@ export default class EditableTable extends React.Component {
     super(props)
     this.state = {
       data: [{
-        id: '11',
+        id: '',
         key: '0',
-        number: '32',
-        accountNumber: '15081128239',
-        name: 'gjx',
-        code: '123'
-      }, {
-        id: '22',
-        key: '1',
-        number: '32',
-        accountNumber: '15081128239',
-        name: 'Edward King 1',
-        code: '1233'
+        number: '',
+        accountNumber: '',
+        name: '',
+        code: ''
       }],
       count: 2,
       editingKey: '',
@@ -165,7 +158,7 @@ export default class EditableTable extends React.Component {
     console.log(record)
     // const dataSource = [...this.state.data]
     ajax.deleteUser({ id: record.id }, response => {
-      if (response.code === 106) {
+      if (response.state.stateCode === 0) {
         message.success(response.msg)
         // this.setState({ data: dataSource.filter(item => item.key !== record.key) })
         this.getUserList()
@@ -197,21 +190,8 @@ export default class EditableTable extends React.Component {
         return
       }
       ajax.updateUser(row, response => {
-        if (response.code === 106) {
+        if (response.state.stateCode === 0) {
           message.success(response.msg)
-          // const newData = [...this.state.data]
-          // const index = newData.findIndex(item => key === item.key)
-          // if (index > -1) {
-          //   const item = newData[index]
-          //   newData.splice(index, 1, {
-          //     ...item,
-          //     ...row
-          //   })
-          //   this.setState({ data: newData, editingKey: '' })
-          // } else {
-          //   newData.push(row)
-          //   this.setState({ data: newData, editingKey: '' })
-          // }
           self.setState({ editingKey: '' }, () => {
             self.getUserList()
           })
@@ -234,23 +214,11 @@ export default class EditableTable extends React.Component {
   cancel = () => {
     this.setState({ editingKey: '' })
   }
-  // handleAdd = () => {
-  //   const { count, data } = this.state
-  //   const newData = {
-  //     key: count,
-  //     name: `Edward King ${count}`,
-  //     age: 32,
-  //     address: `London, Park Lane no. ${count}`
-  //   }
-  //   this.setState({
-  //     data: [...data, newData],
-  //     count: count + 1
-  //   })
-  // }
+
   onSearch=(val) => {
     console.log(val)
     ajax.getUserList({phoneNumber: val}, response => {
-      if (response.code === 106) {
+      if (response.state.stateCode === 0) {
         message.success(response.msg)
         this.setState({
           data: response.data
@@ -285,7 +253,7 @@ export default class EditableTable extends React.Component {
   }
   getUserList=() => {
     ajax.getUserList({}, response => {
-      if (response.code === 106) {
+      if (response.state.stateCode === 0) {
         this.setState({
           data: response.data
         })
@@ -335,7 +303,7 @@ export default class EditableTable extends React.Component {
           onCancel={this.handleCancel}
           footer={null}
         >
-          <AddRow handleOk={this.handleOk} onCancel={this.handleCancel} />
+          <AddRow handleOk={this.handleOk} onCancel={this.handleCancel} getUserList={this.getUserList} />
         </Modal>
         <Search
           placeholder='请输入手机号'

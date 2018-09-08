@@ -17,15 +17,18 @@ export class AddRowForm extends Component {
           code: values.code
         }
         ajax.regist(params, response => {
-          if (response.code === 106) {
+          if (response.state.stateCode === 0) {
             message.success(response.msg)
+            this.props.getUserList()
             this.props.handleOk()
           } else {
             message.error('添加失败，请重新填写')
+            this.props.getUserList()
           }
         }, error => {
           console.log(error)
           message.error('添加失败，请重新填写')
+          this.props.getUserList()
           this.props.handleOk()
         })
       }
@@ -112,6 +115,7 @@ const AddRow = Form.create()(AddRowForm)
 AddRowForm.propTypes = {
   form: PropTypes.object,
   handleOk: PropTypes.func,
+  getUserList: PropTypes.func,
   onCancel: PropTypes.func
 }
 export default AddRow

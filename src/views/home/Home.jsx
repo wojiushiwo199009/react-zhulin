@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getName } from '$redux/actions'
-import { Layout, Menu, message } from 'antd'
+import { Layout, Menu, message, Dropdown, Icon } from 'antd'
 import ajax from '../../api'
 import './Home.scss'
 const { Header, Content, Footer } = Layout
@@ -15,7 +15,8 @@ export class Home extends Component {
     collapsed: false,
     noBreadcrumb: true,
     breadcrumbItem1: '',
-    current: 'index'
+    current: 'index',
+    menuArr: ['dealt', 'index', 'record', 'authority']
   };
   toggle = () => {
     this.setState({
@@ -39,7 +40,7 @@ export class Home extends Component {
     sessionStorage.removeItem('phoneNumber')
     localStorage.removeItem('phoneNumber')
     ajax.logout({}, response => {
-      if (response.state.stateCode === 1) {
+      if (response.state.stateCode === 0) {
         message.success('退出成功')
         this.props.history.push('/login')
       } else {
@@ -55,11 +56,26 @@ export class Home extends Component {
       this.props.history.push('/login')
     }
   }
+  goMessage=() => {
+    this.props.history.push('/message')
+  }
   componentWillMount () {
     this.isLogin()
+    if (this.state.menuArr.indexOf(location.hash.split('/')[1]) > -1) {
+      this.setState({
+        current: location.hash.split('/')[1]
+      })
+    }
   }
   render () {
     console.log(this.props)
+    const menu = (
+      <Menu>
+        <Menu.Item>
+          <span onClick={this.goMessage}>个人信息</span>
+        </Menu.Item>
+      </Menu>
+    )
     return (
       <div className='bgwrap'>
         <Layout className='layout'>
@@ -80,7 +96,9 @@ export class Home extends Component {
               <Menu.Item key='authority'>权限</Menu.Item>
             </Menu>
             <div className='user'>
-              <span>欢迎{this.props.data.getname.userName}</span>
+              <Dropdown overlay={menu}>
+                <span>欢迎{this.props.data.getname.userName} <Icon type='down' /></span>
+              </Dropdown>
               <span className='logout' onClick={this.logout}>退出</span>
             </div>
           </Header>

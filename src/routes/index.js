@@ -1,6 +1,7 @@
 import Login from '../views/login/Login' // 登陆页面
 import Home from '../views/home/Home'
 import Record from '../views/record/Record'
+import FillMessage from '../views/message/FillMessage'
 import Message from '../views/message/Message'
 import DetailOrder from '../views/record/DetailOrder'
 import Dealt from '../views/dealt/Dealt'
@@ -28,6 +29,10 @@ export default [
   {
     path: '/message',
     component: Message
+  },
+  {
+    path: '/fillmessage',
+    component: FillMessage
   },
   {
     path: '/',

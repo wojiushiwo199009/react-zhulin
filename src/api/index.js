@@ -27,7 +27,7 @@ export default {
   },
   // 忘记密码中的获取验证码
   forgetPassword: (params, sucFn, errFn) => {
-    ajax('post', '/password/forget', params, sucFn, errFn)
+    ajax('post', '/user/password/forget', params, sucFn, errFn)
   },
   // 忘记密码中的重置密码
   resetPassword: (params, sucFn, errFn) => {
@@ -78,6 +78,26 @@ export default {
   // 查询用户接口
   getUserInfo: (params, sucFn, errFn) => {
     ajax('get', '/user/info', params, sucFn, errFn)
+  },
+  // 用户信息添加/更新
+  getUserAdd: (params, sucFn, errFn) => {
+    ajax('post', '/user/add_message', params, sucFn, errFn)
+  },
+  // 图片预览
+  getUserFile: (params, sucFn, errFn) => {
+    ajax('get', '/user/file', params, sucFn, errFn)
+  },
+  // 提交支付宝图片
+  getUserFileUpload: (params, sucFn, errFn) => {
+    ajax('post', '/user/file/upload', params, sucFn, errFn)
+  },
+  // 详情页表格
+  getMerchantDetail: (params, sucFn, errFn) => {
+    ajax('get', '/merchant/order/detail', params, sucFn, errFn)
+  },
+  // 详情页表格
+  getAdminMerchantDetail: (params, sucFn, errFn) => {
+    ajax('get', '/admin/merchant/order/detail', params, sucFn, errFn)
   }
 
 }
