@@ -40,7 +40,7 @@ export default {
 
   // 管理员添加
   addUser: (params, sucFn, errFn) => {
-    ajax('post', '/user/add', {}, sucFn, errFn)
+    ajax('post', '/user/add', params, sucFn, errFn)
   },
   // 管理员查询
   getUserList: (params, sucFn, errFn) => {

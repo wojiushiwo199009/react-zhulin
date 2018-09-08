@@ -34,7 +34,7 @@ export class AddOrderForm extends Component {
             this.props.onCancel()
             this.props.getOrder()
           } else {
-            message.error('添加失败，请重新填写')
+            message.error(response.state.stateMessage || '添加失败，请重新填写')
             this.props.getOrder()
           }
         }, error => {
@@ -51,7 +51,7 @@ export class AddOrderForm extends Component {
             this.props.onCancel()
             this.props.getOrder()
           } else {
-            message.error('编辑失败，请重新填写')
+            message.error(response.state.stateMessage || '编辑失败，请重新填写')
             this.props.getOrder()
           }
         }, error => {

@@ -57,8 +57,8 @@ axios.interceptors.response.use((response) => {
       console.log(error.response.data)
       console.log(error.response.status)
       console.log(error.response.headers)
-      message.error(errorMsg)
-      // location.href = '/login'
+      message.error(errorMsg || '登陆超时，请重新登陆')
+      location.href = '/'
     } else {
       message.error(errorMsg)
     }

@@ -82,7 +82,7 @@ export default class EditableTable extends React.Component {
         id: '',
         key: '0',
         number: '',
-        accountNumber: '',
+        account: '',
         name: '',
         code: ''
       }],
@@ -105,7 +105,7 @@ export default class EditableTable extends React.Component {
       },
       {
         title: '账号',
-        dataIndex: 'accountNumber'
+        dataIndex: 'account'
       },
       {
         title: '邀请码',
@@ -140,7 +140,7 @@ export default class EditableTable extends React.Component {
                   </Popconfirm>
                 </span>
               ) : (
-                <a onClick={() => this.edit(record.key)}>编辑<Divider type='vertical' /></a>
+                <a onClick={() => this.edit(record)}>编辑<Divider type='vertical' /></a>
 
               )}
               {
@@ -159,11 +159,12 @@ export default class EditableTable extends React.Component {
     // const dataSource = [...this.state.data]
     ajax.deleteUser({ id: record.id }, response => {
       if (response.state.stateCode === 0) {
-        message.success(response.msg)
-        // this.setState({ data: dataSource.filter(item => item.key !== record.key) })
+        let msg = response.state.stateMessage || '删除成功'
+        message.success(msg)
         this.getUserList()
       } else {
-        message.error('删除失败，请重试')
+        let msg = response.state.stateMessage || '删除成功'
+        message.error(msg)
         this.getUserList()
       }
     }, error => {
@@ -177,8 +178,8 @@ export default class EditableTable extends React.Component {
     return record.key === this.state.editingKey
   };
 
-  edit (key) {
-    this.setState({ editingKey: key })
+  edit (record) {
+    this.setState({editingKey: record.key, id: record.id, password: record.password})
   }
 
   save (form, key) {
@@ -189,14 +190,15 @@ export default class EditableTable extends React.Component {
       if (error) {
         return
       }
-      ajax.updateUser(row, response => {
+      let params = {...row, id: this.state.id, password: this.state.password}
+      ajax.updateUser(params, response => {
         if (response.state.stateCode === 0) {
-          message.success(response.msg)
+          message.success(response.state.stateMessage || '修改成功')
           self.setState({ editingKey: '' }, () => {
             self.getUserList()
           })
         } else {
-          message.error('修改失败，请重试')
+          message.error(response.state.stateMessage || '修改失败，请重试')
           self.setState({ editingKey: '' }, () => {
             self.getUserList()
           })
@@ -219,7 +221,6 @@ export default class EditableTable extends React.Component {
     console.log(val)
     ajax.getUserList({phoneNumber: val}, response => {
       if (response.state.stateCode === 0) {
-        message.success(response.msg)
         this.setState({
           data: response.data
         })
@@ -254,6 +255,9 @@ export default class EditableTable extends React.Component {
   getUserList=() => {
     ajax.getUserList({}, response => {
       if (response.state.stateCode === 0) {
+        response.data.map((item, index) => {
+          item.key = index + ''
+        })
         this.setState({
           data: response.data
         })

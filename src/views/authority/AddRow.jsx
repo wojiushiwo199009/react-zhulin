@@ -16,13 +16,15 @@ export class AddRowForm extends Component {
           password: values.password,
           code: values.code
         }
-        ajax.regist(params, response => {
+        ajax.addUser(params, response => {
           if (response.state.stateCode === 0) {
-            message.success(response.msg)
+            let msg = response.state.stateMessage || '添加成功'
+            message.success(msg)
             this.props.getUserList()
             this.props.handleOk()
           } else {
-            message.error('添加失败，请重新填写')
+            let msg = response.state.stateMessage || '添加失败，请重新填写'
+            message.error(msg)
             this.props.getUserList()
           }
         }, error => {

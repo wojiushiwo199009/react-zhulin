@@ -150,10 +150,12 @@ export class HomePageForm extends Component {
         } else if (response.data.status === 4) {
           message.error('个人信息审核失败，请重新提交')
           self.props.history.push('/fillmessage')
-        } else if (response.data.status === 3) {
-          self.props.history.push('/index')
+        } else if (response.data.status === 3 && (response.data.type === 3 || 4)) {
+          self.props.history.push('/record')
         } else if (response.data.status === 5) {
           message.error('该个人信息已被禁用')
+        } else if (response.data.type === 2) {
+          self.props.history.push('/record')
         }
       } else {
         message.error('添加失败，请重新填写')
@@ -204,11 +206,17 @@ export class HomePageForm extends Component {
     console.log(this.state.phoneNumberNumber)
     ajax.getCaptcha({ phoneNumber: this.state.phoneNumberNumber }, response => {
       console.log(response)
-      this.setState({
-        // msgid:response.data
-      })
+      if (response.state.stateCode === 0) {
+        this.setState({
+          msgid: response.data
+        })
+        message.success('验证码已发送，请注意查收')
+      } else {
+        message.error('验证码发送失败，请重新发送')
+      }
     }, error => {
       console.log(error)
+      message.error('验证码发送失败，请重新发送')
     })
   }
   onChange = (e) => {
