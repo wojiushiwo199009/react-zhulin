@@ -105,7 +105,6 @@ export default class Dealt extends Component {
           endTime: moment.unix(parseInt(resData.orderRecord.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'),
           wordCount: resData.orderRecord.wordCount
         })
-      } else {
       }
     }, error => {
       console.log(error)
@@ -137,6 +136,29 @@ export default class Dealt extends Component {
       console.log(error)
     })
   }
+  getWriterDetail=() => {
+    ajax.getWriterDetail({id: location.hash.split('=')[1]}, response => {
+      if (response.state.stateCode === 0) {
+        let resData = response.data
+        this.setState({
+          orderCode: resData.orderCode,
+          eassyTotal: resData.eassyTotal,
+          merchantPrice: resData.merchantPrice,
+          eassyType: resData.eassyType,
+          orderTitle: resData.orderTitle,
+          originalLevel: resData.originalLevel,
+          picture: resData.picture,
+          type: resData.type,
+          endTime: moment.unix(parseInt(resData.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'),
+          wordCount: resData.wordCount
+        })
+      } else {
+        message.error('请求失败，请稍后再试')
+      }
+    }, error => {
+      console.log(error)
+    })
+  }
   getUserInfo = () => {
     ajax.getUserInfo({}, response => {
       if (response.state.stateCode === 0) {
@@ -144,9 +166,13 @@ export default class Dealt extends Component {
           userType: response.data.type
         }, () => {
           if (this.state.userType === 3) {
+            this.getOrder()
             this.getMerchantDetail()
-          } else if (this.state.userType === 3) {
+          } else if (this.state.userType === 2) {
+            this.getOrder()
             this.getAdminMerchantDetail()
+          } else if (this.state.userType === 4) {
+            this.getWriterDetail()
           }
         })
       } else {
@@ -157,7 +183,7 @@ export default class Dealt extends Component {
     })
   }
   componentDidMount () {
-    this.getOrder()
+    this.getUserInfo()
   }
   render () {
     return (
@@ -180,9 +206,12 @@ export default class Dealt extends Component {
             <Col span={8}>截止交稿时间:{this.state.endTime}</Col>
           </Row>
         </div>
-        <div className='content'>
-          <Table columns={this.state.columns} dataSource={this.state.orderEssayRecords} pagination={false} />
-        </div>
+        {
+          this.state.userType === 4 ? '' : <div className='content'>
+            <Table columns={this.state.columns} dataSource={this.state.orderEssayRecords} pagination={false} />
+          </div>
+        }
+
       </div>
     )
   }

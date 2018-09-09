@@ -86,7 +86,7 @@ export class HomePageForm extends Component {
                 self.getUserInfo()
               })
             } else {
-              message.error('注册失败，请重新填写')
+              message.error(response.state.stateMessage || '注册失败，请重新填写')
               self.setState({
                 showLoading: false
               })
@@ -145,16 +145,16 @@ export class HomePageForm extends Component {
       if (response.state.stateCode === 0) {
         if (response.data.status === 1 && (response.data.type === 3 || 4)) {
           self.props.history.push('/fillmessage')
-        } else if (response.data.status === 2) {
+        } if (response.data.status === 2) {
           message.info('信息已提交，请耐心等待审核')
-        } else if (response.data.status === 4) {
+        } if (response.data.status === 4) {
           message.error('个人信息审核失败，请重新提交')
           self.props.history.push('/fillmessage')
-        } else if (response.data.status === 3 && (response.data.type === 3 || 4)) {
+        } if (response.data.status === 3 && (response.data.type === 3 || 4)) {
           self.props.history.push('/record')
-        } else if (response.data.status === 5) {
+        } if (response.data.status === 5) {
           message.error('该个人信息已被禁用')
-        } else if (response.data.type === 2) {
+        } if (response.data.type === 2 || 1) {
           self.props.history.push('/record')
         }
       } else {

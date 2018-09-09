@@ -62,9 +62,13 @@ export default {
   getOrder: (params, sucFn, errFn) => {
     ajax('get', '/merchant/order/list', params, sucFn, errFn)
   },
-  // 订单详情
+  // 商家和管理员订单详情
   detailOrder: (params, sucFn, errFn) => {
     ajax('get', '/merchant/order/detail', params, sucFn, errFn)
+  },
+  // 写手详情页
+  getWriterDetail: (params, sucFn, errFn) => {
+    ajax('get', '/writer/order/detail', params, sucFn, errFn)
   },
   // z删除订单
   deleteOrder: (params, sucFn, errFn) => {
@@ -98,6 +102,25 @@ export default {
   // 详情页表格
   getAdminMerchantDetail: (params, sucFn, errFn) => {
     ajax('get', '/admin/merchant/order/detail', params, sucFn, errFn)
+  },
+  // 管理员审核订单
+  getAdminMerchantOrder: (params, sucFn, errFn) => {
+    ajax('post', '/admin/merchant/order/auditing', params, sucFn, errFn)
+  },
+  // 商家分配给写手，写手预约订单---未调
+  getWriterMerchantOrder: (params, sucFn, errFn) => {
+    ajax('post', '/writer/order/appoint', params, sucFn, errFn)
+  },
+  // 订单分配
+  getAdminMerchantOrderDistribute: (params, sucFn, errFn) => {
+    ajax('post', '/admin/merchant/order/distribute', params, sucFn, errFn)
+  },
+  // 获取用户列表
+  getWriterList: (params, sucFn, errFn) => {
+    ajax('get', '/admin/merchant/order/writer_list', params, sucFn, errFn)
+  },
+  // 写手预约订单
+  getWriterOrder: (params, sucFn, errFn) => {
+    ajax('post', '/writer/order/create', params, sucFn, errFn)
   }
-
 }

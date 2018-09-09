@@ -3,6 +3,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {Table, Button, Form, Input, DatePicker, Modal, Select, Popconfirm, message, Divider} from 'antd'
 import AddOrder from './AddOrder'
+import VerifyOrder from './VerifyOrder'
+import DistributeOrder from './DistributeOrder'
+import WriterOrder from './WriterOrder'
 import moment from 'moment'
 import ajax from '../../api'
 import './record.scss'
@@ -12,6 +15,10 @@ const RangePicker = DatePicker.RangePicker
 
 export class RecordForm extends Component {
   state = {
+    userRole: '',
+    verifyVisible: false,
+    distributeVisible: false,
+    orderVisible: false,
     filteredInfo: null,
     sortedInfo: null,
     visible: false,
@@ -34,6 +41,9 @@ export class RecordForm extends Component {
       require: '',
       wordCount: 2000
     },
+    verifyObj: {},
+    distributeObj: {},
+    orderObj: {},
     isEdit: false,
     statusArr: [
       // 0：待审核 1：发布中 2：已完成 3：待点评 4：商家已打款5：取消 6：关闭 7：管理员已完成（已打款）, 8 - 审核未通过
@@ -74,7 +84,7 @@ export class RecordForm extends Component {
         value: 8
       }
     ],
-    data: [
+    businessData: [
       {
         id: '1',
         key: '1',
@@ -91,8 +101,8 @@ export class RecordForm extends Component {
         total: 2,
         appointTotal: 1,
         merchantPrice: 33,
-        createdAt: '2018',
-        endTime: '',
+        createdAt: '2018-02-03',
+        endTime: '2018-02-07',
         result: ''
       }],
     columns: [
@@ -143,20 +153,27 @@ export class RecordForm extends Component {
         title: '操作',
         dataIndex: 'operate',
         render: (text, record) => {
+          console.log(text, record, 'dsfs')
           return (
             <div>
               {
-                <a href='javascript:;' onClick={() => this.handleDetail(record)}>查看详情<Divider type='vertical' /></a>
+                this.state.userRole === 2 ? <a disabled={record.orderStatus !== 0} onClick={() => this.handleAllot(record)}>分配订单<Divider type='vertical' /></a> : ''
               }
               {
-                <a onClick={() => this.edit(record)}>编辑<Divider type='vertical' /></a>
+                this.state.userRole === 2 ? <a onClick={() => this.handleVerify(record)}>审核<Divider type='vertical' /></a> : ''
               }
               {
-                <Popconfirm title='确定删除吗?' onConfirm={() => this.handleDelete(record)}>
-                  <a href='javascript:;' className='delete'>删除</a>
-                </Popconfirm>
+                this.state.userRole === 3 ? <a onClick={() => this.edit(record)}>编辑<Divider type='vertical' /></a> : ''
               }
-
+              {
+                this.state.userRole === 3 ? <Popconfirm title='确定删除吗?' onConfirm={() => this.handleDelete(record)}><a href='javascript:;' className='delete'>删除</a></Popconfirm> : ''
+              }
+              {
+                this.state.userRole === 4 ? <a onClick={() => this.handleOrder(record)} href='javascript:;'>预约<Divider type='vertical' /></a> : ''
+              }
+              {
+                <a href='javascript:;' onClick={() => this.handleDetail(record)}>查看详情</a>
+              }
             </div>
           )
         }
@@ -204,9 +221,8 @@ export class RecordForm extends Component {
         response.data.content.map((item, index) => {
           item.key = index + ''
         })
-
         this.setState({
-          data: response.data.content
+          businessData: response.data.content
         })
       } else {
         message.error(response.state.stateMessage || '请稍后再试')
@@ -227,9 +243,33 @@ export class RecordForm extends Component {
     window.open(window.location.origin + `/#/detailOrder?id=${row.id}`)
     // this.props.history.push(`/detailOrder?id=${row.id}`)
   }
+  handleOrder=(row) => {
+    this.setState({
+      orderVisible: true,
+      orderObj: {
+        orderId: row.id
+      }
+    })
+    // let params = {
+    //   orderId: row.id,
+    //   total: row.total
+    // }
+    // ajax.getWriterOrder(params, response => {
+    //   if (response.state.stateCode === 0) {
+    //     message.success(response.state.stateMessage || '预约成功')
+    //     this.getOrder()
+    //   } else {
+    //     message.error(response.state.stateMessage || '预约失败，请重试')
+    //     this.getOrder()
+    //   }
+    // }, error => {
+    //   console.log(error)
+    //   message.error('预约失败，请重试')
+    //   this.getOrder()
+    // })
+  }
   handleDelete = (record) => {
     console.log(record)
-    // const dataSource = [...this.state.data]
     ajax.deleteOrder({ id: record.id }, response => {
       if (response.state.stateCode === 0) {
         message.success(response.state.stateMessage || '删除成功')
@@ -245,7 +285,6 @@ export class RecordForm extends Component {
       this.getOrder()
     })
   }
-
   edit (record) {
     this.setState({
       isEdit: true,
@@ -268,7 +307,18 @@ export class RecordForm extends Component {
       }
     })
   }
-
+  handleVerify = (row) => {
+    this.setState({
+      verifyVisible: true,
+      verifyObj: row
+    })
+  }
+  handleAllot=(row) => {
+    this.setState({
+      distributeObj: row,
+      distributeVisible: true
+    })
+  }
   save (form, key) {
     console.log(form, key)
     form.validateFields((error, row) => {
@@ -304,6 +354,35 @@ export class RecordForm extends Component {
       status: value
     })
   }
+  getUserInfo = () => {
+    ajax.getUserInfo({}, response => {
+      if (response.state.stateCode === 0) {
+        this.setState({
+          userRole: response.data.type
+        })
+      }
+    }, error => {
+      console.log(error)
+    })
+  }
+  verifyOnCancel= () => {
+    this.setState({
+      verifyVisible: false
+    })
+  }
+  distributeOnCancel = () => {
+    this.setState({
+      distributeVisible: false
+    })
+  }
+  orderOnCancel = () => {
+    this.setState({
+      orderVisible: false
+    })
+  }
+  componentWillMount () {
+    this.getUserInfo()
+  }
   componentDidMount () {
     this.getOrder()
   }
@@ -322,7 +401,9 @@ export class RecordForm extends Component {
     return (
       <div className='record'>
         <div className='title'>
-          <Button type='primary' onClick={this.publicOrder}>发布订单</Button>
+          {
+            this.state.userRole === 3 ? <Button type='primary' onClick={this.publicOrder}>发布订单</Button> : ''
+          }
           <Form layout='inline' onSubmit={this.handleSubmit} className='record-form'>
             <FormItem
               {...formItemLayout}
@@ -361,7 +442,7 @@ export class RecordForm extends Component {
             </FormItem>
           </Form>
         </div>
-        <Table columns={this.state.columns} dataSource={this.state.data} />
+        <Table columns={this.state.columns} dataSource={this.state.businessData} />
         <Modal
           title={this.state.modalTitle}
           visible={this.state.visible}
@@ -369,6 +450,30 @@ export class RecordForm extends Component {
           onCancel={this.onCancel}
         >
           <AddOrder modalObj={this.state.modalObj} onCancel={this.onCancel} isEdit={this.state.isEdit} getOrder={this.getOrder} modalTitle={this.state.modalTitle} />
+        </Modal>
+        <Modal
+          title='审核订单'
+          visible={this.state.verifyVisible}
+          footer={null}
+          onCancel={this.verifyOnCancel}
+        >
+          <VerifyOrder verifyObj={this.state.verifyObj} onCancel={this.verifyOnCancel} getOrder={this.getOrder} />
+        </Modal>
+        <Modal
+          title='审核分配'
+          visible={this.state.distributeVisible}
+          footer={null}
+          onCancel={this.distributeOnCancel}
+        >
+          <DistributeOrder distributeObj={this.state.distributeObj} onCancel={this.distributeOnCancel} getOrder={this.getOrder} />
+        </Modal>
+        <Modal
+          title='预约订单'
+          visible={this.state.orderVisible}
+          footer={null}
+          onCancel={this.orderOnCancel}
+        >
+          <WriterOrder orderObj={this.state.orderObj} onCancel={this.orderOnCancel} getOrder={this.getOrder} />
         </Modal>
       </div>
     )
