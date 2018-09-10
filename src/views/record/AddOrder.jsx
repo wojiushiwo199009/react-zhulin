@@ -21,7 +21,7 @@ export class AddOrderForm extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err && !this.state.isEdit) {
         // let endTime = moment(values.endTime).format('YYYY-MM-DD')
-        let params = {...values, endTime: moment(values.endTime).format('YYYY-MM-DD') || this.state.endTime}
+        let params = {...values, endTime: values.endTime ? moment(values.endTime).format('YYYY-MM-DD') : moment.unix(parseInt(this.state.verifyObj.endTime.toString().slice(0, 10))).format('YYYY-MM-DD')}
         // console.log(params)
         // let formData = new FormData()
         // for (let i in values) {
@@ -43,7 +43,7 @@ export class AddOrderForm extends Component {
           this.props.getOrder()
         })
       } else if (!err && this.state.isEdit) {
-        let params = { ...values, endTime: this.state.endTime, id: this.state.modalObj.id }
+        let params = { ...values, endTime: values.endTime ? moment(values.endTime).format('YYYY-MM-DD') : moment.unix(parseInt(this.state.verifyObj.endTime.toString().slice(0, 10))).format('YYYY-MM-DD'), id: this.state.modalObj.id }
 
         ajax.updateOrder(params, response => {
           if (response.state.stateCode === 0) {

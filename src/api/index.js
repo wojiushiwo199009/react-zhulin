@@ -95,11 +95,11 @@ export default {
   getUserFileUpload: (params, sucFn, errFn) => {
     ajax('post', '/user/file/upload', params, sucFn, errFn)
   },
-  // 详情页表格
+  // 详情页表格----------看一下
   getMerchantDetail: (params, sucFn, errFn) => {
     ajax('get', '/merchant/order/detail', params, sucFn, errFn)
   },
-  // 详情页表格
+  // 详情页表格----------看一下
   getAdminMerchantDetail: (params, sucFn, errFn) => {
     ajax('get', '/admin/merchant/order/detail', params, sucFn, errFn)
   },

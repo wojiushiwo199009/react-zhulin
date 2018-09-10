@@ -16,7 +16,6 @@ export class AddOrderForm extends Component {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log(values, moment.unix(parseInt(this.state.verifyObj.endTime.toString().slice(0, 10))).format('YYYY-MM-DD'), moment(moment.unix(parseInt(this.state.verifyObj.endTime.toString().slice(0, 10))).format('YYYY-MM-DD'), 'YYYY-MM-DD'), 'vvv')
         let params = {
           id: this.state.verifyObj.id,
           status: this.state.noPass ? 8 : 1,
