@@ -243,7 +243,7 @@ export class HomePageForm extends Component {
           this.state.showLoading
             ? <Spin size='large' />
             : <div className='login'>
-              <h2>写手平台</h2>
+              <h2>竹林平台</h2>
               <div className='login-content'>
                 <img src={leftLogo} alt='pic' className='left-logo' />
                 <div className='login-form' ref='login-form'>

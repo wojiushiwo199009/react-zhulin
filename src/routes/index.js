@@ -5,7 +5,9 @@ import FillMessage from '../views/message/FillMessage'
 import Message from '../views/message/Message'
 import DetailOrder from '../views/record/DetailOrder'
 import Dealt from '../views/dealt/Dealt'
-import Index from '../views/index/Index'
+import DealtDetail from '../views/dealt/DealtDetail'
+import Writer from '../views/writer/Writer'
+import WriterDetail from '../views/writer/WriterDetail'
 import Authority from '../views/authority/Authority'
 import { Redirect } from 'react-router-dom'
 import React from 'react'
@@ -40,7 +42,7 @@ export default [
     childRoutes: [
       {
         path: '/index',
-        component: Index
+        component: Writer
       },
       {
         path: '/record',
@@ -51,12 +53,20 @@ export default [
         component: Dealt
       },
       {
+        path: '/dealtDetail',
+        component: DealtDetail
+      },
+      {
         path: '/authority',
         component: Authority
       },
       {
         path: '/detailOrder',
         component: DetailOrder
+      },
+      {
+        path: '/writerDetailOrder',
+        component: WriterDetail
       }
     ]
   }

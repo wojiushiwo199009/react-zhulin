@@ -122,5 +122,66 @@ export default {
   // 写手预约订单
   getWriterOrder: (params, sucFn, errFn) => {
     ajax('post', '/writer/order/create', params, sucFn, errFn)
+  },
+  // 写手在我的列表中的搜索
+  SearchWriterOrder: (params, sucFn, errFn) => {
+    ajax('get', '/writer/order/appoint/list', params, sucFn, errFn)
+  },
+  // 写手取消预约
+  WriterOrderDelete: (params, sucFn, errFn) => {
+    ajax('post', '/writer/order/delete', params, sucFn, errFn)
+  },
+  // 写手确定预约
+  WriterOrderAppoint: (params, sucFn, errFn) => {
+    ajax('post', '/writer/order/appoint', params, sucFn, errFn)
+  },
+  // 写手订单详情
+  getWriterEssayList: (params, sucFn, errFn) => {
+    ajax('get', '/writer/essay/list', params, sucFn, errFn)
+  },
+  // 写手文章详情
+  getWriterEssayDetail: (params, sucFn, errFn) => {
+    ajax('get', '/writer/essay/detail', params, sucFn, errFn)
+  },
+  // 写手创建文章
+  WriterCreateEssay: (params, sucFn, errFn) => {
+    ajax('post', '/writer/essay/create', params, sucFn, errFn)
+  },
+  // 写手文章更新
+  WriterUpdateEssay: (params, sucFn, errFn) => {
+    ajax('post', '/writer/essay/update', params, sucFn, errFn)
+  },
+  // 写手文章删除
+  WriterDeleteEssay: (params, sucFn, errFn) => {
+    ajax('post', '/writer/essay/delete', params, sucFn, errFn)
+  },
+
+  // 商户与写手信息列表
+  AdminUserList: (params, sucFn, errFn) => {
+    ajax('get', '/admin/user/list', params, sucFn, errFn)
+  },
+  // 商户与写手信息详情
+  AdminUserDetail: (params, sucFn, errFn) => {
+    ajax('get', '/admin/user/detail', params, sucFn, errFn)
+  },
+  // 商户与写手信息审核
+  AdminUserAuditing: (params, sucFn, errFn) => {
+    ajax('post', '/admin/user/auditing', params, sucFn, errFn)
+  },
+  // 商户与写手信息禁用
+  AdminUserDelete: (params, sucFn, errFn) => {
+    ajax('post', '/admin/user/delete', params, sucFn, errFn)
+  },
+  // 商户与写手信息启用
+  AdminUserEnable: (params, sucFn, errFn) => {
+    ajax('post', '/admin/user/enable', params, sucFn, errFn)
+  },
+  // 下载
+  OrderEssayDownload: (params, sucFn, errFn) => {
+    ajax('get', '/order/essay/download', params, sucFn, errFn)
+  },
+  // 查看图片
+  getOrderPicList: (params, sucFn, errFn) => {
+    ajax('get', '/order/essay/picture/list', params, sucFn, errFn)
   }
 }

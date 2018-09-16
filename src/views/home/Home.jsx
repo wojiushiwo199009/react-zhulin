@@ -90,7 +90,7 @@ export class Home extends Component {
                 lineHeight: '64px',
                 float: 'left'}}
             >
-              <Menu.Item key='index'>首页</Menu.Item>
+              <Menu.Item key='index'>我的订单</Menu.Item>
               <Menu.Item key='record'>我的记录</Menu.Item>
               <Menu.Item key='dealt'>待办</Menu.Item>
               <Menu.Item key='authority'>权限</Menu.Item>

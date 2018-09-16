@@ -1,0 +1,51 @@
+.writer-detail{
+  padding: 20px;
+  .title{
+    margin-bottom: 20px;
+    h3{
+      overflow: hidden;
+    }
+    .ant-row{
+      height: 40px;
+      line-height: 40px;
+    }
+  }
+}
+.ant-carousel .slick-slide {
+  text-align: center;
+  overflow: hidden;
+}
+.ant-modal-content{
+  height: 100%;
+  .ant-modal-body{
+    height: 100%;
+  }
+}
+.ant-carousel .slick-dots{
+  bottom: -20px;
+}
+.ant-carousel .slick-dots li button{
+  background: #d3d7e0;
+}
+.ant-modal-close{
+  color: red;
+}
+.see-pic{
+  height: 100%;
+  .pic{
+    height: 360px;
+    width: 500px;
+    position: relative;
+    h4{
+      position: absolute;
+    bottom: 0;
+    color: #fff;
+    background: #1f2630;
+    left: 50;
+    left: 50%;
+    width: 100%;
+    text-align: center;
+    margin-left: -50%;
+    }
+  }
+}

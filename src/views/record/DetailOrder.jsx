@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 // import Cookies from 'js-cookie'
-import {Row, Col, Table, Divider, Button, message} from 'antd'
+import { Row, Col, Table, Divider, Button, message, Modal } from 'antd'
 import moment from 'moment'
 import ajax from '../../api'
+import { axiosUrl } from '../../api/axios'
+import SeePic from '../writer/SeePic'
 import './detailOrder.scss'
-export default class Dealt extends Component {
+export default class DetailOrder extends Component {
   state = {
+    picVisable: false,
     userType: '',
     orderCode: '1',
     eassyTotal: 1,
@@ -20,7 +23,7 @@ export default class Dealt extends Component {
     columns: [
       {
         title: '文章标题',
-        dataIndex: 'essay_title'
+        dataIndex: 'essayTitle'
       }, {
         title: '原创度',
         dataIndex: 'originalLevel'
@@ -29,7 +32,7 @@ export default class Dealt extends Component {
         dataIndex: 'pictureTotal'
       }, {
         title: '状态',
-        dataIndex: 'Status',
+        dataIndex: 'status',
         render: (text, record) => {
           return (
             <div>
@@ -46,18 +49,24 @@ export default class Dealt extends Component {
       },
       {
         title: '操作',
-        dataIndex: 'result',
+        dataIndex: 'oprate',
         render: (text, record) => {
           return (
             <div>
+              {
+                (this.state.userType === 2 || 3) ? <a href='javascript:;' onClick={() => this.Money(record)}>打款<Divider type='vertical' /></a> : ''
+              }
+              {
+                (this.state.userType === 2 || 0) ? <a href='javascript:;' onClick={() => this.verify(record)}>审核<Divider type='vertical' /></a> : ''
+              }
+              {
+                (this.state.userType === 3 || 2) ? <a href='javascript:;' onClick={() => this.SendBack(record)}>退稿<Divider type='vertical' /></a> : ''
+              }
+              {
+                (this.state.userType === 3) ? <a href='javascript:;' onClick={() => this.Received(record)}>收稿<Divider type='vertical' /></a> : ''
+              }
               <a href='javascript:;' onClick={() => this.downLoad(record)}>下载<Divider type='vertical' /></a>
-              <a onClick={() => this.seePic(record)}>查看图片<Divider type='vertical' /></a>
-              {
-                (text === 4 || 0) ? <Button onClick={() => this.verify(record)}>审核<Divider type='vertical' /></Button> : ''
-              }
-              {
-                (text === 2 || 3) ? <Button onClick={() => this.Money(record)}>打款</Button> : ''
-              }
+              <a href='javascript:;' onClick={() => this.seePic(record)}>查看图片</a>
             </div>
           )
         }
@@ -66,19 +75,34 @@ export default class Dealt extends Component {
     orderEssayRecords: [
       {
         key: '1',
-        essay_title: 'John Brown',
+        id: '',
+        essayTitle: 'John Brown',
         originalLevel: 32,
         pictureTotal: 32,
-        Status: 'New York No. 1 Lake Park',
+        status: 'New York No. 1 Lake Park',
         result: 'lll'
       }]
 
   }
-  seePic = (record) => {
+  SendBack=(record) => {
 
   }
+  Received=(record) => {
+
+  }
+  handlePicCancel = () => {
+    this.setState({
+      picVisable: false
+    })
+  }
+  seePic = (record) => {
+    this.setState({
+      orderEssayId: record.id,
+      picVisable: true
+    })
+  }
   downLoad = (record) => {
-    console.log(record)
+    window.open(axiosUrl + '/order/essay/download?fileName=' + record.eassyFile, '_self')
   }
   verify=(record) => {
 
@@ -86,14 +110,18 @@ export default class Dealt extends Component {
   Money = (record) => {
 
   }
-  getOrder=() => {
+  getMerchantDetail=() => {
     let params = {
       id: location.hash.split('=')[1]
     }
-    ajax.detailOrder(params, response => {
+    ajax.getMerchantDetail(params, response => {
       if (response.state.stateCode === 0) {
         let resData = response.data
+        resData.orderEssayRecords.map((item, index) => {
+          item.key = index + 1 + ''
+        })
         this.setState({
+          orderEssayRecords: resData.orderEssayRecords,
           orderCode: resData.orderRecord.orderCode,
           eassyTotal: resData.orderRecord.eassyTotal,
           merchantPrice: resData.orderRecord.merchantPrice,
@@ -105,17 +133,6 @@ export default class Dealt extends Component {
           endTime: moment.unix(parseInt(resData.orderRecord.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'),
           wordCount: resData.orderRecord.wordCount
         })
-      }
-    }, error => {
-      console.log(error)
-    })
-  }
-  getMerchantDetail=() => {
-    ajax.getMerchantDetail({}, response => {
-      if (response.state.stateCode === 0) {
-        this.setState({
-          orderEssayRecords: response.data
-        })
       } else {
         message.error('请求失败，请稍后再试')
       }
@@ -124,10 +141,27 @@ export default class Dealt extends Component {
     })
   }
   getAdminMerchantDetail=() => {
-    ajax.getAdminMerchantDetail({}, response => {
+    let params = {
+      id: location.hash.split('=')[1]
+    }
+    ajax.getAdminMerchantDetail(params, response => {
       if (response.state.stateCode === 0) {
+        let resData = response.data
+        resData.orderEssayRecords.map((item, index) => {
+          item.key = index + 1 + ''
+        })
         this.setState({
-          orderEssayRecords: response.data
+          orderEssayRecords: resData.orderEssayRecords,
+          orderCode: resData.orderRecord.orderCode,
+          eassyTotal: resData.orderRecord.eassyTotal,
+          merchantPrice: resData.orderRecord.merchantPrice,
+          eassyType: resData.orderRecord.eassyType,
+          orderTitle: resData.orderRecord.orderTitle,
+          originalLevel: resData.orderRecord.originalLevel,
+          picture: resData.orderRecord.picture,
+          type: resData.orderRecord.type,
+          endTime: moment.unix(parseInt(resData.orderRecord.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'),
+          wordCount: resData.orderRecord.wordCount
         })
       } else {
         message.error('请求失败，请稍后再试')
@@ -140,17 +174,21 @@ export default class Dealt extends Component {
     ajax.getWriterDetail({id: location.hash.split('=')[1]}, response => {
       if (response.state.stateCode === 0) {
         let resData = response.data
+        resData.orderEssayRecords.map((item, index) => {
+          item.key = index + 1 + ''
+        })
         this.setState({
-          orderCode: resData.orderCode,
-          eassyTotal: resData.eassyTotal,
-          merchantPrice: resData.merchantPrice,
-          eassyType: resData.eassyType,
-          orderTitle: resData.orderTitle,
-          originalLevel: resData.originalLevel,
-          picture: resData.picture,
-          type: resData.type,
-          endTime: moment.unix(parseInt(resData.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'),
-          wordCount: resData.wordCount
+          orderEssayRecords: resData.orderEssayRecords,
+          orderCode: resData.orderRecord.orderCode,
+          eassyTotal: resData.orderRecord.eassyTotal,
+          merchantPrice: resData.orderRecord.merchantPrice,
+          eassyType: resData.orderRecord.eassyType,
+          orderTitle: resData.orderRecord.orderTitle,
+          originalLevel: resData.orderRecord.originalLevel,
+          picture: resData.orderRecord.picture,
+          type: resData.orderRecord.type,
+          endTime: moment.unix(parseInt(resData.orderRecord.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'),
+          wordCount: resData.orderRecord.wordCount
         })
       } else {
         message.error('请求失败，请稍后再试')
@@ -166,10 +204,8 @@ export default class Dealt extends Component {
           userType: response.data.type
         }, () => {
           if (this.state.userType === 3) {
-            this.getOrder()
             this.getMerchantDetail()
           } else if (this.state.userType === 2) {
-            this.getOrder()
             this.getAdminMerchantDetail()
           } else if (this.state.userType === 4) {
             this.getWriterDetail()
@@ -211,7 +247,16 @@ export default class Dealt extends Component {
             <Table columns={this.state.columns} dataSource={this.state.orderEssayRecords} pagination={false} />
           </div>
         }
-
+        <Modal title={null}
+          visible={this.state.picVisable}
+          onCancel={this.handlePicCancel}
+          footer={null}
+          width={800}
+          height={460}
+          bodyStyle={{ 'background': '#1f2630', color: 'red' }}
+        >
+          <SeePic orderEssayId={this.state.orderEssayId} onCancel={this.handlePicCancel} />
+        </Modal>
       </div>
     )
   }

@@ -1,10 +1,13 @@
 import React from 'react'
+import moment from 'moment'
 import PropTypes from 'prop-types'
-import { Table, Input, InputNumber, Popconfirm, Form, Button, Modal, message, Divider } from 'antd'
-import AddRow from './AddRow'
-import Assign from './Assign'
+import {Table, Input, InputNumber, Popconfirm, Form, Button, Modal, message, Divider, Row, Col} from 'antd'
 import ajax from '../../api'
-import './authority.scss'
+import CreateEssay from './CreateEssay'
+import EditOrder from './EditOrder'
+import SeePic from './SeePic'
+import './writer.scss'
+import { axiosUrl } from '../../api/axios'
 const Search = Input.Search
 
 const FormItem = Form.Item
@@ -79,41 +82,56 @@ export default class EditableTable extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      data: [{
+      picVisable: false,
+      upDateCreate: false,
+      orderEssayId: 0,
+      orderEssayRecords: [{
         id: '',
-        key: '0',
-        number: '',
-        account: '',
-        name: '',
-        code: ''
+        key: '1',
+        essayTitle: 'John Brown',
+        eassyFile: '',
+        originalLevel: 32,
+        pictureTotal: 32,
+        status: 'New York No. 1 Lake Park',
+        result: 'lll'
       }],
       count: 2,
       editingKey: '',
       visible: false,
-      assignVisible: false,
-      userId: ''
+      editVisible: false,
+      userOrderId: ''
     }
     this.columns = [
       {
-        title: '序号',
-        dataIndex: 'number',
-        render: (text, record, index) => {
-          return index + 1
+        title: '文章标题',
+        dataIndex: 'essayTitle'
+      },
+      {
+        title: 'Word标题',
+        dataIndex: 'eassyFile'
+      },
+      {
+        title: '原创度',
+        dataIndex: 'originalLevel'
+      }, {
+        title: '图片数量',
+        dataIndex: 'pictureTotal'
+      }, {
+        title: '状态',
+        dataIndex: 'status',
+        render: (text, record) => {
+          return (
+            <div>
+              {
+                text === 0 ? <span>待管理员审核</span> : (text === 1) ? <span>商家退稿</span> : (text === 2) ? <span>收稿成功</span> : (text === 3) ? <span>商家已打款</span> : (text === 4) ? <span>待商家审核</span> : (text === 5) ? <span>管理员退稿</span> : (text === 6) ? <span>管理员已打款</span> : ''
+              }
+            </div>
+          )
         }
       },
       {
-        title: '姓名',
-        dataIndex: 'name',
-        editable: true
-      },
-      {
-        title: '账号',
-        dataIndex: 'account'
-      },
-      {
-        title: '邀请码',
-        dataIndex: 'code',
-        editable: true
+        title: '审核结果',
+        dataIndex: 'result'
       },
       {
         title: '操作',
@@ -151,45 +169,54 @@ export default class EditableTable extends React.Component {
                   <a href='javascript:;' className='delete'>删除<Divider type='vertical' /></a>
                 </Popconfirm>
               }
-              <a onClick={() => this.assign(record)}>分派</a>
+              {
+                <a href='javascript:;' onClick={() => this.downLoad(record)}>下载<Divider type='vertical' /></a>
+              }
+              {
+                <a href='javascript:;' onClick={() => this.seePic(record)}>查看图片</a>
+              }
             </div>
           )
         }
       }
     ]
   }
-  assign=(record) => {
-    this.setState({
-      assignVisible: true,
-      userId: record.id
-    })
+
+  downLoad = (record) => {
+    window.open(axiosUrl + '/order/essay/download?fileName=' + record.eassyFile, '_self')
   }
+
   handleDelete = (record) => {
     console.log(record)
-    // const dataSource = [...this.state.data]
-    ajax.deleteUser({ id: record.id }, response => {
+    ajax.WriterDeleteEssay({ essayOrderId: record.id }, response => {
       if (response.state.stateCode === 0) {
         let msg = response.state.stateMessage || '删除成功'
         message.success(msg)
-        this.getUserList()
+        this.getWriterEssayList()
       } else {
-        let msg = response.state.stateMessage || '删除成功'
+        let msg = response.state.stateMessage || '删除失败，请重试'
         message.error(msg)
-        this.getUserList()
+        this.getWriterEssayList()
       }
     }, error => {
       console.log(error)
       message.error('删除失败，请重试')
-      this.getUserList()
+      this.getWriterEssayList()
     })
   }
-
+  seePic = (record) => {
+    console.log(record)
+    this.setState({
+      orderEssayId: record.id,
+      picVisable: true
+    })
+  }
   isEditing = (record) => {
     return record.key === this.state.editingKey
   };
 
   edit (record) {
-    this.setState({editingKey: record.key, id: record.id, password: record.password})
+    this.setState({editVisible: true, essayOrderId: record.id, filename: record.eassyFile, essayTitle: record.essayTitle})
   }
 
   save (form, key) {
@@ -200,24 +227,25 @@ export default class EditableTable extends React.Component {
       if (error) {
         return
       }
-      let params = {...row, id: this.state.id, password: this.state.password}
-      ajax.updateUser(params, response => {
+      let params = { essayOrderId: this.state.essayOrderId, filename: row.eassyFile, essayTitle: row.essayTitle }
+      console.log(params, 'ppp')
+      ajax.WriterUpdateEssay(params, response => {
         if (response.state.stateCode === 0) {
           message.success(response.state.stateMessage || '修改成功')
           self.setState({ editingKey: '' }, () => {
-            self.getUserList()
+            this.getWriterEssayList()
           })
         } else {
           message.error(response.state.stateMessage || '修改失败，请重试')
           self.setState({ editingKey: '' }, () => {
-            self.getUserList()
+            this.getWriterEssayList()
           })
         }
       }, error => {
         console.log(error)
         message.error('修改失败，请重试')
         self.setState({ editingKey: '' }, () => {
-          self.getUserList()
+          this.getWriterEssayList()
         })
       })
     })
@@ -227,24 +255,10 @@ export default class EditableTable extends React.Component {
     this.setState({ editingKey: '' })
   }
 
-  onSearch=(val) => {
-    console.log(val)
-    ajax.getUserList({phoneNumber: val}, response => {
-      if (response.state.stateCode === 0) {
-        this.setState({
-          data: response.data
-        })
-      } else {
-        message.error('查询失败，请重试')
-      }
-    }, error => {
-      console.log(error)
-      message.error('查询失败，请重试')
-    })
-  }
   showModal = () => {
     this.setState({
-      visible: true
+      visible: true,
+      upDateCreate: !this.state.upDateCreate
     })
   }
   handleOk = () => {
@@ -262,19 +276,26 @@ export default class EditableTable extends React.Component {
       visible: false
     })
   }
-  handleAssignCancel=() => {
-    this.setState({
-      assignVisible: false
-    })
-  }
-  getUserList=() => {
-    ajax.getUserList({}, response => {
+  getWriterEssayList = () => {
+    ajax.getWriterEssayList({userOrderId: location.hash.split('=')[1]}, response => {
       if (response.state.stateCode === 0) {
-        response.data.map((item, index) => {
+        let resData = response.data.orderRecord
+        response.data.orderEssayRecords.map((item, index) => {
           item.key = index + ''
         })
         this.setState({
-          data: response.data
+          orderCode: resData.orderCode,
+          eassyTotal: resData.eassyTotal,
+          merchantPrice: resData.merchantPrice,
+          eassyType: resData.eassyType,
+          orderTitle: resData.orderTitle,
+          originalLevel: resData.originalLevel,
+          picture: resData.picture,
+          type: resData.type,
+          endTime: moment.unix(parseInt(resData.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'),
+          wordCount: resData.wordCount,
+          userOrderId: location.hash.split('=')[1],
+          data: response.data.orderEssayRecords
         })
       } else {
         message.error('查询失败，请重试')
@@ -284,8 +305,18 @@ export default class EditableTable extends React.Component {
       message.error('查询失败，请重试')
     })
   }
+  handleEditCancel=() => {
+    this.setState({
+      editVisible: false
+    })
+  }
+  handlePicCancel = () => {
+    this.setState({
+      picVisable: false
+    })
+  }
   componentDidMount () {
-    this.getUserList()
+    this.getWriterEssayList()
   }
   render () {
     const { visible } = this.state
@@ -313,23 +344,27 @@ export default class EditableTable extends React.Component {
     })
 
     return (
-      <div className='authority'>
-        <Button onClick={this.showModal} type='primary' style={{ marginBottom: 16 }}>
-          添加管理员
-        </Button>
-        <Modal title='添加管理员'
-          visible={visible}
-          onCancel={this.handleCancel}
-          footer={null}
-        >
-          <AddRow handleOk={this.handleOk} onCancel={this.handleCancel} getUserList={this.getUserList} />
-        </Modal>
-        <Search
-          placeholder='请输入手机号'
-          onSearch={this.onSearch}
-          enterButton
-          style={{ width: 240, float: 'right' }}
-        />
+      <div className='writer-detail'>
+        <div className='title'>
+          <h3>订单号:{this.state.orderCode}<Button style={{float: 'right'}} onClick={this.showModal} type='primary'>
+            创建文章
+          </Button></h3>
+          <Row>
+            <Col span={8}>订单标题:{this.state.orderTitle}</Col>
+            <Col span={8}>商户定价:{this.state.merchantPrice}</Col>
+            <Col span={8}>文章领域:{this.state.eassyType}</Col>
+          </Row>
+          <Row>
+            <Col span={8}>文章数量:{this.state.eassyTotal}</Col>
+            <Col span={8}>原创度:{this.state.originalLevel}</Col>
+            <Col span={8}>图片数量要求:{this.state.picture}</Col>
+          </Row>
+          <Row>
+            <Col span={8}>字数要求:{this.state.wordCount}</Col>
+            <Col span={8}>类型:{this.state.type}</Col>
+            <Col span={8}>截止交稿时间:{this.state.endTime}</Col>
+          </Row>
+        </div>
         <Table
           components={components}
           bordered
@@ -337,12 +372,29 @@ export default class EditableTable extends React.Component {
           columns={columns}
           rowClassName='editable-row'
         />
-        <Modal title='分派'
-          visible={this.state.assignVisible}
-          onCancel={this.handleAssignCancel}
+        <Modal title='创建文章'
+          visible={visible}
+          onCancel={this.handleCancel}
           footer={null}
         >
-          <Assign userId={this.state.userId} handleOk={this.handleOk} onCancel={this.handleCancel} getUserList={this.getUserList} />
+          <CreateEssay getWriterEssayList={this.getWriterEssayList} userOrderId={this.state.userOrderId} onCancel={this.handleCancel} upDateCreate={this.state.upDateCreate} />
+        </Modal>
+        <Modal title='编辑'
+          visible={this.state.editVisible}
+          onCancel={this.handleEditCancel}
+          footer={null}
+        >
+          <EditOrder getWriterEssayList={this.getWriterEssayList} essayTitle={this.state.essayTitle} filename={this.state.filename} essayOrderId={this.state.essayOrderId} onCancel={this.handleEditCancel} />
+        </Modal>
+        <Modal title={null}
+          visible={this.state.picVisable}
+          onCancel={this.handlePicCancel}
+          footer={null}
+          width={800}
+          height={460}
+          bodyStyle={{'background': '#1f2630', color: 'red'}}
+        >
+          <SeePic orderEssayId={this.state.orderEssayId} onCancel={this.handlePicCancel} />
         </Modal>
       </div>
     )

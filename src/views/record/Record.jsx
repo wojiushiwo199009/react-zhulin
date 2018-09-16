@@ -46,7 +46,7 @@ export class RecordForm extends Component {
     orderObj: {},
     isEdit: false,
     statusArr: [
-      // 0：待审核 1：发布中 2：已完成 3：待点评 4：商家已打款5：取消 6：关闭 7：管理员已完成（已打款）, 8 - 审核未通过
+      // 0：待审核 1：发布中 2：已完成 3：待点评 4：商家已打款5：取消 6.已截稿 7：管理员已完成（已打款）, 8 - 审核未通过
       {
         name: '待审核',
         value: 0
@@ -72,7 +72,7 @@ export class RecordForm extends Component {
         value: 5
       },
       {
-        name: '关闭',
+        name: '已截稿',
         value: 6
       },
       {
@@ -101,8 +101,10 @@ export class RecordForm extends Component {
         total: 2,
         appointTotal: 1,
         merchantPrice: 33,
+        adminPrice: 33,
         createdAt: '2018-02-03',
         endTime: '2018-02-07',
+        adminEndTime: '2018-02-07',
         result: ''
       }],
     columns: [
@@ -121,17 +123,17 @@ export class RecordForm extends Component {
         dataIndex: 'appointTotal',
         render: text => <span>{text || 'null'}</span>
       }, {
-        title: '商户定价',
-        dataIndex: 'merchantPrice'
+        title: '我的定价',
+        dataIndex: 'adminPrice'
       }, {
         title: '发布状态',
         dataIndex: 'orderStatus',
         render: (text, record) => {
-          // 0：待审核 1：发布中 2：已完成 3：待点评 4：商家已打款5：取消 6：关闭 7：管理员已完成（已打款）, 8 - 审核未通过
+          // 0：待审核 1：发布中 2：已完成 3：待点评 4：商家已打款5：取消 6：已截稿 7：管理员已完成（已打款）, 8 - 审核未通过
           return (
             <div>
               {
-                text === 0 ? <span>待审核</span> : (text === 1) ? <span>发布中</span> : (text === 2) ? <span>已完成</span> : (text === 3) ? <span>待点评</span> : (text === 4) ? <span>商家已打款</span> : (text === 5) ? <span>取消</span> : (text === 6) ? <span>关闭</span> : (text === 7) ? <span>管理员已完成(已打款)</span> : (text === 8) ? <span>审核未通过</span> : ''
+                text === 0 ? <span>待审核</span> : (text === 1) ? <span>发布中</span> : (text === 2) ? <span>已完成</span> : (text === 3) ? <span>待点评</span> : (text === 4) ? <span>商家已打款</span> : (text === 5) ? <span>取消</span> : (text === 6) ? <span>已截稿</span> : (text === 7) ? <span>管理员已完成(已打款)</span> : (text === 8) ? <span>审核未通过</span> : ''
                 // <a href='javascript:;' onClick={() => this.handleDetail(record)}>查看详情<Divider type='vertical' /></a>
               }
             </div>
@@ -141,9 +143,10 @@ export class RecordForm extends Component {
         title: '发布时间',
         dataIndex: 'createdAt',
         render: text => <span>{moment.unix(parseInt(text.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss')}</span>
-      }, {
-        title: '截稿时间',
-        dataIndex: 'endTime',
+      },
+      {
+        title: '我的截稿时间',
+        dataIndex: 'adminEndTime',
         render: text => <span>{moment.unix(parseInt(text.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss')}</span>
       }, {
         title: '审核结果',
@@ -166,14 +169,21 @@ export class RecordForm extends Component {
                 this.state.userRole === 3 ? <a onClick={() => this.edit(record)}>编辑<Divider type='vertical' /></a> : ''
               }
               {
-                this.state.userRole === 3 ? <Popconfirm title='确定删除吗?' onConfirm={() => this.handleDelete(record)}><a href='javascript:;' className='delete'>删除</a></Popconfirm> : ''
+                this.state.userRole === 3 ? <Popconfirm title='确定删除吗?' onConfirm={() => this.handleDelete(record)}><a href='javascript:;' className='delete'>删除<Divider type='vertical' /></a></Popconfirm> : ''
               }
               {
                 this.state.userRole === 4 ? <a onClick={() => this.handleOrder(record)} href='javascript:;'>预约<Divider type='vertical' /></a> : ''
               }
               {
+                this.state.userRole === 3 && record.orderStatus === 6 ? <a onClick={() => this.handleMoney(record)} href='javascript:;'>打款<Divider type='vertical' /></a> : ''
+              }
+              {
+                this.state.userRole === 2 && record.orderStatus === 4 ? <a onClick={() => this.handleConfirmMoney(record)} href='javascript:;'>确认打款<Divider type='vertical' /></a> : ''
+              }
+              {
                 <a href='javascript:;' onClick={() => this.handleDetail(record)}>查看详情</a>
               }
+
             </div>
           )
         }
@@ -268,6 +278,12 @@ export class RecordForm extends Component {
     //   this.getOrder()
     // })
   }
+  handleConfirmMoney = (record) => {
+
+  }
+  handleMoney = (record) => {
+
+  }
   handleDelete = (record) => {
     console.log(record)
     ajax.deleteOrder({ id: record.id }, response => {
@@ -359,6 +375,18 @@ export class RecordForm extends Component {
       if (response.state.stateCode === 0) {
         this.setState({
           userRole: response.data.type
+        }, () => {
+          if (this.state.userRole === 2) {
+            this.state.columns.splice(4, 0, {
+              title: '商家定价',
+              dataIndex: 'merchantPrice'
+            })
+            this.state.columns.splice(8, 0, {
+              title: '商家的截稿时间',
+              dataIndex: 'endTime',
+              render: text => <span>{moment.unix(parseInt(text.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss')}</span>
+            })
+          }
         })
       }
     }, error => {
@@ -420,7 +448,7 @@ export class RecordForm extends Component {
               {getFieldDecorator('status', {
                 initialValue: this.state.status
               })(
-                <Select placeholder='请选择订单状态' style={{ width: 120 }} onChange={this.selectChange}>
+                <Select placeholder='请选择订单状态' style={{ width: 180 }} onChange={this.selectChange}>
                   {
                     this.state.statusArr.map((item, index) => {
                       return <Option key={index} value={item.value}>{item.name}</Option>
