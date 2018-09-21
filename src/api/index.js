@@ -183,5 +183,30 @@ export default {
   // 查看图片
   getOrderPicList: (params, sucFn, errFn) => {
     ajax('get', '/order/essay/picture/list', params, sucFn, errFn)
+  },
+
+  // 显示打款金额
+  getMoneyList: (params, sucFn, errFn) => {
+    ajax('get', '/merchant/finance/make_money/info', params, sucFn, errFn)
+  },
+  // 商家确定打款
+  getMakeMoney: (params, sucFn, errFn) => {
+    ajax('post', '/merchant/finance/make_money', params, sucFn, errFn)
+  },
+  // 管理员缺商家打款
+  adminFinance: (params, sucFn, errFn) => {
+    ajax('post', '/admin/finance/determine', params, sucFn, errFn)
+  },
+  // 余额与交易信息查询
+  financeRecord: (params, sucFn, errFn) => {
+    ajax('get', '/finance/record/list', params, sucFn, errFn)
+  },
+  // 创建申请交易
+  WriterFinaceCreate: (params, sucFn, errFn) => {
+    ajax('post', '/writer/finance/create', params, sucFn, errFn)
+  },
+  // 余额与交易信息查询
+  adminFinmceMakemoney: (params, sucFn, errFn) => {
+    ajax('post', '/admin/finance/make_money/writer', params, sucFn, errFn)
   }
 }

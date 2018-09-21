@@ -30,6 +30,10 @@ export class WriterForm extends Component {
         value: 1
       },
       {
+        name: '已截稿',
+        value: 6
+      },
+      {
         name: '已完成',
         value: 2
       }
@@ -48,7 +52,6 @@ export class WriterForm extends Component {
         adminEndTime: '2018-02-07'
       }],
     columns: [
-
       {
         title: '订单号',
         dataIndex: 'orderCode',
@@ -104,10 +107,14 @@ export class WriterForm extends Component {
           console.log(text, record, 'dsfs')
           return (
             <div>
-              <a href='javascript:;' onClick={() => this.handleDelete(record)} className='delete'>取消预约<Divider type='vertical' /></a>
-              <Popconfirm title='确定预约吗?' onConfirm={() => this.handleOrder(record)}>
-                <a href='javascript:;'>预约<Divider type='vertical' /></a>
-              </Popconfirm>
+              {
+                record.orderStatus === 0 ? <Popconfirm title='确定预约吗?' onConfirm={() => this.handleOrder(record)}>
+                  <a href='javascript:;'>预约<Divider type='vertical' /></a>
+                </Popconfirm> : ''
+              }
+              {
+                record.orderStatus === 1 ? <a href='javascript:;' onClick={() => this.handleDelete(record)} className='delete'>取消预约<Divider type='vertical' /></a> : ''
+              }
               <a href='javascript:;' onClick={() => this.handleDetail(record)}>查看详情</a>
             </div>
           )

@@ -9,6 +9,8 @@ import DealtDetail from '../views/dealt/DealtDetail'
 import Writer from '../views/writer/Writer'
 import WriterDetail from '../views/writer/WriterDetail'
 import Authority from '../views/authority/Authority'
+import Accounting from '../views/accounting/Accounting'
+import Cash from '../views/cash/Cash'
 import { Redirect } from 'react-router-dom'
 import React from 'react'
 
@@ -50,7 +52,14 @@ export default [
       },
       {
         path: '/dealt',
-        component: Dealt
+        component: Dealt,
+        childRoutes: [
+          {
+
+            path: '/dealt/dealtDetail',
+            component: DealtDetail
+          }
+        ]
       },
       {
         path: '/dealtDetail',
@@ -67,6 +76,14 @@ export default [
       {
         path: '/writerDetailOrder',
         component: WriterDetail
+      },
+      {
+        path: '/account',
+        component: Accounting
+      },
+      {
+        path: '/cash',
+        component: Cash
       }
     ]
   }

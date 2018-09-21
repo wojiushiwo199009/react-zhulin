@@ -16,7 +16,7 @@ export class Home extends Component {
     noBreadcrumb: true,
     breadcrumbItem1: '',
     current: 'index',
-    menuArr: ['dealt', 'index', 'record', 'authority']
+    menuArr: ['dealt', 'index', 'record', 'authority', 'account', 'cash']
   };
   toggle = () => {
     this.setState({
@@ -93,6 +93,8 @@ export class Home extends Component {
               <Menu.Item key='index'>我的订单</Menu.Item>
               <Menu.Item key='record'>我的记录</Menu.Item>
               <Menu.Item key='dealt'>待办</Menu.Item>
+              <Menu.Item key='account'>财务对账</Menu.Item>
+              <Menu.Item key='cash'>提现</Menu.Item>
               <Menu.Item key='authority'>权限</Menu.Item>
             </Menu>
             <div className='user'>

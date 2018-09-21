@@ -129,7 +129,7 @@ export default class DetailOrder extends Component {
           orderTitle: resData.orderRecord.orderTitle,
           originalLevel: resData.orderRecord.originalLevel,
           picture: resData.orderRecord.picture,
-          type: resData.orderRecord.type,
+          type: resData.orderRecord.type === 1 ? '养号文' : '流量文',
           endTime: moment.unix(parseInt(resData.orderRecord.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'),
           wordCount: resData.orderRecord.wordCount
         })
@@ -159,7 +159,7 @@ export default class DetailOrder extends Component {
           orderTitle: resData.orderRecord.orderTitle,
           originalLevel: resData.orderRecord.originalLevel,
           picture: resData.orderRecord.picture,
-          type: resData.orderRecord.type,
+          type: resData.orderRecord.type === 1 ? '养号文' : '流量文',
           endTime: moment.unix(parseInt(resData.orderRecord.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'),
           wordCount: resData.orderRecord.wordCount
         })
@@ -174,21 +174,18 @@ export default class DetailOrder extends Component {
     ajax.getWriterDetail({id: location.hash.split('=')[1]}, response => {
       if (response.state.stateCode === 0) {
         let resData = response.data
-        resData.orderEssayRecords.map((item, index) => {
-          item.key = index + 1 + ''
-        })
         this.setState({
           orderEssayRecords: resData.orderEssayRecords,
-          orderCode: resData.orderRecord.orderCode,
-          eassyTotal: resData.orderRecord.eassyTotal,
-          merchantPrice: resData.orderRecord.merchantPrice,
-          eassyType: resData.orderRecord.eassyType,
-          orderTitle: resData.orderRecord.orderTitle,
-          originalLevel: resData.orderRecord.originalLevel,
-          picture: resData.orderRecord.picture,
-          type: resData.orderRecord.type,
-          endTime: moment.unix(parseInt(resData.orderRecord.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'),
-          wordCount: resData.orderRecord.wordCount
+          orderCode: resData.orderCode,
+          eassyTotal: resData.eassyTotal,
+          merchantPrice: resData.merchantPrice,
+          eassyType: resData.eassyType,
+          orderTitle: resData.orderTitle,
+          originalLevel: resData.originalLevel,
+          picture: resData.picture,
+          type: resData.type === 1 ? '养号文' : '流量文',
+          endTime: moment.unix(parseInt(resData.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'),
+          wordCount: resData.wordCount
         })
       } else {
         message.error('请求失败，请稍后再试')
@@ -238,7 +235,7 @@ export default class DetailOrder extends Component {
           </Row>
           <Row>
             <Col span={8}>字数要求:{this.state.wordCount}</Col>
-            <Col span={8}>类型:{this.state.type}</Col>
+            <Col span={8}>文章类型:{this.state.type}</Col>
             <Col span={8}>截止交稿时间:{this.state.endTime}</Col>
           </Row>
         </div>

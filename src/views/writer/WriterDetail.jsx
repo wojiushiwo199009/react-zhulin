@@ -291,7 +291,7 @@ export default class EditableTable extends React.Component {
           orderTitle: resData.orderTitle,
           originalLevel: resData.originalLevel,
           picture: resData.picture,
-          type: resData.type,
+          type: resData.type === 1 ? '养号文' : '流量文',
           endTime: moment.unix(parseInt(resData.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'),
           wordCount: resData.wordCount,
           userOrderId: location.hash.split('=')[1],
@@ -361,7 +361,7 @@ export default class EditableTable extends React.Component {
           </Row>
           <Row>
             <Col span={8}>字数要求:{this.state.wordCount}</Col>
-            <Col span={8}>类型:{this.state.type}</Col>
+            <Col span={8}>文章类型:{this.state.type}</Col>
             <Col span={8}>截止交稿时间:{this.state.endTime}</Col>
           </Row>
         </div>

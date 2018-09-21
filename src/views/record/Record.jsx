@@ -6,6 +6,7 @@ import AddOrder from './AddOrder'
 import VerifyOrder from './VerifyOrder'
 import DistributeOrder from './DistributeOrder'
 import WriterOrder from './WriterOrder'
+import Money from './Money'
 import moment from 'moment'
 import ajax from '../../api'
 import './record.scss'
@@ -16,9 +17,11 @@ const RangePicker = DatePicker.RangePicker
 export class RecordForm extends Component {
   state = {
     userRole: '',
+    money: '',
     verifyVisible: false,
     distributeVisible: false,
     orderVisible: false,
+    MoneyVisible: false,
     filteredInfo: null,
     sortedInfo: null,
     visible: false,
@@ -116,7 +119,7 @@ export class RecordForm extends Component {
         title: '订单标题',
         dataIndex: 'orderTitle'
       }, {
-        title: '文章数量',
+        title: '可预约数量',
         dataIndex: 'total'
       }, {
         title: '已预约数量',
@@ -157,6 +160,7 @@ export class RecordForm extends Component {
         dataIndex: 'operate',
         render: (text, record) => {
           console.log(text, record, 'dsfs')
+          console.log(this.state.userRole, record.orderStatus, 'ssssss')
           return (
             <div>
               {
@@ -166,19 +170,19 @@ export class RecordForm extends Component {
                 this.state.userRole === 2 ? <a onClick={() => this.handleVerify(record)}>审核<Divider type='vertical' /></a> : ''
               }
               {
-                this.state.userRole === 3 ? <a onClick={() => this.edit(record)}>编辑<Divider type='vertical' /></a> : ''
+                (this.state.userRole === 3 && (record.orderStatus === 0 || record.orderStatus === 8)) ? <a onClick={() => this.edit(record)}>编辑<Divider type='vertical' /></a> : ''
               }
               {
-                this.state.userRole === 3 ? <Popconfirm title='确定删除吗?' onConfirm={() => this.handleDelete(record)}><a href='javascript:;' className='delete'>删除<Divider type='vertical' /></a></Popconfirm> : ''
+                (this.state.userRole === 3 && (record.orderStatus === 0 || record.orderStatus === 8)) ? <Popconfirm title='确定删除吗?' onConfirm={() => this.handleDelete(record)}><a href='javascript:;' className='delete'>删除<Divider type='vertical' /></a></Popconfirm> : ''
               }
               {
-                this.state.userRole === 4 ? <a onClick={() => this.handleOrder(record)} href='javascript:;'>预约<Divider type='vertical' /></a> : ''
+                (this.state.userRole === 4 && record.orderStatus === 1) ? <a onClick={() => this.handleOrder(record)} href='javascript:;'>预约<Divider type='vertical' /></a> : ''
               }
               {
-                this.state.userRole === 3 && record.orderStatus === 6 ? <a onClick={() => this.handleMoney(record)} href='javascript:;'>打款<Divider type='vertical' /></a> : ''
+                (this.state.userRole === 3 && record.orderStatus === 6) ? <a onClick={() => this.handleMoney(record)} href='javascript:;'>打款<Divider type='vertical' /></a> : ''
               }
               {
-                this.state.userRole === 2 && record.orderStatus === 4 ? <a onClick={() => this.handleConfirmMoney(record)} href='javascript:;'>确认打款<Divider type='vertical' /></a> : ''
+                (this.state.userRole === 2 && record.orderStatus === 4) ? <Popconfirm title='确定打款吗?' onConfirm={() => this.handleConfirmMoney(record)}><a href='javascript:;' className='delete'>确认商家打款<Divider type='vertical' /></a></Popconfirm> : ''
               }
               {
                 <a href='javascript:;' onClick={() => this.handleDetail(record)}>查看详情</a>
@@ -279,10 +283,38 @@ export class RecordForm extends Component {
     // })
   }
   handleConfirmMoney = (record) => {
-
+    this.getMakeMoney(record.id)
+  }
+  getMakeMoney=(record) => {
+    ajax.getMakeMoney({ orderId: record }, response => {
+      if (response.state.stateCode === 0) {
+        message.success(response.state.stateMessage || '打款成功')
+      } else {
+        message.error(response.state.stateMessage || '打款失败，请稍后再试')
+      }
+    }, error => {
+      console.log(error)
+      message.error('打款失败，请稍后再试')
+    })
   }
   handleMoney = (record) => {
-
+    this.setState({
+      MoneyVisible: true,
+      moneyOrderId: record.id
+    }, () => {
+      this.getMoneyList(record.id)
+    })
+  }
+  getMoneyList=(record) => {
+    ajax.getMoneyList({ orderId: record }, response => {
+      if (response.state.stateCode === 0) {
+        this.setState({
+          money: response.data
+        })
+      }
+    }, error => {
+      console.log(error)
+    })
   }
   handleDelete = (record) => {
     console.log(record)
@@ -360,6 +392,11 @@ export class RecordForm extends Component {
       visible: false
     })
   }
+  moneyOnCancel=() => {
+    this.setState({
+      MoneyVisible: false
+    })
+  }
   InpChange=(e) => {
     this.setState({
       orderCode: e.target.value
@@ -385,6 +422,56 @@ export class RecordForm extends Component {
               title: '商家的截稿时间',
               dataIndex: 'endTime',
               render: text => <span>{moment.unix(parseInt(text.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss')}</span>
+            })
+          } else if (this.state.userRole === 3) {
+            this.setState({
+              statusArr: [
+                {
+                  name: '待审核',
+                  value: 0
+                },
+                {
+                  name: '发布中',
+                  value: 1
+                },
+                {
+                  name: '已完成',
+                  value: 2
+                },
+                {
+                  name: '已截稿',
+                  value: 6
+                },
+                {
+                  name: '审核未通过',
+                  value: 8
+                }
+              ]
+            })
+          } else if (this.state.userRole === 4) {
+            this.state.columns.map((item, index) => {
+              if (item.dataIndex === 'adminPrice') {
+                item.title = '定价'
+              }
+              if (item.dataIndex === 'adminEndTime') {
+                item.title = '截稿时间'
+              }
+            })
+            this.setState({
+              statusArr: [
+                {
+                  name: '发布中',
+                  value: 1
+                },
+                {
+                  name: '已完成',
+                  value: 2
+                },
+                {
+                  name: '已截稿',
+                  value: 6
+                }
+              ]
             })
           }
         })
@@ -502,6 +589,14 @@ export class RecordForm extends Component {
           onCancel={this.orderOnCancel}
         >
           <WriterOrder orderObj={this.state.orderObj} onCancel={this.orderOnCancel} getOrder={this.getOrder} />
+        </Modal>
+        <Modal
+          title='打款'
+          visible={this.state.MoneyVisible}
+          footer={null}
+          onCancel={this.moneyOnCancel}
+        >
+          <Money moneyOrderId={this.state.moneyOrderId} onCancel={this.moneyOnCancel} getOrder={this.getOrder} money={this.state.money} />
         </Modal>
       </div>
     )
