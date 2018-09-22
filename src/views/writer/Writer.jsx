@@ -254,9 +254,9 @@ export class WriterForm extends Component {
     return (
       <div className='record'>
         <div className='title'>
-          {
+          {/* {
             this.state.userRole === 3 ? <Button type='primary' onClick={this.publicOrder}>发布订单</Button> : ''
-          }
+          } */}
           <Form layout='inline' onSubmit={this.handleSubmit} className='record-form'>
             <FormItem
               {...formItemLayout}

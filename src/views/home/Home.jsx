@@ -105,12 +105,25 @@ export class Home extends Component {
                 lineHeight: '64px',
                 float: 'left'}}
             >
-              <Menu.Item key='index'>订单记录</Menu.Item>
-              <Menu.Item key='writer'>我的订单</Menu.Item>
-              <Menu.Item key='dealt'>账号信息</Menu.Item>
-              <Menu.Item key='account'>财务对账</Menu.Item>
-              <Menu.Item key='cash'>提现列表</Menu.Item>
-              <Menu.Item key='authority'>权限管理</Menu.Item>
+              {
+                this.state.userType !== 1 ? <Menu.Item key='index'>订单记录</Menu.Item> : ''
+              }
+              {
+                this.state.userType === 4 ? <Menu.Item key='writer'>我的订单</Menu.Item> : ''
+              }
+              {
+                this.state.userType === 2 ? <Menu.Item key='dealt'>账号信息</Menu.Item> : ''
+              }
+              {
+                (this.state.userType !== 1) ? <Menu.Item key='account'>财务对账</Menu.Item> : ''
+              }
+              {
+                (this.state.userType === 2 || this.state.userType === 4) ? <Menu.Item key='cash'>提现列表</Menu.Item> : ''
+              }
+              {
+                this.state.userType === 1 ? <Menu.Item key='authority'>权限管理</Menu.Item> : ''
+              }
+
             </Menu>
             <div className='user'>
               <Dropdown overlay={menu}>

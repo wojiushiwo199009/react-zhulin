@@ -57,7 +57,7 @@ export default class DetailOrder extends Component {
           return (
             <div>
               {
-                (this.state.userType === 2 || 0) ? <a href='javascript:;' onClick={() => this.verify(record)}>审核<Divider type='vertical' /></a> : ''
+                (this.state.userType === 2 || 3) ? <a href='javascript:;' onClick={() => this.verify(record)}>审核<Divider type='vertical' /></a> : ''
               }
               <a href='javascript:;' onClick={() => this.downLoad(record)}>下载<Divider type='vertical' /></a>
               <a href='javascript:;' onClick={() => this.seePic(record)}>查看图片</a>
