@@ -9,7 +9,7 @@ export class AddRowForm extends Component {
     fileName: '',
     fileList: [{
       uid: '-1',
-      name: 'xxx.docx',
+      name: 'xxx.zip',
       status: 'done'
     }]
   }
@@ -65,7 +65,7 @@ export class AddRowForm extends Component {
     const props = {
       name: 'file',
       action: PicUrl,
-      accept: '.docx',
+      accept: '.rar,.zip',
       headers: {
         authorization: 'authorization-text'
       },

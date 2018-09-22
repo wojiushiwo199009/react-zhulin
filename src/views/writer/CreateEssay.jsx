@@ -88,7 +88,7 @@ export class AddRowForm extends Component {
     const props = {
       name: 'file',
       action: PicUrl,
-      accept: '.docx',
+      accept: '.rar,.zip',
       onChange: this.handleChange,
       headers: {
         authorization: 'authorization-text'
