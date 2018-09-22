@@ -39,11 +39,20 @@ export class MoneyForm extends Component {
   handleCancel = () => {
     this.props.onCancel()
   }
-
-  componentWillReceiveProps (nextProps) {
-    this.setState({
-      money: nextProps.money
+  getMoneyList = (record) => {
+    ajax.getMoneyList({ orderId: this.props.moneyOrderId }, response => {
+      if (response.state.stateCode === 0) {
+        this.setState({
+          money: response.data.merchantPrice
+        })
+      }
+    }, error => {
+      console.log(error)
     })
+  }
+
+  componentDidMount () {
+    this.getMoneyList()
   }
   render () {
     const formItemLayout = {

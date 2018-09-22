@@ -6,11 +6,12 @@ import ajax from '../../api'
 import './message.scss'
 export default class Message extends Component {
   state={
+    name: '',
     qq: '',
     weChat: '',
     email: '',
     address: '',
-    sex: 0,
+    sex: null,
     age: '',
     profession: '',
     good: '',
@@ -20,7 +21,7 @@ export default class Message extends Component {
     previewImage: '',
     fileList: [{
       uid: '-1',
-      name: 'xxx.png',
+      name: '支付宝图片.png',
       status: 'done',
       url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
     }]
@@ -51,6 +52,7 @@ export default class Message extends Component {
       if (response.state.stateCode === 0) {
         let resData = response.data
         this.setState({
+          name: resData.name,
           qq: resData.qq,
           weChat: resData.wechat,
           email: resData.email,
@@ -64,7 +66,7 @@ export default class Message extends Component {
           fileList: [
             {
               uid: '-1',
-              name: 'xxx.png',
+              name: '支付宝.png',
               status: 'done',
               url: `${axiosUrl}/user/file/` + resData.payPicture
             }
@@ -91,6 +93,30 @@ export default class Message extends Component {
     const { previewVisible, fileList } = this.state
     return (
       <div className='message'>
+        <Row>
+          <Col className='gutter-row' span={8}>
+            <div className='gutter-box'>姓名:</div>
+          </Col>
+          <Col className='gutter-row' span={16}>
+            <div className='gutter-box'>{this.state.name}</div>
+          </Col>
+        </Row>
+        <Row gutter={20}>
+          <Col className='gutter-row' span={8}>
+            <div className='gutter-box'>性别:</div>
+          </Col>
+          <Col className='gutter-row' span={16}>
+            <div className='gutter-box'>{this.state.sex === 0 ? '男' : (this.state.sex === 1) ? '女' : ''}</div>
+          </Col>
+        </Row>
+        <Row gutter={20}>
+          <Col className='gutter-row' span={8}>
+            <div className='gutter-box'>年龄:</div>
+          </Col>
+          <Col className='gutter-row' span={16}>
+            <div className='gutter-box'>{this.state.age}</div>
+          </Col>
+        </Row>
         <Row gutter={20}>
           <Col className='gutter-row' span={8}>
             <div className='gutter-box'>qq号:</div>
@@ -123,22 +149,7 @@ export default class Message extends Component {
             <div className='gutter-box'>{this.state.address}</div>
           </Col>
         </Row>
-        <Row gutter={20}>
-          <Col className='gutter-row' span={8}>
-            <div className='gutter-box'>性别:</div>
-          </Col>
-          <Col className='gutter-row' span={16}>
-            <div className='gutter-box'>{this.state.sex === 0 ? '男' : '女'}</div>
-          </Col>
-        </Row>
-        <Row gutter={20}>
-          <Col className='gutter-row' span={8}>
-            <div className='gutter-box'>年龄:</div>
-          </Col>
-          <Col className='gutter-row' span={16}>
-            <div className='gutter-box'>{this.state.age}</div>
-          </Col>
-        </Row>
+
         <Row gutter={20}>
           <Col className='gutter-row' span={8}>
             <div className='gutter-box'>职业:</div>

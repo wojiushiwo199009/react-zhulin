@@ -43,40 +43,35 @@ export default [
     component: Home,
     childRoutes: [
       {
-        path: '/index',
-        component: Writer
+        path: '/index/detailOrder',
+        component: DetailOrder
       },
       {
-        path: '/record',
+        path: '/index',
         component: Record
       },
       {
-        path: '/dealt',
-        component: Dealt,
-        childRoutes: [
-          {
-
-            path: '/dealt/dealtDetail',
-            component: DealtDetail
-          }
-        ]
+        path: '/writer/writerDetailOrder',
+        component: WriterDetail
       },
       {
-        path: '/dealtDetail',
+        path: '/writer',
+        component: Writer
+      },
+      {
+        path: '/dealt/dealtDetail',
         component: DealtDetail
       },
+      {
+        path: '/dealt',
+        component: Dealt
+      },
+
       {
         path: '/authority',
         component: Authority
       },
-      {
-        path: '/detailOrder',
-        component: DetailOrder
-      },
-      {
-        path: '/writerDetailOrder',
-        component: WriterDetail
-      },
+
       {
         path: '/account',
         component: Accounting

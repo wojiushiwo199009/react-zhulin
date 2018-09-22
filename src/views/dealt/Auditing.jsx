@@ -8,28 +8,7 @@ const RadioButton = Radio.Button
 const FormItem = Form.Item
 export class AuditFormForm extends Component {
   state={
-    statusArr: [
-      {
-        name: '待提交信息',
-        value: 1
-      },
-      {
-        name: '待审核',
-        value: 2
-      },
-      {
-        name: '审核成功',
-        value: 3
-      },
-      {
-        name: '审核失败',
-        value: 4
-      },
-      {
-        name: '禁用',
-        value: 5
-      }
-    ]
+
   }
   handleSubmit = (e) => {
     e.preventDefault()

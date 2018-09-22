@@ -16,7 +16,9 @@ export class Home extends Component {
     noBreadcrumb: true,
     breadcrumbItem1: '',
     current: 'index',
-    menuArr: ['dealt', 'index', 'record', 'authority', 'account', 'cash']
+    userType: '',
+    userName: '',
+    menuArr: ['dealt', 'index', 'writer', 'authority', 'account', 'cash']
   };
   toggle = () => {
     this.setState({
@@ -59,6 +61,16 @@ export class Home extends Component {
   goMessage=() => {
     this.props.history.push('/message')
   }
+  getUserInfo = () => {
+    ajax.getUserInfo({}, response => {
+      this.setState({
+        userType: response.data.type,
+        userName: response.data.name
+      })
+    }, error => {
+      console.log(error)
+    })
+  }
   componentWillMount () {
     this.isLogin()
     if (this.state.menuArr.indexOf(location.hash.split('/')[1]) > -1) {
@@ -66,6 +78,9 @@ export class Home extends Component {
         current: location.hash.split('/')[1]
       })
     }
+  }
+  componentDidMount () {
+    this.getUserInfo()
   }
   render () {
     console.log(this.props)
@@ -90,16 +105,16 @@ export class Home extends Component {
                 lineHeight: '64px',
                 float: 'left'}}
             >
-              <Menu.Item key='index'>我的订单</Menu.Item>
-              <Menu.Item key='record'>我的记录</Menu.Item>
-              <Menu.Item key='dealt'>待办</Menu.Item>
+              <Menu.Item key='index'>订单记录</Menu.Item>
+              <Menu.Item key='writer'>我的订单</Menu.Item>
+              <Menu.Item key='dealt'>账号信息</Menu.Item>
               <Menu.Item key='account'>财务对账</Menu.Item>
-              <Menu.Item key='cash'>提现</Menu.Item>
-              <Menu.Item key='authority'>权限</Menu.Item>
+              <Menu.Item key='cash'>提现列表</Menu.Item>
+              <Menu.Item key='authority'>权限管理</Menu.Item>
             </Menu>
             <div className='user'>
               <Dropdown overlay={menu}>
-                <span>欢迎{this.props.data.getname.userName} <Icon type='down' /></span>
+                <span>欢迎{this.state.userName} <Icon type='down' /></span>
               </Dropdown>
               <span className='logout' onClick={this.logout}>退出</span>
             </div>
@@ -127,7 +142,6 @@ export class Home extends Component {
   }
 }
 Home.propTypes = {
-  data: PropTypes.object,
   history: PropTypes.object,
   route: PropTypes.object
 }

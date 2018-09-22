@@ -161,9 +161,7 @@ export class WriterForm extends Component {
   }
   handleDetail = (row) => {
     console.log(row, 'row')
-    // window.open(axiosUrl + '/detailOrder?flag=1')
-    window.open(window.location.origin + `/#/writerDetailOrder?id=${row.userOrderId}`)
-    // this.props.history.push(`/detailOrder?id=${row.id}`)
+    window.open(window.location.origin + `/#/writer/writerDetailOrder?id=${row.userOrderId}`)
   }
   handleOrder = (row) => {
     let params = {

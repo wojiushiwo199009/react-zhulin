@@ -182,7 +182,7 @@ export class RecordForm extends Component {
                 (this.state.userRole === 3 && record.orderStatus === 6) ? <a onClick={() => this.handleMoney(record)} href='javascript:;'>打款<Divider type='vertical' /></a> : ''
               }
               {
-                (this.state.userRole === 2 && record.orderStatus === 4) ? <Popconfirm title='确定打款吗?' onConfirm={() => this.handleConfirmMoney(record)}><a href='javascript:;' className='delete'>确认商家打款<Divider type='vertical' /></a></Popconfirm> : ''
+                (this.state.userRole === 2 && record.orderStatus === 4) ? <Popconfirm title='确定打款吗?' onConfirm={() => this.handleConfirmMoney(record)}><a href='javascript:;'>确认商家打款<Divider type='vertical' /></a></Popconfirm> : ''
               }
               {
                 <a href='javascript:;' onClick={() => this.handleDetail(record)}>查看详情</a>
@@ -253,9 +253,7 @@ export class RecordForm extends Component {
   }
   handleDetail=(row) => {
     console.log(row, 'row')
-    // window.open(axiosUrl + '/detailOrder?flag=1')
-    window.open(window.location.origin + `/#/detailOrder?id=${row.id}`)
-    // this.props.history.push(`/detailOrder?id=${row.id}`)
+    window.open(window.location.origin + `/#/index/detailOrder?id=${row.id}`)
   }
   handleOrder=(row) => {
     this.setState({
@@ -283,8 +281,21 @@ export class RecordForm extends Component {
     // })
   }
   handleConfirmMoney = (record) => {
-    this.getMakeMoney(record.id)
+    this.adminFinance(record.id)
   }
+  adminFinance = (record) => {
+    ajax.adminFinance({ orderId: record }, response => {
+      if (response.state.stateCode === 0) {
+        message.success(response.state.stateMessage || '确认打款成功')
+      } else {
+        message.error(response.state.stateMessage || '确认打款失败，请稍后再试')
+      }
+    }, error => {
+      console.log(error)
+      message.error('确认打款失败，请稍后再试')
+    })
+  }
+
   getMakeMoney=(record) => {
     ajax.getMakeMoney({ orderId: record }, response => {
       if (response.state.stateCode === 0) {
@@ -301,21 +312,9 @@ export class RecordForm extends Component {
     this.setState({
       MoneyVisible: true,
       moneyOrderId: record.id
-    }, () => {
-      this.getMoneyList(record.id)
     })
   }
-  getMoneyList=(record) => {
-    ajax.getMoneyList({ orderId: record }, response => {
-      if (response.state.stateCode === 0) {
-        this.setState({
-          money: response.data
-        })
-      }
-    }, error => {
-      console.log(error)
-    })
-  }
+
   handleDelete = (record) => {
     console.log(record)
     ajax.deleteOrder({ id: record.id }, response => {
@@ -394,7 +393,8 @@ export class RecordForm extends Component {
   }
   moneyOnCancel=() => {
     this.setState({
-      MoneyVisible: false
+      MoneyVisible: false,
+      moneyOrderId: ''
     })
   }
   InpChange=(e) => {
@@ -447,6 +447,15 @@ export class RecordForm extends Component {
                   value: 8
                 }
               ]
+            })
+            this.state.columns.map((item, index) => {
+              if (item.dataIndex === 'adminPrice') {
+                item.dataIndex = 'merchantPrice'
+              }
+              if (item.dataIndex === 'adminEndTime') {
+                item.dataIndex = 'endTime'
+                item.title = '截稿时间'
+              }
             })
           } else if (this.state.userRole === 4) {
             this.state.columns.map((item, index) => {
@@ -596,7 +605,7 @@ export class RecordForm extends Component {
           footer={null}
           onCancel={this.moneyOnCancel}
         >
-          <Money moneyOrderId={this.state.moneyOrderId} onCancel={this.moneyOnCancel} getOrder={this.getOrder} money={this.state.money} />
+          <Money moneyOrderId={this.state.moneyOrderId} onCancel={this.moneyOnCancel} getOrder={this.getOrder} />
         </Modal>
       </div>
     )

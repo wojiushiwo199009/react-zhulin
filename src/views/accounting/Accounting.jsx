@@ -34,15 +34,9 @@ export class WriterForm extends Component {
         money: 0,
         tradeCode: 1,
         tradeInfo: '',
-        userId: '',
         createdAt: '2018-02-03'
       }],
     columns: [
-      {
-        title: '用户订单号号',
-        dataIndex: 'userId',
-        render: text => <a href='javascript:;'>{text || '--'}</a>
-      },
       {
         title: '收支情况',
         dataIndex: 'money'
@@ -97,62 +91,6 @@ export class WriterForm extends Component {
     })
   }
 
-  handleDetail = (row) => {
-    console.log(row, 'row')
-    // window.open(axiosUrl + '/detailOrder?flag=1')
-    window.open(window.location.origin + `/#/dealtDetail?id=${row.id}`)
-    // this.props.history.push(`/detailOrder?id=${row.id}`)
-  }
-  handleOrder = (row) => {
-    this.setState({
-      id: row.id,
-      visible: true
-    })
-  }
-  handleDelete = (record) => {
-    console.log(record)
-    ajax.AdminUserDelete({ id: record.id }, response => {
-      if (response.state.stateCode === 0) {
-        message.success(response.state.stateMessage || '禁用成功')
-        // this.setState({ data: dataSource.filter(item => item.key !== record.key) })
-        this.AdminUserList()
-      } else {
-        message.error('禁用失败，请重试')
-        this.AdminUserList()
-      }
-    }, error => {
-      console.log(error)
-      message.error('禁用失败，请重试')
-      this.AdminUserList()
-    })
-  }
-  handleEnable = (record) => {
-    console.log(record)
-    ajax.AdminUserEnable({ id: record.id }, response => {
-      if (response.state.stateCode === 0) {
-        message.success(response.state.stateMessage || '启用成功')
-        // this.setState({ data: dataSource.filter(item => item.key !== record.key) })
-        this.AdminUserList()
-      } else {
-        message.error('启用失败，请重试')
-        this.AdminUserList()
-      }
-    }, error => {
-      console.log(error)
-      message.error('启用失败，请重试')
-      this.AdminUserList()
-    })
-  }
-  InpChange = (e) => {
-    this.setState({
-      orderCode: e.target.value
-    })
-  }
-  selectChange = (value) => {
-    this.setState({
-      status: value
-    })
-  }
   getUserInfo = () => {
     ajax.getUserInfo({}, response => {
       if (response.state.stateCode === 0) {

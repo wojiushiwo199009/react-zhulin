@@ -48,7 +48,7 @@ export class AssignForm extends Component {
             let msg = response.state.stateMessage || '添加成功'
             message.success(msg)
             this.props.getUserList()
-            this.props.handleOk()
+            this.handleCancel()
           } else {
             let msg = response.state.stateMessage || '添加失败，请重新填写'
             message.error(msg)
@@ -58,7 +58,7 @@ export class AssignForm extends Component {
           console.log(error)
           message.error('添加失败，请重新填写')
           this.props.getUserList()
-          this.props.handleOk()
+          this.handleCancel()
         })
       }
     })
@@ -142,7 +142,6 @@ export class AssignForm extends Component {
 const Assign = Form.create()(AssignForm)
 AssignForm.propTypes = {
   form: PropTypes.object,
-  handleOk: PropTypes.func,
   getUserList: PropTypes.func,
   onCancel: PropTypes.func
 }

@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Table, Input, InputNumber, Popconfirm, Form, Button, Modal, message, Divider } from 'antd'
 import AddRow from './AddRow'
-import Assign from './Assign'
 import ajax from '../../api'
 
 const FormItem = Form.Item
@@ -80,39 +79,31 @@ export default class EditableTable extends React.Component {
       data: [{
         id: '',
         key: '0',
-        number: '',
-        account: '',
-        name: '',
-        code: ''
+        Time: '',
+        money: 0,
+        status: ''
       }],
       userType: '',
       count: 2,
       editingKey: '',
-      visible: false,
-      assignVisible: false,
-      userId: ''
+      visible: false
     }
     this.columns = [
       {
-        title: '序号',
-        dataIndex: 'number',
+        title: '申请时间',
+        dataIndex: 'Time',
         render: (text, record, index) => {
           return index + 1
         }
       },
       {
-        title: '姓名',
-        dataIndex: 'name',
+        title: '申请金额',
+        dataIndex: 'money',
         editable: true
       },
       {
-        title: '账号',
-        dataIndex: 'account'
-      },
-      {
-        title: '邀请码',
-        dataIndex: 'code',
-        editable: true
+        title: '状态',
+        dataIndex: 'status'
       },
       {
         title: '操作',
@@ -122,7 +113,7 @@ export default class EditableTable extends React.Component {
             <div>
               {
                 <Popconfirm title='确定打款吗?' onConfirm={() => this.handleMoney(record)}>
-                  <a href='javascript:;' className='delete'>打款<Divider type='vertical' /></a>
+                  <a href='javascript:;'>打款</a>
                 </Popconfirm>
               }
             </div>
@@ -161,14 +152,6 @@ export default class EditableTable extends React.Component {
       visible: true
     })
   }
-  handleOk = () => {
-    // 发送请求
-    setTimeout(() => {
-      this.setState({
-        visible: false
-      })
-    }, 2000)
-  }
 
   handleCancel = () => {
     console.log('Clicked cancel button')
@@ -176,11 +159,7 @@ export default class EditableTable extends React.Component {
       visible: false
     })
   }
-  handleAssignCancel = () => {
-    this.setState({
-      assignVisible: false
-    })
-  }
+
   getUserList = () => {
     ajax.getUserList({}, response => {
       if (response.state.stateCode === 0) {
@@ -198,8 +177,8 @@ export default class EditableTable extends React.Component {
       message.error('查询失败，请重试')
     })
   }
-  getUserInfo = () => {
-    ajax.getUserInfo({}, response => {
+  WriterCashList = () => {
+    ajax.WriterCashList({}, response => {
       if (response.state.stateCode === 0) {
         this.setState({
           userType: response.data.type
@@ -210,10 +189,10 @@ export default class EditableTable extends React.Component {
     })
   }
   componentWillMount () {
-    this.getUserInfo()
+    this.WriterCashList()
   }
   componentDidMount () {
-    this.getUserList()// beizhu
+    this.WriterCashList()// beizhu
   }
   render () {
     const { visible } = this.state
@@ -243,9 +222,9 @@ export default class EditableTable extends React.Component {
     return (
       <div className='authority'>
         {
-          this.state.userType === 4 ? <Button onClick={this.showModal} type='primary' style={{ marginBottom: 16, float: 'right' }}>
+          this.state.userType === 4 ? <div style={{overflow: 'hidden'}}> <Button onClick={this.showModal} type='primary' style={{ marginBottom: 16, float: 'right' }}>
             申请提现
-          </Button> : ''
+          </Button></div> : ''
         }
 
         <Modal title='申请提现'
@@ -262,13 +241,6 @@ export default class EditableTable extends React.Component {
           columns={columns}
           rowClassName='editable-row'
         />
-        <Modal title='分派'
-          visible={this.state.assignVisible}
-          onCancel={this.handleAssignCancel}
-          footer={null}
-        >
-          <Assign userId={this.state.userId} handleOk={this.handleOk} onCancel={this.handleCancel} getUserList={this.getUserList} />
-        </Modal>
       </div>
     )
   }

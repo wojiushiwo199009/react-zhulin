@@ -193,13 +193,17 @@ export default {
   getMakeMoney: (params, sucFn, errFn) => {
     ajax('post', '/merchant/finance/make_money', params, sucFn, errFn)
   },
-  // 管理员缺商家打款
+  // 管理员确认商家打款
   adminFinance: (params, sucFn, errFn) => {
     ajax('post', '/admin/finance/determine', params, sucFn, errFn)
   },
   // 余额与交易信息查询
   financeRecord: (params, sucFn, errFn) => {
     ajax('get', '/finance/record/list', params, sucFn, errFn)
+  },
+  // 申请提现列表
+  WriterCashList: (params, sucFn, errFn) => {
+    ajax('get', '/writer/finance/list', params, sucFn, errFn)
   },
   // 创建申请交易
   WriterFinaceCreate: (params, sucFn, errFn) => {
@@ -208,5 +212,9 @@ export default {
   // 余额与交易信息查询
   adminFinmceMakemoney: (params, sucFn, errFn) => {
     ajax('post', '/admin/finance/make_money/writer', params, sucFn, errFn)
+  },
+  // 订单详情中的审核功能
+  merchantOrderAuditing: (params, sucFn, errFn) => {
+    ajax('post', '/merchant/order/auditing/essay', params, sucFn, errFn)
   }
 }

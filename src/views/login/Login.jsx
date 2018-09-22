@@ -151,11 +151,13 @@ export class HomePageForm extends Component {
           message.error('个人信息审核失败，请重新提交')
           self.props.history.push('/fillmessage')
         } if (response.data.status === 3 && (response.data.type === 3 || 4)) {
-          self.props.history.push('/record')
+          self.props.history.push('/index')
         } if (response.data.status === 5) {
           message.error('该个人信息已被禁用')
-        } if (response.data.type === 2 || 1) {
-          self.props.history.push('/record')
+        } if (response.data.type === 2) {
+          self.props.history.push('/index')
+        } if (response.data.type === 1) {
+          self.props.history.push('/authority')
         }
       } else {
         message.error('添加失败，请重新填写')

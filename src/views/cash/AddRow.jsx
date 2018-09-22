@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import ajax from '../../api'
-import { Form, Input, Button, Row, Col, message } from 'antd'
+import { Form, Button, Row, Col, message, InputNumber } from 'antd'
 
 const FormItem = Form.Item
 export class AddRowForm extends Component {
@@ -11,7 +11,7 @@ export class AddRowForm extends Component {
       if (!err) {
         console.log('Received values of form: ', values)
         let params = {
-          name: values.money
+          money: values.money
         }
         ajax.WriterFinaceCreate(params, response => {
           if (response.state.stateCode === 0) {
@@ -54,7 +54,7 @@ export class AddRowForm extends Component {
           {getFieldDecorator('money', {
             rules: [{ required: true, message: '请输入提现金额!' }]
           })(
-            <Input type='number' placeholder='请输入提现金额' />
+            <InputNumber placeholder='请输入提现金额' />
           )}
         </FormItem>
         <FormItem>

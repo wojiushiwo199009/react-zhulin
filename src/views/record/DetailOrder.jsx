@@ -5,10 +5,13 @@ import moment from 'moment'
 import ajax from '../../api'
 import { axiosUrl } from '../../api/axios'
 import SeePic from '../writer/SeePic'
+import VertifyResult from './VertifyResult'
 import './detailOrder.scss'
 export default class DetailOrder extends Component {
   state = {
     picVisable: false,
+    vertifyVisable: false,
+    verifyStatus: '',
     userType: '',
     orderCode: '1',
     eassyTotal: 1,
@@ -54,16 +57,7 @@ export default class DetailOrder extends Component {
           return (
             <div>
               {
-                (this.state.userType === 2 || 3) ? <a href='javascript:;' onClick={() => this.Money(record)}>打款<Divider type='vertical' /></a> : ''
-              }
-              {
                 (this.state.userType === 2 || 0) ? <a href='javascript:;' onClick={() => this.verify(record)}>审核<Divider type='vertical' /></a> : ''
-              }
-              {
-                (this.state.userType === 3 || 2) ? <a href='javascript:;' onClick={() => this.SendBack(record)}>退稿<Divider type='vertical' /></a> : ''
-              }
-              {
-                (this.state.userType === 3) ? <a href='javascript:;' onClick={() => this.Received(record)}>收稿<Divider type='vertical' /></a> : ''
               }
               <a href='javascript:;' onClick={() => this.downLoad(record)}>下载<Divider type='vertical' /></a>
               <a href='javascript:;' onClick={() => this.seePic(record)}>查看图片</a>
@@ -84,12 +78,7 @@ export default class DetailOrder extends Component {
       }]
 
   }
-  SendBack=(record) => {
 
-  }
-  Received=(record) => {
-
-  }
   handlePicCancel = () => {
     this.setState({
       picVisable: false
@@ -105,11 +94,20 @@ export default class DetailOrder extends Component {
     window.open(axiosUrl + '/order/essay/download?fileName=' + record.eassyFile, '_self')
   }
   verify=(record) => {
-
+    this.setState({
+      orderEssayId: record.id,
+      verifyStatus: record.status,
+      vertifyVisable: true
+    })
   }
-  Money = (record) => {
-
+  handleVertifyCancel = () => {
+    this.setState({
+      orderEssayId: '',
+      verifyStatus: '',
+      vertifyVisable: false
+    })
   }
+
   getMerchantDetail=() => {
     let params = {
       id: location.hash.split('=')[1]
@@ -131,7 +129,8 @@ export default class DetailOrder extends Component {
           picture: resData.orderRecord.picture,
           type: resData.orderRecord.type === 1 ? '养号文' : '流量文',
           endTime: moment.unix(parseInt(resData.orderRecord.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'),
-          wordCount: resData.orderRecord.wordCount
+          wordCount: resData.orderRecord.wordCount,
+          userId: resData.orderRecord.userId
         })
       } else {
         message.error('请求失败，请稍后再试')
@@ -161,7 +160,8 @@ export default class DetailOrder extends Component {
           picture: resData.orderRecord.picture,
           type: resData.orderRecord.type === 1 ? '养号文' : '流量文',
           endTime: moment.unix(parseInt(resData.orderRecord.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'),
-          wordCount: resData.orderRecord.wordCount
+          wordCount: resData.orderRecord.wordCount,
+          userId: resData.orderRecord.userId
         })
       } else {
         message.error('请求失败，请稍后再试')
@@ -185,7 +185,8 @@ export default class DetailOrder extends Component {
           picture: resData.picture,
           type: resData.type === 1 ? '养号文' : '流量文',
           endTime: moment.unix(parseInt(resData.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'),
-          wordCount: resData.wordCount
+          wordCount: resData.wordCount,
+          userId: resData.userId
         })
       } else {
         message.error('请求失败，请稍后再试')
@@ -194,6 +195,7 @@ export default class DetailOrder extends Component {
       console.log(error)
     })
   }
+
   getUserInfo = () => {
     ajax.getUserInfo({}, response => {
       if (response.state.stateCode === 0) {
@@ -244,6 +246,13 @@ export default class DetailOrder extends Component {
             <Table columns={this.state.columns} dataSource={this.state.orderEssayRecords} pagination={false} />
           </div>
         }
+        <Modal title={null}
+          visible={this.state.vertifyVisable}
+          onCancel={this.handleVertifyCancel}
+          footer={null}
+        >
+          <VertifyResult verifyStatus={this.state.verifyStatus} orderEssayId={this.state.orderEssayId} onCancel={this.handleVertifyCancel} userId={this.state.userId} getUserInfo={this.getUserInfo} />
+        </Modal>
         <Modal title={null}
           visible={this.state.picVisable}
           onCancel={this.handlePicCancel}

@@ -346,7 +346,7 @@ export default class EditableTable extends React.Component {
     return (
       <div className='writer-detail'>
         <div className='title'>
-          <h3>订单号:{this.state.orderCode}<Button style={{float: 'right'}} onClick={this.showModal} type='primary'>
+          <h3>订单号:{this.state.orderCode}<Button style={{float: 'right', marginRight: '16px'}} onClick={this.showModal} type='primary'>
             创建文章
           </Button></h3>
           <Row>

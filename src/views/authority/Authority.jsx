@@ -342,7 +342,7 @@ export default class EditableTable extends React.Component {
           onCancel={this.handleAssignCancel}
           footer={null}
         >
-          <Assign userId={this.state.userId} handleOk={this.handleOk} onCancel={this.handleCancel} getUserList={this.getUserList} />
+          <Assign userId={this.state.userId} onCancel={this.handleAssignCancel} getUserList={this.getUserList} />
         </Modal>
       </div>
     )
