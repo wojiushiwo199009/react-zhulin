@@ -154,7 +154,7 @@ export class RecordForm extends Component {
       }, {
         title: '审核结果',
         dataIndex: 'result',
-        render: text => (text || 'null')
+        render: text => (text || '')
       }, {
         title: '操作',
         dataIndex: 'operate',
@@ -167,7 +167,7 @@ export class RecordForm extends Component {
                 this.state.userRole === 2 ? <a disabled={record.orderStatus !== 0} onClick={() => this.handleAllot(record)}>分配订单<Divider type='vertical' /></a> : ''
               }
               {
-                this.state.userRole === 2 ? <a onClick={() => this.handleVerify(record)}>审核<Divider type='vertical' /></a> : ''
+                (this.state.userRole === 2 && record.orderStatus === 0) ? <a onClick={() => this.handleVerify(record)}>审核<Divider type='vertical' /></a> : ''
               }
               {
                 (this.state.userRole === 3 && (record.orderStatus === 0 || record.orderStatus === 8)) ? <a onClick={() => this.edit(record)}>编辑<Divider type='vertical' /></a> : ''
@@ -424,30 +424,6 @@ export class RecordForm extends Component {
               render: text => <span>{moment.unix(parseInt(text.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss')}</span>
             })
           } else if (this.state.userRole === 3) {
-            this.setState({
-              statusArr: [
-                {
-                  name: '待审核',
-                  value: 0
-                },
-                {
-                  name: '发布中',
-                  value: 1
-                },
-                {
-                  name: '已完成',
-                  value: 2
-                },
-                {
-                  name: '已截稿',
-                  value: 6
-                },
-                {
-                  name: '审核未通过',
-                  value: 8
-                }
-              ]
-            })
             this.state.columns.map((item, index) => {
               if (item.dataIndex === 'adminPrice') {
                 item.dataIndex = 'merchantPrice'

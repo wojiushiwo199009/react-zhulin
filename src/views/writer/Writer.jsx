@@ -5,6 +5,7 @@ import { Table, Button, Form, Input, DatePicker, Modal, Select, Popconfirm, mess
 import moment from 'moment'
 import ajax from '../../api'
 import DeleteOrder from './DeleteOrder'
+import './writer.scss'
 const Option = Select.Option
 const FormItem = Form.Item
 const RangePicker = DatePicker.RangePicker
@@ -41,7 +42,6 @@ export class WriterForm extends Component {
     businessData: [
       {
         key: '1',
-        userOrderId: '',
         orderCode: '',
         essayTitle: '',
         reserveTotal: 0,
@@ -66,19 +66,21 @@ export class WriterForm extends Component {
       }, {
         title: '价格',
         dataIndex: 'adminPrice'
-      }, {
+      },
+      {
         title: '未完成文章',
         dataIndex: 'unfinishedNum',
         render: (text, record) => {
           return (
             <div>
               {
-                record.reserveTotal - record.complete
+                record.reserveTotal - record.completed
               }
             </div>
           )
         }
-      }, {
+      },
+      {
         title: '状态',
         dataIndex: 'userOrderStatus',
         render: (text, record) => {
@@ -140,7 +142,7 @@ export class WriterForm extends Component {
     }
     ajax.SearchWriterOrder(params, response => {
       if (response.state.stateCode === 0) {
-        response.data.content.map((item, index) => {
+        response.data.content.length > 0 && response.data.content.map((item, index) => {
           item.key = index + ''
         })
         this.setState({
@@ -252,7 +254,7 @@ export class WriterForm extends Component {
       }
     }
     return (
-      <div className='record'>
+      <div className='writer'>
         <div className='title'>
           {/* {
             this.state.userRole === 3 ? <Button type='primary' onClick={this.publicOrder}>发布订单</Button> : ''

@@ -5,7 +5,7 @@ import { Form, Input, Button, Row, Col, message, Select } from 'antd'
 const Option = Select.Option
 
 const FormItem = Form.Item
-export class AuditFormForm extends Component {
+export class DeleteForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
@@ -69,11 +69,11 @@ export class AuditFormForm extends Component {
     )
   }
 }
-const AuditForm = Form.create()(AuditFormForm)
-AuditFormForm.propTypes = {
+const DeleteFormOrder = Form.create()(DeleteForm)
+DeleteForm.propTypes = {
   form: PropTypes.object,
   handleOk: PropTypes.func,
   getUserList: PropTypes.func,
   onCancel: PropTypes.func
 }
-export default AuditForm
+export default DeleteFormOrder

@@ -65,7 +65,8 @@ export class Home extends Component {
     ajax.getUserInfo({}, response => {
       this.setState({
         userType: response.data.type,
-        userName: response.data.name
+        userName: response.data.name,
+        result: response.data.result
       })
     }, error => {
       console.log(error)

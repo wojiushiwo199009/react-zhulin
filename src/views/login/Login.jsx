@@ -159,6 +159,9 @@ export class HomePageForm extends Component {
         } if (response.data.type === 1) {
           self.props.history.push('/authority')
         }
+        if (response.data.status !== 3) {
+          message.info('信息已提交，请耐心等待审核')
+        }
       } else {
         message.error('添加失败，请重新填写')
       }

@@ -4,7 +4,7 @@ import ajax from '../../api'
 import { Form, Input, Row, Col, message, Upload, Button, Icon, InputNumber } from 'antd'
 import { axiosUrl } from '../../api/axios'
 const FormItem = Form.Item
-export class AddRowForm extends Component {
+export class CreateEssayForm extends Component {
   state = {
     fileName: '',
     essayTitle: '',
@@ -128,11 +128,11 @@ export class AddRowForm extends Component {
     )
   }
 }
-const AddRow = Form.create()(AddRowForm)
-AddRowForm.propTypes = {
+const CreateEssay = Form.create()(CreateEssayForm)
+CreateEssayForm.propTypes = {
   form: PropTypes.object,
   handleOk: PropTypes.func,
   getWriterEssayList: PropTypes.func,
   onCancel: PropTypes.func
 }
-export default AddRow
+export default CreateEssay

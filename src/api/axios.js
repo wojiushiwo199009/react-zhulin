@@ -2,7 +2,7 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import { message } from 'antd'
 // export const axiosUrl = 'http://172.16.20.52:8080/casefile'
-export const axiosUrl = '132.232.177.22/zhulin'
+export const axiosUrl = 'http://132.232.177.22/zhulin'
 // export const axiosUrl = 'http://www.sso.hlvan.cn:21200'
 // axios.defaults.baseURL = 'http://172.16.74.105:8080' // 蔡莉娟
 // axios.defaults.baseURL = 'http://172.16.74.95:8080' //谷立庆

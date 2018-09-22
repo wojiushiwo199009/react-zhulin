@@ -161,13 +161,17 @@ export default class EditableTable extends React.Component {
                   </Popconfirm>
                 </span>
               ) : (
-                <a onClick={() => this.edit(record)}>编辑<Divider type='vertical' /></a>
+                record.result.indexOf('通过') > -1 ? ''
+                  : <a onClick={() => this.edit(record)}>编辑<Divider type='vertical' /></a>
 
               )}
+              {/* text === 0 ? <span>待管理员审核</span> : (text === 1) ? <span>商家退稿</span> : (text === 2) ? <span>收稿成功</span> : (text === 3) ? <span>商家已打款</span> : (text === 4) ? <span>待商家审核</span> : (text === 5) ? <span>管理员退稿</span> : (text === 6) ? <span>管理员已打款</span> : '' */}
+
               {
-                <Popconfirm title='确定删除吗?' onConfirm={() => this.handleDelete(record)}>
-                  <a href='javascript:;' className='delete'>删除<Divider type='vertical' /></a>
-                </Popconfirm>
+                record.result.indexOf('通过') > -1 ? ''
+                  : <Popconfirm title='确定删除吗?' onConfirm={() => this.handleDelete(record)}>
+                    <a href='javascript:;' className='delete'>删除<Divider type='vertical' /></a>
+                  </Popconfirm>
               }
               {
                 <a href='javascript:;' onClick={() => this.downLoad(record)}>下载<Divider type='vertical' /></a>

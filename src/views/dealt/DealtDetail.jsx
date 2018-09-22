@@ -65,11 +65,11 @@ export default class DealtDetail extends Component {
     orderEssayRecords: [
       {
         key: '1',
-        essay_title: 'John Brown',
+        essay_title: '',
         originalLevel: 32,
         pictureTotal: 32,
-        Status: 'New York No. 1 Lake Park',
-        result: 'lll'
+        Status: '',
+        result: ''
       }]
 
   }
@@ -112,6 +112,9 @@ export default class DealtDetail extends Component {
   getMerchantDetail = () => {
     ajax.getMerchantDetail({}, response => {
       if (response.state.stateCode === 0) {
+        response.data.length > 0 && response.data.map((item, index) => {
+          item.key = index + ''
+        })
         this.setState({
           orderEssayRecords: response.data
         })
@@ -127,7 +130,6 @@ export default class DealtDetail extends Component {
     ajax.AdminUserDetail({id: location.hash.split('=')[1]}, response => {
       if (response.state.stateCode === 0) {
         this.setState({
-          userType: response.data.type,
           orderCode: response.data.code,
           name: response.data.name,
           sex: response.data.sex,
@@ -146,17 +148,38 @@ export default class DealtDetail extends Component {
       console.log(error)
     })
   }
+  getUserInfo = () => {
+    ajax.getUserInfo({}, response => {
+      this.setState({
+        userType: response.data.type
+      })
+    }, error => {
+      console.log(error)
+    })
+  }
+  componentWillMount () {
+    this.getUserInfo()
+  }
   componentDidMount () {
     this.AdminUserDetail()
   }
   render () {
+    console.log(this.state.userType, 'useetupe')
+
     return (
       <div className='detail-order' >
         <div className='title'>
           <h3>订单号:{this.state.orderCode}</h3>
           <Row>
             <Col span={8}>姓名:{this.state.name}</Col>
-            <Col span={8}>性别:{this.state.sex}</Col>
+            <Col span={8}>性别:
+              {
+                this.state.sex === 1 ? '女' : ''
+              }
+              {
+                this.state.sex === 0 ? '男' : ''
+              }
+            </Col>
             <Col span={8}>邮箱:{this.state.email}</Col>
           </Row>
           <Row>
@@ -171,7 +194,7 @@ export default class DealtDetail extends Component {
           </Row>
         </div>
         {
-          this.state.userType === 4 ? '' : <div className='content'>
+          (this.state.userType === 4 || this.state.userType === 2) ? '' : <div className='content'>
             <Table columns={this.state.columns} dataSource={this.state.orderEssayRecords} pagination={false} />
           </div>
         }

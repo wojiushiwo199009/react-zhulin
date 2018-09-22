@@ -39,6 +39,7 @@ export class MessageForm extends Component {
         ajax.getUserAdd(params, response => {
           if (response.state.stateCode === 0) {
             message.success(response.state.stateMessage || '修改成功')
+            this.props.history.push('/message-info')
           } else {
             message.error('修改失败，请重新填写')
           }

@@ -24,6 +24,7 @@ export class AuditFormForm extends Component {
           if (response.state.stateCode === 0) {
             message.success(response.state.stateMessage || '审核成功')
             this.props.AdminUserList()
+            this.handleCancel()
           } else {
             message.error(response.state.stateMessage || '审核失败，请重试')
             this.props.AdminUserList()
@@ -32,6 +33,7 @@ export class AuditFormForm extends Component {
           console.log(error)
           message.error('审核失败，请重试')
           this.props.AdminUserList()
+          this.handleCancel()
         })
       }
     })

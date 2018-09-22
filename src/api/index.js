@@ -216,5 +216,13 @@ export default {
   // 订单详情中的审核功能
   merchantOrderAuditing: (params, sucFn, errFn) => {
     ajax('post', '/merchant/order/auditing/essay', params, sucFn, errFn)
+  },
+  // 查询管理员下的商家与写手
+  getUserMerchantList: (params, sucFn, errFn) => {
+    ajax('get', '/user/merchant_list', params, sucFn, errFn)
+  },
+  // 把商家或者写手分配至其他管理员
+  getUserUpdateAdmin: (params, sucFn, errFn) => {
+    ajax('post', '/user/update_admin', params, sucFn, errFn)
   }
 }

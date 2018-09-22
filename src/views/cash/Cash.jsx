@@ -181,69 +181,101 @@ export default class EditableTable extends React.Component {
     ajax.WriterCashList({}, response => {
       if (response.state.stateCode === 0) {
         this.setState({
-          userType: response.data.type
+          data: response.data
         })
       }
     }, error => {
       console.log(error)
     })
   }
-  componentWillMount () {
-    this.WriterCashList()
-  }
-  componentDidMount () {
-    this.WriterCashList()// beizhu
-  }
-  render () {
-    const { visible } = this.state
-    const components = {
-      body: {
-        row: EditableFormRow,
-        cell: CashCell
-      }
-    }
+   getUserInfo = () => {
+     ajax.getUserInfo({}, response => {
+       if (response.state.stateCode === 0) {
+         this.setState({
+           userType: response.data.type
+         }, () => {
+           if (this.state.userType === 4) {
+             this.columns = [
+               {
+                 title: '申请时间',
+                 dataIndex: 'Time',
+                 render: (text, record, index) => {
+                   return index + 1
+                 }
+               },
+               {
+                 title: '申请金额',
+                 dataIndex: 'money',
+                 editable: true
+               },
+               {
+                 title: '状态',
+                 dataIndex: 'status'
+               }
+             ]
+           }
+         })
+       }
+     }, error => {
+       console.log(error)
+     })
+   }
+   componentWillMount () {
+     this.getUserInfo()
+   }
+   componentDidMount () {
+     this.WriterCashList()// beizhu
+   }
+   render () {
+     const { visible } = this.state
+     const components = {
+       body: {
+         row: EditableFormRow,
+         cell: CashCell
+       }
+     }
 
-    const columns = this.columns.map((col) => {
-      if (!col.editable) {
-        return col
-      }
-      return {
-        ...col,
-        onCell: record => ({
-          record,
-          inputType: col.dataIndex === 'age' ? 'number' : 'text',
-          dataIndex: col.dataIndex,
-          title: col.title,
-          editing: this.isEditing(record)
-        })
-      }
-    })
+     const columns = this.columns.map((col) => {
+       if (!col.editable) {
+         return col
+       }
+       return {
+         ...col,
+         onCell: record => ({
+           record,
+           inputType: col.dataIndex === 'age' ? 'number' : 'text',
+           dataIndex: col.dataIndex,
+           title: col.title,
+           editing: this.isEditing(record)
+         })
+       }
+     })
 
-    return (
-      <div className='authority'>
-        {
-          this.state.userType === 4 ? <div style={{overflow: 'hidden'}}> <Button onClick={this.showModal} type='primary' style={{ marginBottom: 16, float: 'right' }}>
+     return (
+       <div className='authority'>
+         {
+           this.state.userType === 4 ? <div style={{overflow: 'hidden'}}> <Button onClick={this.showModal} type='primary' style={{ marginBottom: 16, float: 'right' }}>
             申请提现
-          </Button></div> : ''
-        }
+           </Button></div> : ''
+         }
 
-        <Modal title='申请提现'
-          visible={visible}
-          onCancel={this.handleCancel}
-          footer={null}
-        >
-          <AddRow onCancel={this.handleCancel} getUserList={this.getUserList} />
-        </Modal>
-        <Table
-          components={components}
-          bordered
-          dataSource={this.state.data}
-          columns={columns}
-          rowClassName='editable-row'
-        />
-      </div>
-    )
-  }
+         <Modal title='申请提现'
+           visible={visible}
+           onCancel={this.handleCancel}
+           footer={null}
+         >
+           <AddRow onCancel={this.handleCancel} getUserList={this.getUserList} />
+         </Modal>
+         <Table
+           components={components}
+           bordered
+           dataSource={this.state.data}
+           columns={columns}
+           rowClassName='editable-row'
+         />
+       </div>
+     )
+   }
 }
 
 CashCell.propTypes = {

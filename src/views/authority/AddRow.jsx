@@ -22,6 +22,7 @@ export class AddRowForm extends Component {
             message.success(msg)
             this.props.getUserList()
             this.props.handleOk()
+            window.location.reload()
           } else {
             let msg = response.state.stateMessage || '添加失败，请重新填写'
             message.error(msg)
@@ -32,6 +33,7 @@ export class AddRowForm extends Component {
           message.error('添加失败，请重新填写')
           this.props.getUserList()
           this.props.handleOk()
+          window.location.reload()
         })
       }
     })
