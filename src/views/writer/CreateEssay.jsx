@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import ajax from '../../api'
-import { Form, Input, Row, Col, message, Upload, Button, Icon, InputNumber } from 'antd'
+import { Form, Input, Row, Col, message, Upload, Button, Icon } from 'antd'
 import { axiosUrl } from '../../api/axios'
 const FormItem = Form.Item
 export class CreateEssayForm extends Component {

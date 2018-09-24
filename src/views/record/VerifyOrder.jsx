@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import ajax from '../../api'
-import {Form, Input, Button, Row, Col, message, DatePicker} from 'antd'
+import {Form, Input, Button, Row, Col, message, DatePicker, InputNumber} from 'antd'
 const FormItem = Form.Item
 export class AddOrderForm extends Component {
   constructor (props) {
@@ -101,7 +101,7 @@ export class AddOrderForm extends Component {
                 }
               ]
             })(
-              <Input placeholder='请输入定价' style={{width: '174px'}} />
+              <InputNumber placeholder='请输入定价' style={{width: '174px'}} />
             )}
           </FormItem>
         }

@@ -128,7 +128,7 @@ export default class DetailOrder extends Component {
           originalLevel: resData.orderRecord.originalLevel,
           picture: resData.orderRecord.picture,
           type: resData.orderRecord.type === 1 ? '养号文' : '流量文',
-          endTime: moment.unix(parseInt(resData.orderRecord.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'),
+          endTime: resData.orderRecord.endTime ? moment.unix(parseInt(resData.orderRecord.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss') : '--',
           wordCount: resData.orderRecord.wordCount,
           userId: resData.orderRecord.userId
         })

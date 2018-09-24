@@ -4,7 +4,7 @@ export default class MessageInfo extends Component {
   }
   render () {
     return (
-      <h2 style={{marginTop: '45%'}}>信息待审核，请耐心等待</h2>
+      <h2 style={{marginTop: '45%', textAlign: 'center'}}>信息待审核，请耐心等待</h2>
     )
   }
 }

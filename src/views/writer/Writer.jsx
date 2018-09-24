@@ -12,6 +12,7 @@ const RangePicker = DatePicker.RangePicker
 
 export class WriterForm extends Component {
   state = {
+    orderNum: 0,
     userRole: '',
     filteredInfo: null,
     sortedInfo: null,
@@ -32,7 +33,7 @@ export class WriterForm extends Component {
       },
       {
         name: '已截稿',
-        value: 6
+        value: 3
       },
       {
         name: '已完成',
@@ -74,7 +75,7 @@ export class WriterForm extends Component {
           return (
             <div>
               {
-                record.reserveTotal - record.completed
+                record.reserveTotal - record.complete
               }
             </div>
           )
@@ -96,12 +97,12 @@ export class WriterForm extends Component {
       {
         title: '创建时间',
         dataIndex: 'createdAt',
-        render: text => <span>{moment.unix(parseInt(text.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss')}</span>
+        render: text => <span>{text ? moment.unix(parseInt(text.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss') : '--'}</span>
       },
       {
         title: '截稿时间',
         dataIndex: 'adminEndTime',
-        render: text => <span>{moment.unix(parseInt(text.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss')}</span>
+        render: text => <span>{text ? moment.unix(parseInt(text.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss') : '--'}</span>
       }, {
         title: '操作',
         dataIndex: 'operate',
@@ -110,12 +111,12 @@ export class WriterForm extends Component {
           return (
             <div>
               {
-                record.orderStatus === 0 ? <Popconfirm title='确定预约吗?' onConfirm={() => this.handleOrder(record)}>
+                record.userOrderStatus === 0 ? <Popconfirm title='确定预约吗?' onConfirm={() => this.handleOrder(record)}>
                   <a href='javascript:;'>预约<Divider type='vertical' /></a>
                 </Popconfirm> : ''
               }
               {
-                record.orderStatus === 1 ? <a href='javascript:;' onClick={() => this.handleDelete(record)} className='delete'>取消预约<Divider type='vertical' /></a> : ''
+                record.userOrderStatus === 1 ? <a href='javascript:;' onClick={() => this.handleDelete(record)} className='delete'>取消预约<Divider type='vertical' /></a> : ''
               }
               <a href='javascript:;' onClick={() => this.handleDetail(record)}>查看详情</a>
             </div>
@@ -184,9 +185,11 @@ export class WriterForm extends Component {
     })
   }
   handleDelete = (record) => {
+    console.log(record, 'record')
     this.setState({
       deleteOrderVisible: true,
-      userOrderId: record.userOrderId
+      userOrderId: record.userOrderId,
+      orderNum: record.reserveTotal
     })
   }
   save (form, key) {
@@ -230,7 +233,7 @@ export class WriterForm extends Component {
       console.log(error)
     })
   }
-  OnCancel=() => {
+  OnCancel=(record) => {
     this.setState({
       deleteOrderVisible: false
     })
@@ -304,7 +307,7 @@ export class WriterForm extends Component {
           footer={null}
           onCancel={this.OnCancel}
         >
-          <DeleteOrder userOrderId={this.state.userOrderId} onCancel={this.OnCancel} getWriterOrder={this.getWriterOrder} />
+          <DeleteOrder orderNum={this.state.orderNum} userOrderId={this.state.userOrderId} onCancel={this.OnCancel} getWriterOrder={this.getWriterOrder} />
         </Modal>
       </div>
     )

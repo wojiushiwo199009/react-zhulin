@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import ajax from '../../api'
-import { Form, Button, Row, Col, message, Input } from 'antd'
+import { Form, Button, Row, Col, message, InputNumber } from 'antd'
 const FormItem = Form.Item
 export class AddOrderForm extends Component {
   constructor (props) {
@@ -71,14 +71,14 @@ export class AddOrderForm extends Component {
     const { getFieldDecorator } = this.props.form
     return (
       <Form onSubmit={this.handleSubmit} >
-        <FormItem {...formItemLayout} label='预订数量'>
+        <FormItem {...formItemLayout} label='预约数量'>
           {getFieldDecorator('total', {
             initialValue: '',
-            rules: [{ required: true, message: '请填写预订数量!' }, {
+            rules: [{ required: true, message: '请填写预约数量!' }, {
               validator: this.validateOriginalLevel
             }]
           })(
-            <Input placeholder='请填写预订数量' />
+            <InputNumber min={1} style={{width: '200px'}} placeholder='请填写预约数量' />
           )}
         </FormItem>
         <FormItem>

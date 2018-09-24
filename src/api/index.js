@@ -224,5 +224,13 @@ export default {
   // 把商家或者写手分配至其他管理员
   getUserUpdateAdmin: (params, sucFn, errFn) => {
     ajax('post', '/user/update_admin', params, sucFn, errFn)
+  },
+  // 写手订单取消时间
+  getAdminMerchantOrderLimitTime: (params, sucFn, errFn) => {
+    ajax('get', '/admin/merchant/order/limit_time', params, sucFn, errFn)
+  },
+  // 更新写手订单取消时间
+  getAdminMerchantOrderTime: (params, sucFn, errFn) => {
+    ajax('post', '/admin/merchant/order/time', params, sucFn, errFn)
   }
 }

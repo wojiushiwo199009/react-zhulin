@@ -296,7 +296,7 @@ export default class EditableTable extends React.Component {
           originalLevel: resData.originalLevel,
           picture: resData.picture,
           type: resData.type === 1 ? '养号文' : '流量文',
-          endTime: moment.unix(parseInt(resData.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'),
+          endTime: resData.endTime ? moment.unix(parseInt(resData.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss') : '--',
           wordCount: resData.wordCount,
           userOrderId: location.hash.split('=')[1],
           data: response.data.orderEssayRecords

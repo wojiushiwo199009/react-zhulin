@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import ajax from '../../api'
-import { Form, Input, Button, Row, Col, message, DatePicker, Radio, InputNumber } from 'antd'
+import { Form, Input, Button, Row, Col, message, DatePicker, Radio, InputNumber, Tooltip, Icon } from 'antd'
 // 商户修改订单的时候，根据订单字段orderStatus的状态判断修改哪些字段。当orderStatus为0或8时，可以修改所有的字段，当orderStatus为1或2时只能修改文章数量total
 const FormItem = Form.Item
 const RadioGroup = Radio.Group
@@ -100,8 +100,8 @@ export class AddOrderForm extends Component {
       if (value && myreg.test(value)) {
         callback()
       } else {
-        let validatemobile = '请输入正确的原创度!'
-        callback(validatemobile)
+        let validateOriginLevel = '请输入正确的原创度!'
+        callback(validateOriginLevel)
       }
     } else {
       callback()
@@ -134,7 +134,7 @@ export class AddOrderForm extends Component {
       }
     }
     const { getFieldDecorator } = this.props.form
-
+    const text = '原创度最高为100，最低为0'
     return (
       <Form onSubmit={this.handleSubmit} >
         <FormItem {...formItemLayout} label='文章数量'>
@@ -142,7 +142,7 @@ export class AddOrderForm extends Component {
             initialValue: this.state.modalObj.total,
             rules: [{required: true, message: '请输入文章数量'}]
           })(
-            <InputNumber min={1} max={10} />
+            <InputNumber min={1} style={{width: '180px'}} />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label='定价'>
@@ -154,7 +154,7 @@ export class AddOrderForm extends Component {
               }
             ]
           })(
-            <Input placeholder='请输入定价' disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : (this.state.modalObj['orderStatus'] === (1 || 2))} />
+            <InputNumber style={{width: '180px'}} placeholder='请输入定价' disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : (this.state.modalObj['orderStatus'] === (1 || 2))} />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label='文章领域'>
@@ -194,7 +194,12 @@ export class AddOrderForm extends Component {
               validator: this.validateOriginalLevel
             }]
           })(
-            <Input placeholder='请输入原创度要求' disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : (this.state.modalObj['orderStatus'] === (1 || 2))} />
+            <div>
+              <InputNumber style={{width: '180px', marginRight: '10px'}} placeholder='请输入原创度要求' disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : (this.state.modalObj['orderStatus'] === (1 || 2))} />
+              <Tooltip placement='bottom' title={text}>
+                <Icon type='question-circle' theme='outlined' />
+              </Tooltip>
+            </div>
           )}
         </FormItem>
         <FormItem {...formItemLayout} label='图片数量要求'>
@@ -204,7 +209,7 @@ export class AddOrderForm extends Component {
               required: true, message: '请输入图片数量要求!'
             }]
           })(
-            <InputNumber min={1} max={10} disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : (this.state.modalObj['orderStatus'] === (1 || 2))} />
+            <InputNumber min={0} disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : (this.state.modalObj['orderStatus'] === (1 || 2))} />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label='类型'>

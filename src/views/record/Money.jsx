@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import ajax from '../../api'
-import { Form, Button, Row, Col, message, Input } from 'antd'
+import { Form, Button, Row, Col, message } from 'antd'
 const FormItem = Form.Item
 export class MoneyForm extends Component {
   constructor (props) {

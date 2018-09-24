@@ -28,7 +28,7 @@ export class RecordForm extends Component {
     startTime: '',
     endTime: '',
     orderCode: '',
-    status: 0,
+    status: 1,
     modalTitle: '发布订单',
     modalObj: {
       id: '',
@@ -145,12 +145,12 @@ export class RecordForm extends Component {
       }, {
         title: '发布时间',
         dataIndex: 'createdAt',
-        render: text => <span>{moment.unix(parseInt(text.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss')}</span>
+        render: text => <span>{text ? moment.unix(parseInt(text.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss') : '--'}</span>
       },
       {
         title: '我的截稿时间',
         dataIndex: 'adminEndTime',
-        render: text => <span>{moment.unix(parseInt(text.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss')}</span>
+        render: text => <span>{text ? moment.unix(parseInt(text.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss') : '--'}</span>
       }, {
         title: '审核结果',
         dataIndex: 'result',
@@ -421,7 +421,7 @@ export class RecordForm extends Component {
             this.state.columns.splice(8, 0, {
               title: '商家的截稿时间',
               dataIndex: 'endTime',
-              render: text => <span>{moment.unix(parseInt(text.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss')}</span>
+              render: text => <span>{text ? moment.unix(parseInt(text.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss') : '--'}</span>
             })
           } else if (this.state.userRole === 3) {
             this.state.columns.map((item, index) => {
@@ -443,6 +443,7 @@ export class RecordForm extends Component {
               }
             })
             this.setState({
+              status: 1,
               statusArr: [
                 {
                   name: '发布中',

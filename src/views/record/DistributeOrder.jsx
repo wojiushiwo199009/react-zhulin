@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import ajax from '../../api'
-import { Form, Button, Row, Col, message, Select, Input } from 'antd'
+import { Form, Button, Row, Col, message, Select, InputNumber } from 'antd'
 const FormItem = Form.Item
 const Option = Select.Option
 export class AddOrderForm extends Component {
@@ -109,7 +109,7 @@ export class AddOrderForm extends Component {
               validator: this.validateOriginalLevel
             }]
           })(
-            <Input placeholder='请填写预约数量' />
+            <InputNumber min={1} style={{width: '180px'}} placeholder='请填写预约数量' />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label='选择用户'>

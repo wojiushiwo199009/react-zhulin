@@ -54,7 +54,7 @@ export class AddRowForm extends Component {
           {getFieldDecorator('money', {
             rules: [{ required: true, message: '请输入提现金额!' }]
           })(
-            <InputNumber placeholder='请输入提现金额' />
+            <InputNumber style={{width: '180px'}} placeholder='请输入提现金额' />
           )}
         </FormItem>
         <FormItem>

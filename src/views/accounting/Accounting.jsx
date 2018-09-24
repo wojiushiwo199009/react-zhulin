@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 // import Cookies from 'js-cookie'
 import PropTypes from 'prop-types'
-import { Table, Button, Form, Input, Modal, Select, Popconfirm, message, Divider, Row, Col, DatePicker } from 'antd'
+import { Table, Button, Form, Select, Popconfirm, message, Row, Col, DatePicker } from 'antd'
 import moment from 'moment'
 import './accounting.scss'
 import ajax from '../../api'
@@ -52,7 +52,7 @@ export class WriterForm extends Component {
       {
         title: '创建时间',
         dataIndex: 'createdAt',
-        render: text => <span>{moment.unix(parseInt(text.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss')}</span>
+        render: text => <span>{text ? moment.unix(parseInt(text.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss') : '--'}</span>
       }
     ]
   };

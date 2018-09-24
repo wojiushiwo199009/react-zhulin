@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Table, Input, InputNumber, Popconfirm, Form, Button, Modal, message, Divider } from 'antd'
 import AddRow from './AddRow'
+import moment from 'moment'
 import ajax from '../../api'
 
 const FormItem = Form.Item
@@ -48,7 +49,7 @@ class CashCell extends React.Component {
                   {getFieldDecorator(dataIndex, {
                     rules: [{
                       required: true,
-                      message: `Please Input ${title}!`
+                      message: `请输入 ${title}!`
                     }],
                     initialValue: record[dataIndex]
                   })(this.getInput())}
@@ -92,9 +93,7 @@ export default class EditableTable extends React.Component {
       {
         title: '申请时间',
         dataIndex: 'Time',
-        render: (text, record, index) => {
-          return index + 1
-        }
+        render: text => <span>{text ? moment.unix(parseInt(text.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss') : '--'}</span>
       },
       {
         title: '申请金额',
@@ -198,10 +197,7 @@ export default class EditableTable extends React.Component {
              this.columns = [
                {
                  title: '申请时间',
-                 dataIndex: 'Time',
-                 render: (text, record, index) => {
-                   return index + 1
-                 }
+                 render: text => <span>{text ? moment.unix(parseInt(text.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss') : '--'}</span>
                },
                {
                  title: '申请金额',
