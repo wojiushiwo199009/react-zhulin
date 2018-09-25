@@ -234,7 +234,7 @@ export default {
     ajax('post', '/admin/merchant/order/time', params, sucFn, errFn)
   },
   // 商家催稿
- MerchantOrderUrge: (params, sucFn, errFn) => {
+  MerchantOrderUrge: (params, sucFn, errFn) => {
     ajax('post', '/merchant/order/urge/email', params, sucFn, errFn)
   }
 }

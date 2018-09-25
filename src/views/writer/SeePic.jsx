@@ -12,7 +12,7 @@ state={
       picturePixel: ''
     }
   ],
-   orderEssayId: this.props.orderEssayId
+  orderEssayId: this.props.orderEssayId
 }
 onChange=(a, b, c) => {
   console.log(a, b, c)
@@ -50,7 +50,7 @@ render () {
       <Carousel afterChange={this.onChange}>
         {
           this.state.ImageArr.map((item, index) => {
-            let ImgSrc = axiosImgUrl+ item.pictureName
+            let ImgSrc = axiosImgUrl + item.pictureName
             return (
               <div className='pic' key={index}>
                 <img src={ImgSrc} alt='' style={{height: '100%', width: '100%', display: 'block', margin: '0 auto'}} />

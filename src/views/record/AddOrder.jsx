@@ -154,7 +154,7 @@ export class AddOrderForm extends Component {
               }
             ]
           })(
-            <InputNumber style={{width: '180px'}} placeholder='请输入定价' disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : true />
+            <InputNumber style={{width: '180px'}} placeholder='请输入定价' disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : true} />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label='文章领域'>
@@ -172,7 +172,7 @@ export class AddOrderForm extends Component {
             initialValue: this.state.modalObj.notes,
             rules: []
           })(
-            <Input placeholder='请输入备注' disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit :true} />
+            <Input placeholder='请输入备注' disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : true} />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label='订单标题'>
@@ -220,7 +220,7 @@ export class AddOrderForm extends Component {
             }]
           })(
             <RadioGroup>
-              <Radio value={0} disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit :true}>流量文</Radio>
+              <Radio value={0} disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : true}>流量文</Radio>
               <Radio value={1} disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : true} >养号文</Radio>
             </RadioGroup>
           )}
