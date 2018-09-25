@@ -13,7 +13,8 @@ export default class DetailOrder extends Component {
     vertifyVisable: false,
     verifyStatus: '',
     userType: '',
-    orderCode: '1',
+    orderCode: '',
+    require: '',
     eassyTotal: 1,
     merchantPrice: '200',
     eassyType: 1,
@@ -40,7 +41,7 @@ export default class DetailOrder extends Component {
           return (
             <div>
               {
-                text === 0 ? <span>待管理员审核</span> : (text === 1) ? <span>商家退稿</span> : (text === 2) ? <span>收稿成功</span> : (text === 3) ? <span>商家已打款</span> : (text === 4) ? <span>待商家审核</span> : (text === 5) ? <span>商家退稿</span> : (text === 6) ? <span>管理员已打款</span> : ''
+                text === 0 ? <span>待管理员审核</span> : (text === 1) ? <span>商家退稿</span> : (text === 2) ? <span>收稿成功</span> : (text === 3) ? <span>商家已打款</span> : (text === 4) ? <span>待商家审核</span> : (text === 5) ? <span>管理员不通过</span> : (text === 6) ? <span>管理员已打款</span> : ''
               }
             </div>
           )
@@ -186,7 +187,8 @@ export default class DetailOrder extends Component {
           type: resData.type === 1 ? '养号文' : '流量文',
           endTime: moment.unix(parseInt(resData.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'),
           wordCount: resData.wordCount,
-          userId: resData.userId
+          userId: resData.userId,
+          require: resData.require
         })
       } else {
         message.error('请求失败，请稍后再试')
@@ -232,13 +234,16 @@ export default class DetailOrder extends Component {
           </Row>
           <Row>
             <Col span={8}>文章数量:{this.state.eassyTotal}</Col>
-            <Col span={8}>原创度:{this.state.originalLevel}</Col>
+            <Col span={8}>原创度要求:{this.state.originalLevel}</Col>
             <Col span={8}>图片数量要求:{this.state.picture}</Col>
           </Row>
           <Row>
             <Col span={8}>字数要求:{this.state.wordCount}</Col>
             <Col span={8}>文章类型:{this.state.type}</Col>
             <Col span={8}>截止交稿时间:{this.state.endTime}</Col>
+          </Row>
+          <Row>
+            <Col span={8}>订单要求:{this.state.require}</Col>
           </Row>
         </div>
         {

@@ -107,7 +107,7 @@ export default class EditableTable extends React.Component {
         dataIndex: 'essayTitle'
       },
       {
-        title: 'Word标题',
+        title: '文件名称',
         dataIndex: 'eassyFile'
       },
       {
@@ -161,14 +161,14 @@ export default class EditableTable extends React.Component {
                   </Popconfirm>
                 </span>
               ) : (
-                record.result.indexOf('通过') > -1 ? ''
+                record.result && record.result.indexOf('通过') > -1 ? ''
                   : <a onClick={() => this.edit(record)}>编辑<Divider type='vertical' /></a>
 
               )}
               {/* text === 0 ? <span>待管理员审核</span> : (text === 1) ? <span>商家退稿</span> : (text === 2) ? <span>收稿成功</span> : (text === 3) ? <span>商家已打款</span> : (text === 4) ? <span>待商家审核</span> : (text === 5) ? <span>管理员退稿</span> : (text === 6) ? <span>管理员已打款</span> : '' */}
 
               {
-                record.result.indexOf('通过') > -1 ? ''
+                record.result && record.result.indexOf('通过') > -1 ? ''
                   : <Popconfirm title='确定删除吗?' onConfirm={() => this.handleDelete(record)}>
                     <a href='javascript:;' className='delete'>删除<Divider type='vertical' /></a>
                   </Popconfirm>
@@ -298,6 +298,7 @@ export default class EditableTable extends React.Component {
           type: resData.type === 1 ? '养号文' : '流量文',
           endTime: resData.endTime ? moment.unix(parseInt(resData.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss') : '--',
           wordCount: resData.wordCount,
+          require: resData.require,
           userOrderId: location.hash.split('=')[1],
           data: response.data.orderEssayRecords
         })
@@ -360,13 +361,16 @@ export default class EditableTable extends React.Component {
           </Row>
           <Row>
             <Col span={8}>文章数量:{this.state.eassyTotal}</Col>
-            <Col span={8}>原创度:{this.state.originalLevel}</Col>
+            <Col span={8}>原创度要求:{this.state.originalLevel}</Col>
             <Col span={8}>图片数量要求:{this.state.picture}</Col>
           </Row>
           <Row>
             <Col span={8}>字数要求:{this.state.wordCount}</Col>
             <Col span={8}>文章类型:{this.state.type}</Col>
             <Col span={8}>截止交稿时间:{this.state.endTime}</Col>
+          </Row>
+          <Row>
+            <Col span={8}>订单要求:{this.state.require}</Col>
           </Row>
         </div>
         <Table

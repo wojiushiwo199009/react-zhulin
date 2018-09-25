@@ -17,17 +17,17 @@ export class AddRowForm extends Component {
           if (response.state.stateCode === 0) {
             let msg = response.state.stateMessage || '提现成功'
             message.success(msg)
-            this.props.getUserList()
+            this.props.WriterCashList()
             this.handleCancel()
           } else {
             let msg = response.state.stateMessage || '提现失败，请重新填写'
             message.error(msg)
-            this.props.getUserList()
+            this.props.WriterCashList()
           }
         }, error => {
           console.log(error)
           message.error('提现失败，请重新填写')
-          this.props.getUserList()
+          this.props.WriterCashList()
           this.handleCancel()
         })
       }
@@ -54,7 +54,7 @@ export class AddRowForm extends Component {
           {getFieldDecorator('money', {
             rules: [{ required: true, message: '请输入提现金额!' }]
           })(
-            <InputNumber style={{width: '180px'}} placeholder='请输入提现金额' />
+            <InputNumber style={{width: '180px'}} placeholder='请输入提现金额' precision={2}/>
           )}
         </FormItem>
         <FormItem>
@@ -72,7 +72,7 @@ const AddRow = Form.create()(AddRowForm)
 AddRowForm.propTypes = {
   form: PropTypes.object,
   handleOk: PropTypes.func,
-  getUserList: PropTypes.func,
+  WriterCashList: PropTypes.func,
   onCancel: PropTypes.func
 }
 export default AddRow

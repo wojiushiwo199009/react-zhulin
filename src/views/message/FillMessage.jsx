@@ -12,6 +12,7 @@ export class MessageForm extends Component {
         qq: '',
         weChat: '',
         email: '',
+        creditLevel: '',
         address: '',
         sex: 0,
         age: '',
@@ -130,6 +131,7 @@ export class MessageForm extends Component {
             qq: resData.qq,
             weChat: resData.wechat,
             email: resData.email,
+            creditLevel: resData.creditLevel,
             address: resData.address,
             sex: resData.sex,
             age: resData.age,
@@ -210,6 +212,16 @@ export class MessageForm extends Component {
               }]
             })(
               <Input placeholder='请输入邮箱' />
+            )}
+          </FormItem>
+          <FormItem {...formItemLayout} label='信用分'>
+            {getFieldDecorator('creditLevel', {
+              initialValue: this.state.modalObj.creditLevel,
+              rules: [{
+                required: true, message: ''
+              }]
+            })(
+              <Input placeholder='' disabled />
             )}
           </FormItem>
           <FormItem {...formItemLayout} label='地址'>

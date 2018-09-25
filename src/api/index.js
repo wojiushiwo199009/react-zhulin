@@ -232,5 +232,9 @@ export default {
   // 更新写手订单取消时间
   getAdminMerchantOrderTime: (params, sucFn, errFn) => {
     ajax('post', '/admin/merchant/order/time', params, sucFn, errFn)
+  },
+  // 商家催稿
+ MerchantOrderUrge: (params, sucFn, errFn) => {
+    ajax('post', '/merchant/order/urge/email', params, sucFn, errFn)
   }
 }

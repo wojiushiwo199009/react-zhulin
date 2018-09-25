@@ -63,24 +63,12 @@ export class RecordForm extends Component {
         value: 2
       },
       {
-        name: '待点评',
-        value: 3
-      },
-      {
         name: '商家已打款',
         value: 4
       },
       {
-        name: '取消',
-        value: 5
-      },
-      {
         name: '已截稿',
         value: 6
-      },
-      {
-        name: '管理员已完成(已打款)',
-        value: 7
       },
       {
         name: '审核未通过',
@@ -124,7 +112,7 @@ export class RecordForm extends Component {
       }, {
         title: '已预约数量',
         dataIndex: 'appointTotal',
-        render: text => <span>{text || 'null'}</span>
+        render: text => <span>{text}</span>
       }, {
         title: '我的定价',
         dataIndex: 'adminPrice'
@@ -170,7 +158,7 @@ export class RecordForm extends Component {
                 (this.state.userRole === 2 && record.orderStatus === 0) ? <a onClick={() => this.handleVerify(record)}>审核<Divider type='vertical' /></a> : ''
               }
               {
-                (this.state.userRole === 3 && (record.orderStatus === 0 || record.orderStatus === 8)) ? <a onClick={() => this.edit(record)}>编辑<Divider type='vertical' /></a> : ''
+                (this.state.userRole === 3 && record.orderStatus === 1) ? <a onClick={() => this.edit(record)}>编辑<Divider type='vertical' /></a> : ''
               }
               {
                 (this.state.userRole === 3 && (record.orderStatus === 0 || record.orderStatus === 8)) ? <Popconfirm title='确定删除吗?' onConfirm={() => this.handleDelete(record)}><a href='javascript:;' className='delete'>删除<Divider type='vertical' /></a></Popconfirm> : ''
@@ -183,6 +171,9 @@ export class RecordForm extends Component {
               }
               {
                 (this.state.userRole === 2 && record.orderStatus === 4) ? <Popconfirm title='确定打款吗?' onConfirm={() => this.handleConfirmMoney(record)}><a href='javascript:;'>确认商家打款<Divider type='vertical' /></a></Popconfirm> : ''
+              }
+              {
+                (this.state.userRole === 3 && record.orderStatus === 1) ? <Popconfirm title='确定催稿吗?' onConfirm={() => this.handleReminder(record)}><a href='javascript:;'>催稿<Divider type='vertical' /></a></Popconfirm> : ''
               }
               {
                 <a href='javascript:;' onClick={() => this.handleDetail(record)}>查看详情</a>
@@ -213,6 +204,22 @@ export class RecordForm extends Component {
         require: '',
         wordCount: 2000
       }
+    })
+  }
+  handleReminder=(record) => {
+    ajax.MerchantOrderUrge({ id: record.id }, response => {
+      if (response.state.stateCode === 0) {
+        message.success(response.state.stateMessage || '催稿成功')
+        // this.setState({ data: dataSource.filter(item => item.key !== record.key) })
+        this.getOrder()
+      } else {
+        message.error('催稿失败，请重试')
+        this.getOrder()
+      }
+    }, error => {
+      console.log(error)
+      message.error('催稿失败，请重试')
+      this.getOrder()
     })
   }
   handleSubmit=(e) => {
@@ -440,6 +447,9 @@ export class RecordForm extends Component {
               }
               if (item.dataIndex === 'adminEndTime') {
                 item.title = '截稿时间'
+              }
+              if (item.dataIndex === 'result') {
+                this.state.columns.splice(index, 1)
               }
             })
             this.setState({

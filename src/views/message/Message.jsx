@@ -16,6 +16,7 @@ export default class Message extends Component {
     profession: '',
     good: '',
     fullTime: 0,
+    creditLevel: '',
     payPicture: '',
     previewVisible: false,
     previewImage: '',
@@ -63,6 +64,7 @@ export default class Message extends Component {
           good: resData.good,
           fullTime: resData.fullTime,
           payPicture: resData.payPicture,
+          creditLevel: resData.creditLevel,
           fileList: [
             {
               uid: '-1',
@@ -139,6 +141,14 @@ export default class Message extends Component {
           </Col>
           <Col className='gutter-row' span={16}>
             <div className='gutter-box'>{this.state.email}</div>
+          </Col>
+        </Row>
+        <Row gutter={20}>
+          <Col className='gutter-row' span={8}>
+            <div className='gutter-box'>信用分:</div>
+          </Col>
+          <Col className='gutter-row' span={16}>
+            <div className='gutter-box'>{this.state.creditLevel}</div>
           </Col>
         </Row>
         <Row gutter={20}>

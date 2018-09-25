@@ -132,7 +132,7 @@ export class AuditFormForm extends Component {
           <Row>
             <Col span={6} offset={6}><Button onClick={this.handleCancel}>取消
             </Button></Col>
-            <Col span={6} offset={2}><Button type='primary' htmlType='submit' className='login-form-button'>审核通过</Button></Col>
+            <Col span={6} offset={2}><Button type='primary' htmlType='submit' className='login-form-button'>确定</Button></Col>
           </Row>
         </FormItem>
       </Form>

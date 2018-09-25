@@ -11,7 +11,8 @@ state={
       pictureName: '',
       picturePixel: ''
     }
-  ]
+  ],
+   orderEssayId: this.props.orderEssayId
 }
 onChange=(a, b, c) => {
   console.log(a, b, c)
@@ -40,20 +41,16 @@ SeePic=() => {
 }
 componentDidMount () {
   console.log(this.props.orderEssayId, 'iiiiiiiii')
-  this.setState({
-    orderEssayId: this.props.orderEssayId
-  }, () => {
-    this.SeePic()
-  })
+  this.SeePic()
 }
 render () {
-  console.log(this.props, 'jjjj')
+  let axiosImgUrl = axiosUrl + '/user/file/'
   return (
     <div className='see-pic'>
       <Carousel afterChange={this.onChange}>
         {
           this.state.ImageArr.map((item, index) => {
-            let ImgSrc = 'http://www.sso.hlvan.cn:21200/user/file/' + item.pictureName
+            let ImgSrc = axiosImgUrl+ item.pictureName
             return (
               <div className='pic' key={index}>
                 <img src={ImgSrc} alt='' style={{height: '100%', width: '100%', display: 'block', margin: '0 auto'}} />

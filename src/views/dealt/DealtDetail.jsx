@@ -16,6 +16,7 @@ export default class DealtDetail extends Component {
     creditLevel: '',
     good: '',
     result: '',
+    require: '',
     columns: [
       {
         title: '文章标题',
@@ -139,6 +140,7 @@ export default class DealtDetail extends Component {
           qq: response.data.qq,
           creditLevel: response.data.creditLevel,
           good: response.data.good,
+          require: response.data.require,
           result: response.data.result === '1' ? '待提交信息' : (response.data.result === '2') ? '待审核' : (response.data.result === '3') ? '审核成功' : (response.data.result === '4') ? '审核失败' : (response.data.result === '5') ? '禁用' : ''
         })
       } else {
@@ -191,6 +193,9 @@ export default class DealtDetail extends Component {
             <Col span={8}>信用等级:{this.state.creditLevel}</Col>
             <Col span={8}>擅长:{this.state.good}</Col>
             <Col span={8}>审核结果:{this.state.result}</Col>
+          </Row>
+          <Row>
+            <Col span={8}>订单要求:{this.state.require}</Col>
           </Row>
         </div>
         {

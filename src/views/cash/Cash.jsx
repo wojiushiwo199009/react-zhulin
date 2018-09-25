@@ -260,7 +260,7 @@ export default class EditableTable extends React.Component {
            onCancel={this.handleCancel}
            footer={null}
          >
-           <AddRow onCancel={this.handleCancel} getUserList={this.getUserList} />
+           <AddRow onCancel={this.handleCancel} WriterCashList={this.WriterCashList} />
          </Modal>
          <Table
            components={components}

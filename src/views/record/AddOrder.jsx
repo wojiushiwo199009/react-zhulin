@@ -96,7 +96,7 @@ export class AddOrderForm extends Component {
   validateOriginalLevel = (rule, value, callback) => {
     console.log(rule, value)
     if (value) {
-      let myreg = /(^[1-9]+$)/
+      let myreg = /(^[0-9]+$)/
       if (value && myreg.test(value)) {
         callback()
       } else {
@@ -154,7 +154,7 @@ export class AddOrderForm extends Component {
               }
             ]
           })(
-            <InputNumber style={{width: '180px'}} placeholder='请输入定价' disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : (this.state.modalObj['orderStatus'] === (1 || 2))} />
+            <InputNumber style={{width: '180px'}} placeholder='请输入定价' disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : true />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label='文章领域'>
@@ -164,7 +164,7 @@ export class AddOrderForm extends Component {
               required: true, message: '请输入文章领域!'
             }]
           })(
-            <Input placeholder='请输入文章领域' disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : (this.state.modalObj['orderStatus'] === (1 || 2))} />
+            <Input placeholder='请输入文章领域' disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : true} />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label='备注'>
@@ -172,7 +172,7 @@ export class AddOrderForm extends Component {
             initialValue: this.state.modalObj.notes,
             rules: []
           })(
-            <Input placeholder='请输入备注' disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : (this.state.modalObj['orderStatus'] === (1 || 2))} />
+            <Input placeholder='请输入备注' disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit :true} />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label='订单标题'>
@@ -182,7 +182,7 @@ export class AddOrderForm extends Component {
               required: true, message: '请输入订单标题!'
             }]
           })(
-            <Input placeholder='请输入订单标题' disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : (this.state.modalObj['orderStatus'] === (1 || 2))} />
+            <Input placeholder='请输入订单标题' disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : true} />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label='原创度要求'>
@@ -195,7 +195,7 @@ export class AddOrderForm extends Component {
             }]
           })(
             <div>
-              <InputNumber style={{width: '180px', marginRight: '10px'}} placeholder='请输入原创度要求' disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : (this.state.modalObj['orderStatus'] === (1 || 2))} />
+              <InputNumber style={{width: '180px', marginRight: '10px'}} placeholder='请输入原创度要求' disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : true} />
               <Tooltip placement='bottom' title={text}>
                 <Icon type='question-circle' theme='outlined' />
               </Tooltip>
@@ -209,7 +209,7 @@ export class AddOrderForm extends Component {
               required: true, message: '请输入图片数量要求!'
             }]
           })(
-            <InputNumber min={0} disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : (this.state.modalObj['orderStatus'] === (1 || 2))} />
+            <InputNumber min={0} disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : true} />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label='类型'>
@@ -220,8 +220,8 @@ export class AddOrderForm extends Component {
             }]
           })(
             <RadioGroup>
-              <Radio value={0} disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : (this.state.modalObj['orderStatus'] === (1 || 2))}>流量文</Radio>
-              <Radio value={1} disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : (this.state.modalObj['orderStatus'] === (1 || 2))} >养号文</Radio>
+              <Radio value={0} disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit :true}>流量文</Radio>
+              <Radio value={1} disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : true} >养号文</Radio>
             </RadioGroup>
           )}
         </FormItem>
@@ -232,7 +232,7 @@ export class AddOrderForm extends Component {
               required: true, message: '请选择截止交稿时间!'
             }]
           })(
-            <DatePicker onChange={this.onChange} disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : (this.state.modalObj['orderStatus'] === (1 || 2))} />
+            <DatePicker onChange={this.onChange} disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : true} />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label='要求'>
@@ -242,7 +242,7 @@ export class AddOrderForm extends Component {
               required: true, message: '请输入要求!'
             }]
           })(
-            <Input placeholder='请输入要求' disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : (this.state.modalObj['orderStatus'] === (1 || 2))} />
+            <Input placeholder='请输入要求' disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : true} />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label='字数要求'>
@@ -251,7 +251,7 @@ export class AddOrderForm extends Component {
               required: true, message: '请输入字数要求!'
             }]
           })(
-            <InputNumber min={1} disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : (this.state.modalObj['orderStatus'] === (1 || 2))} />
+            <InputNumber min={1} disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : true} />
           )}
         </FormItem>
         <FormItem>
