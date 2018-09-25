@@ -7,7 +7,7 @@ const FormItem = Form.Item
 const Option = Select.Option
 export class AssignForm extends Component {
   state={
-    WriterParam: [],
+    WriterParam: '',
     id: '',
     adminArr: [
       {
@@ -86,7 +86,7 @@ export class AssignForm extends Component {
   }
   WriterChange=(val) => {
     this.setState({
-      WriterParam: [val]
+      WriterParam: val
     })
   }
   AdminChange=(val) => {
