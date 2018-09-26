@@ -12,6 +12,10 @@ const RangePicker = DatePicker.RangePicker
 
 export class WriterForm extends Component {
   state = {
+    pagination: {
+      current: 1,
+      pageSize: 10
+    },
     orderNum: 0,
     userRole: '',
     filteredInfo: null,
@@ -139,7 +143,9 @@ export class WriterForm extends Component {
       orderCode: this.state.orderCode,
       status: this.state.status,
       startTime: this.state.startTime,
-      endTime: this.state.endTime
+      endTime: this.state.endTime,
+      pageCount: this.state.pagination.pageSize,
+      pageId: this.state.pagination.current
     }
     ajax.SearchWriterOrder(params, response => {
       if (response.state.stateCode === 0) {
@@ -238,80 +244,89 @@ export class WriterForm extends Component {
       deleteOrderVisible: false
     })
   }
-  componentWillMount () {
-    this.getUserInfo()
-  }
-  componentDidMount () {
-    this.getWriterOrder()
-  }
-  render () {
-    const { getFieldDecorator } = this.props.form
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 8 }
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 }
-      }
-    }
-    return (
-      <div className='writer'>
-        <div className='title'>
-          {/* {
+   handleTableChange = (pagination) => {
+     const pager = { ...this.state.pagination }
+     pager.current = pagination.current
+     this.setState({
+       pagination: pager
+     }, () => {
+       this.getWriterOrder()
+     })
+   }
+   componentWillMount () {
+     this.getUserInfo()
+   }
+   componentDidMount () {
+     this.getWriterOrder()
+   }
+   render () {
+     const { getFieldDecorator } = this.props.form
+     const formItemLayout = {
+       labelCol: {
+         xs: { span: 24 },
+         sm: { span: 8 }
+       },
+       wrapperCol: {
+         xs: { span: 24 },
+         sm: { span: 16 }
+       }
+     }
+     return (
+       <div className='writer'>
+         <div className='title'>
+           {/* {
             this.state.userRole === 3 ? <Button type='primary' onClick={this.publicOrder}>发布订单</Button> : ''
           } */}
-          <Form layout='inline' onSubmit={this.handleSubmit} className='record-form'>
-            <FormItem
-              {...formItemLayout}
-              label='订单号'
-            >
-              {getFieldDecorator('orderCode', { initialValue: '' })(
-                <Input placeholder='请输入订单号' onChange={this.InpChange} />
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label='订单状态'
-            >
-              {getFieldDecorator('status', {
-                initialValue: this.state.status
-              })(
-                <Select placeholder='请选择订单状态' style={{ width: 120 }} onChange={this.selectChange}>
-                  {
-                    this.state.statusArr.map((item, index) => {
-                      return <Option key={index} value={item.value}>{item.name}</Option>
-                    })
-                  }
-                </Select>
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label='起止时间'
-            >
-              {(
-                <RangePicker onChange={this.onChange} />
-              )}
-            </FormItem>
-            <FormItem>
-              <Button type='primary' htmlType='submit'>查询</Button>
-            </FormItem>
-          </Form>
-        </div>
-        <Table columns={this.state.columns} dataSource={this.state.businessData} />
-        <Modal
-          title='取消预约'
-          visible={this.state.deleteOrderVisible}
-          footer={null}
-          onCancel={this.OnCancel}
-        >
-          <DeleteOrder orderNum={this.state.orderNum} userOrderId={this.state.userOrderId} onCancel={this.OnCancel} getWriterOrder={this.getWriterOrder} />
-        </Modal>
-      </div>
-    )
-  }
+           <Form layout='inline' onSubmit={this.handleSubmit} className='record-form'>
+             <FormItem
+               {...formItemLayout}
+               label='订单号'
+             >
+               {getFieldDecorator('orderCode', { initialValue: '' })(
+                 <Input placeholder='请输入订单号' onChange={this.InpChange} />
+               )}
+             </FormItem>
+             <FormItem
+               {...formItemLayout}
+               label='订单状态'
+             >
+               {getFieldDecorator('status', {
+                 initialValue: this.state.status
+               })(
+                 <Select placeholder='请选择订单状态' style={{ width: 120 }} onChange={this.selectChange}>
+                   {
+                     this.state.statusArr.map((item, index) => {
+                       return <Option key={index} value={item.value}>{item.name}</Option>
+                     })
+                   }
+                 </Select>
+               )}
+             </FormItem>
+             <FormItem
+               {...formItemLayout}
+               label='起止时间'
+             >
+               {(
+                 <RangePicker onChange={this.onChange} />
+               )}
+             </FormItem>
+             <FormItem>
+               <Button type='primary' htmlType='submit'>查询</Button>
+             </FormItem>
+           </Form>
+         </div>
+         <Table columns={this.state.columns} dataSource={this.state.businessData} pagination={this.state.pagination} onChange={this.handleTableChange} />
+         <Modal
+           title='取消预约'
+           visible={this.state.deleteOrderVisible}
+           footer={null}
+           onCancel={this.OnCancel}
+         >
+           <DeleteOrder orderNum={this.state.orderNum} userOrderId={this.state.userOrderId} onCancel={this.OnCancel} getWriterOrder={this.getWriterOrder} />
+         </Modal>
+       </div>
+     )
+   }
 }
 const Writer = Form.create()(WriterForm)
 

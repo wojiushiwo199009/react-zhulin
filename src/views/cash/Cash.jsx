@@ -77,11 +77,16 @@ export default class EditableTable extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
+      pagination: {
+        current: 1,
+        pageSize: 10
+      },
       data: [{
         id: '',
         key: '0',
-        Time: '',
+        createAt: '',
         money: 0,
+        account: '',
         status: ''
       }],
       userType: '',
@@ -92,7 +97,7 @@ export default class EditableTable extends React.Component {
     this.columns = [
       {
         title: '申请时间',
-        dataIndex: 'Time',
+        dataIndex: 'createAt',
         render: text => <span>{text ? moment.unix(parseInt(text.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss') : '--'}</span>
       },
       {
@@ -101,8 +106,17 @@ export default class EditableTable extends React.Component {
         editable: true
       },
       {
+        title: '提现用户',
+        dataIndex: 'account'
+      },
+      {
         title: '状态',
-        dataIndex: 'status'
+        dataIndex: 'status',
+        render: (text, record) => {
+          return (
+            text === 0 ? '待打款' : '已打款'
+          )
+        }
       },
       {
         title: '操作',
@@ -177,7 +191,9 @@ export default class EditableTable extends React.Component {
     })
   }
   WriterCashList = () => {
-    ajax.WriterCashList({}, response => {
+    ajax.WriterCashList({
+      pageCount: this.state.pagination.pageSize,
+      pageId: this.state.pagination.current}, response => {
       if (response.state.stateCode === 0) {
         this.setState({
           data: response.data
@@ -187,28 +203,28 @@ export default class EditableTable extends React.Component {
       console.log(error)
     })
   }
+   handleTableChange = (pagination) => {
+     const pager = { ...this.state.pagination }
+     pager.current = pagination.current
+     this.setState({
+       pagination: pager
+     }, () => {
+       this.WriterCashList()
+     })
+   }
    getUserInfo = () => {
+     let self = this
      ajax.getUserInfo({}, response => {
        if (response.state.stateCode === 0) {
-         this.setState({
+         self.setState({
            userType: response.data.type
          }, () => {
-           if (this.state.userType === 4) {
-             this.columns = [
-               {
-                 title: '申请时间',
-                 render: text => <span>{text ? moment.unix(parseInt(text.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss') : '--'}</span>
-               },
-               {
-                 title: '申请金额',
-                 dataIndex: 'money',
-                 editable: true
-               },
-               {
-                 title: '状态',
-                 dataIndex: 'status'
+           if (self.state.userType === 4) {
+             self.columns.map((item, index) => {
+               if (item.dataIndex === 'operation') {
+                 self.columns.splice(index, 1)
                }
-             ]
+             })
            }
          })
        }
@@ -268,6 +284,7 @@ export default class EditableTable extends React.Component {
            dataSource={this.state.data}
            columns={columns}
            rowClassName='editable-row'
+           pagination={this.state.pagination} onChange={this.handleTableChange}
          />
        </div>
      )

@@ -79,6 +79,10 @@ export default class EditableTable extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
+      pagination: {
+        current: 1,
+        pageSize: 10
+      },
       data: [{
         id: '',
         key: '0',
@@ -267,8 +271,20 @@ export default class EditableTable extends React.Component {
       assignVisible: false
     })
   }
+  handleTableChange = (pagination) => {
+    const pager = { ...this.state.pagination }
+    pager.current = pagination.current
+    this.setState({
+      pagination: pager
+    }, () => {
+      this.getUserList()
+    })
+  }
   getUserList=() => {
-    ajax.getUserList({}, response => {
+    ajax.getUserList({
+      pageCount: this.state.pagination.pageSize,
+      pageId: this.state.pagination.current
+    }, response => {
       if (response.state.stateCode === 0) {
         response.data.map((item, index) => {
           item.key = index + ''
@@ -336,6 +352,7 @@ export default class EditableTable extends React.Component {
           dataSource={this.state.data}
           columns={columns}
           rowClassName='editable-row'
+          pagination={this.state.pagination} onChange={this.handleTableChange}
         />
         <Modal title='分派'
           visible={this.state.assignVisible}

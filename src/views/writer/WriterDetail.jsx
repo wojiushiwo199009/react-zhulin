@@ -379,6 +379,7 @@ export default class EditableTable extends React.Component {
           dataSource={this.state.data}
           columns={columns}
           rowClassName='editable-row'
+          pagination={false}
         />
         <Modal title='创建文章'
           visible={visible}

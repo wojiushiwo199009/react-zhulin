@@ -58,7 +58,7 @@ export default class DetailOrder extends Component {
           return (
             <div>
               {
-                (this.state.userType === 2 || 3) ? <a href='javascript:;' onClick={() => this.verify(record)}>审核<Divider type='vertical' /></a> : ''
+                ((this.state.userType === 2 || this.state.userType === 3) && (record.status === 0 || record.status === 4)) ? <a href='javascript:;' onClick={() => this.verify(record)}>审核<Divider type='vertical' /></a> : ''
               }
               <a href='javascript:;' onClick={() => this.downLoad(record)}>下载<Divider type='vertical' /></a>
               <a href='javascript:;' onClick={() => this.seePic(record)}>查看图片</a>
@@ -131,7 +131,8 @@ export default class DetailOrder extends Component {
           type: resData.orderRecord.type === 1 ? '养号文' : '流量文',
           endTime: resData.orderRecord.endTime ? moment.unix(parseInt(resData.orderRecord.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss') : '--',
           wordCount: resData.orderRecord.wordCount,
-          userId: resData.orderRecord.userId
+          userId: resData.orderRecord.userId,
+          require: resData.require
         })
       } else {
         message.error('请求失败，请稍后再试')
@@ -162,7 +163,8 @@ export default class DetailOrder extends Component {
           type: resData.orderRecord.type === 1 ? '养号文' : '流量文',
           endTime: moment.unix(parseInt(resData.orderRecord.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'),
           wordCount: resData.orderRecord.wordCount,
-          userId: resData.orderRecord.userId
+          userId: resData.orderRecord.userId,
+          require: resData.require
         })
       } else {
         message.error('请求失败，请稍后再试')

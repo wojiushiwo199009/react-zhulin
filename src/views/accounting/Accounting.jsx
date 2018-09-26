@@ -13,6 +13,10 @@ const FormItem = Form.Item
 
 export class WriterForm extends Component {
   state = {
+    pagination: {
+      current: 1,
+      pageSize: 10
+    },
     userid: '',
     id: '',
     money: 0,
@@ -55,7 +59,7 @@ export class WriterForm extends Component {
         render: text => <span>{text ? moment.unix(parseInt(text.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss') : '--'}</span>
       }
     ]
-  };
+  }
 
   handleSubmit = (e) => {
     e.preventDefault()
@@ -65,10 +69,21 @@ export class WriterForm extends Component {
       }
     })
   }
+   handleTableChange = (pagination) => {
+     const pager = { ...this.state.pagination }
+     pager.current = pagination.current
+     this.setState({
+       pagination: pager
+     }, () => {
+       this.financeRecord()
+     })
+   }
   financeRecord = () => {
     let params = {
       startTime: this.state.startTime,
-      endTime: this.state.endTime
+      endTime: this.state.endTime,
+      pageCount: this.state.pagination.pageSize,
+      pageId: this.state.pagination.current
     }
     ajax.financeRecord(params, response => {
       if (response.state.stateCode === 0) {
@@ -155,7 +170,7 @@ export class WriterForm extends Component {
             </FormItem>
           </Form>
         </div>
-        <Table columns={this.state.columns} dataSource={this.state.accountData} />
+        <Table columns={this.state.columns} dataSource={this.state.accountData} pagination={this.state.pagination} onChange={this.handleTableChange} />
         {/* <Modal
           title='信息审核'
           visible={this.state.visible}

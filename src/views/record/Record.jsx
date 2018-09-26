@@ -16,6 +16,10 @@ const RangePicker = DatePicker.RangePicker
 
 export class RecordForm extends Component {
   state = {
+    pagination: {
+      current: 1,
+      pageSize: 10
+    },
     userRole: '',
     money: '',
     verifyVisible: false,
@@ -28,7 +32,7 @@ export class RecordForm extends Component {
     startTime: '',
     endTime: '',
     orderCode: '',
-    status: 1,
+    status: '',
     modalTitle: '发布订单',
     modalObj: {
       id: '',
@@ -235,7 +239,9 @@ export class RecordForm extends Component {
       orderCode: this.state.orderCode,
       status: this.state.status,
       startTime: this.state.startTime,
-      endTime: this.state.endTime
+      endTime: this.state.endTime,
+      pageCount: this.state.pagination.pageSize,
+      pageId: this.state.pagination.current
     }
     ajax.getOrder(params, response => {
       if (response.state.stateCode === 0) {
@@ -373,6 +379,15 @@ export class RecordForm extends Component {
       distributeVisible: true
     })
   }
+  handleTableChange = (pagination) => {
+    const pager = { ...this.state.pagination }
+    pager.current = pagination.current
+    this.setState({
+      pagination: pager
+    }, () => {
+      this.getOrder()
+    })
+  }
   save (form, key) {
     console.log(form, key)
     form.validateFields((error, row) => {
@@ -453,7 +468,6 @@ export class RecordForm extends Component {
               }
             })
             this.setState({
-              status: 1,
               statusArr: [
                 {
                   name: '发布中',
@@ -553,7 +567,7 @@ export class RecordForm extends Component {
             </FormItem>
           </Form>
         </div>
-        <Table columns={this.state.columns} dataSource={this.state.businessData} />
+        <Table columns={this.state.columns} dataSource={this.state.businessData} pagination={this.state.pagination} onChange={this.handleTableChange} />
         <Modal
           title={this.state.modalTitle}
           visible={this.state.visible}

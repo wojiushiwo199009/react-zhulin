@@ -86,7 +86,7 @@ export class AssignForm extends Component {
   }
   WriterChange=(val) => {
     this.setState({
-      WriterParam: val
+      WriterParam: `${val}`
     })
   }
   AdminChange=(val) => {

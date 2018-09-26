@@ -10,6 +10,10 @@ const FormItem = Form.Item
 
 export class WriterForm extends Component {
   state = {
+    pagination: {
+      current: 1,
+      pageSize: 10
+    },
     userid: '',
     id: '',
     visible: false,
@@ -118,7 +122,9 @@ export class WriterForm extends Component {
   AdminUserList = () => {
     let params = {
       account: this.state.account,
-      status: this.state.status
+      status: this.state.status,
+      pageCount: this.state.pagination.pageSize,
+      pageId: this.state.pagination.current
     }
     ajax.AdminUserList(params, response => {
       if (response.state.stateCode === 0) {
@@ -206,6 +212,15 @@ export class WriterForm extends Component {
       visible: false
     })
   }
+  handleTableChange = (pagination) => {
+    const pager = { ...this.state.pagination }
+    pager.current = pagination.current
+    this.setState({
+      pagination: pager
+    }, () => {
+      this.AdminUserList()
+    })
+  }
   componentWillMount () {
     this.getUserInfo()
   }
@@ -257,7 +272,7 @@ export class WriterForm extends Component {
             </FormItem>
           </Form>
         </div>
-        <Table columns={this.state.columns} dataSource={this.state.businessData} />
+        <Table columns={this.state.columns} dataSource={this.state.businessData} pagination={this.state.pagination} onChange={this.handleTableChange} />
         <Modal
           title='信息审核'
           visible={this.state.visible}
