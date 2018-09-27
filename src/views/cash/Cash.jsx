@@ -79,7 +79,8 @@ export default class EditableTable extends React.Component {
     this.state = {
       pagination: {
         current: 1,
-        pageSize: 10
+        pageSize: 10,
+        total: 1
       },
       data: [{
         id: '',
@@ -196,7 +197,8 @@ export default class EditableTable extends React.Component {
       pageId: this.state.pagination.current}, response => {
       if (response.state.stateCode === 0) {
         this.setState({
-          data: response.data
+          data: response.data,
+          pagination: { ...this.state.pagination, total: response.data.totalElements }
         })
       }
     }, error => {

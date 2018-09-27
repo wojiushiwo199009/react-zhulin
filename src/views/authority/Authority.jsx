@@ -81,7 +81,8 @@ export default class EditableTable extends React.Component {
     this.state = {
       pagination: {
         current: 1,
-        pageSize: 10
+        pageSize: 10,
+        total: 1
       },
       data: [{
         id: '',
@@ -290,7 +291,8 @@ export default class EditableTable extends React.Component {
           item.key = index + ''
         })
         this.setState({
-          data: response.data
+          data: response.data,
+          pagination: { ...this.state.pagination, total: response.data.totalElements }
         })
       } else {
         message.error('查询失败，请重试')

@@ -15,7 +15,8 @@ export class WriterForm extends Component {
   state = {
     pagination: {
       current: 1,
-      pageSize: 10
+      pageSize: 10,
+      total: 1
     },
     userid: '',
     id: '',
@@ -95,8 +96,8 @@ export class WriterForm extends Component {
           accountData: resData.tradeRecords,
           money: resData.userMoneyRecord.money,
           income: resData.income,
-          expend: resData.expend
-
+          expend: resData.expend,
+          pagination: { ...this.state.pagination, total: response.data.totalElements }
         })
       } else {
         message.error(response.state.stateMessage || '请稍后再试')

@@ -6,6 +6,7 @@ import {axiosUrl} from '../../api/axios'
 import './message.scss'
 const FormItem = Form.Item
 const RadioGroup = Radio.Group
+const PicUrl = `${axiosUrl}/user/file/upload/`
 export class MessageForm extends Component {
     state = {
       modalObj: {
@@ -26,7 +27,7 @@ export class MessageForm extends Component {
         uid: '-1',
         name: 'xxx.png',
         status: 'done',
-        url: `${axiosUrl}/user/file/upload`
+        url: PicUrl
       }]
     }
 
@@ -144,7 +145,8 @@ export class MessageForm extends Component {
           },
           fileList: [
             {
-              url: resData.payPicture
+              uid: '-1',
+              url: PicUrl + resData.payPicture
             }
           ]
         })
@@ -181,7 +183,7 @@ export class MessageForm extends Component {
         <div className='ant-upload-text'>Upload</div>
       </div>
     )
-    const PicUrl = `${axiosUrl}/user/file/upload`
+
     return (
       <div className='fill-message'>
         <Form onSubmit={this.handleSubmit} >

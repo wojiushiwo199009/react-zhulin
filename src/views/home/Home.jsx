@@ -139,20 +139,22 @@ export class Home extends Component {
           <Content style={{ margin: '90px 50px 0 50px',
             background: '#fff',
             overflow: 'hidden',
-            paddingBottom: '60px'}}>
+            paddingBottom: '60px',
+            overflowY: 'auto'
+          }}>
 
             {
               renderRoutes(this.props.route.childRoutes)
             }
           </Content>
-          <Footer style={{
+          {/* <Footer style={{
             textAlign: 'center',
             position: 'absolute',
             bottom: 0,
             height: '60px',
             width: '100%'}}>
               版权所有
-          </Footer>
+          </Footer> */}
         </Layout>
       </div>
     )

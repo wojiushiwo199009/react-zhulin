@@ -18,7 +18,8 @@ export class RecordForm extends Component {
   state = {
     pagination: {
       current: 1,
-      pageSize: 10
+      pageSize: 10,
+      total: 1
     },
     userRole: '',
     money: '',
@@ -249,7 +250,8 @@ export class RecordForm extends Component {
           item.key = index + ''
         })
         this.setState({
-          businessData: response.data.content
+          businessData: response.data.content,
+          pagination: { ...this.state.pagination, total: response.data.totalElements }
         })
       } else {
         message.error(response.state.stateMessage || '请稍后再试')
