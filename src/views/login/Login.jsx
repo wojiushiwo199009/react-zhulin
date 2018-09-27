@@ -17,6 +17,7 @@ export class HomePageForm extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      role: 3,
       hasUser: false,
       phoneNumberNumber: '',
       user: '',
@@ -312,10 +313,15 @@ export class HomePageForm extends Component {
                           </Row>
                         </FormItem>
                         <FormItem>
-                          {getFieldDecorator('role')(
+                          {getFieldDecorator('role', {
+                            initialValue: this.state.role,
+                            rules: [{
+                              required: true, message: '请选择商家或者作者!'
+                            }]
+                          })(
                             <RadioGroup>
-                              <Radio value='3'>商家</Radio>
-                              <Radio value='4'>作者</Radio>
+                              <Radio value={3}>商家</Radio>
+                              <Radio value={4}>作者</Radio>
                             </RadioGroup>
                           )}
                           <a className='login-form-forgot gologin' href='javascript:;' onClick={this.goRegist}>已有账号？请登陆</a>

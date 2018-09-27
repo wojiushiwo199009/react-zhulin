@@ -84,7 +84,7 @@ export default class EditableTable extends React.Component {
       data: [{
         id: '',
         key: '0',
-        createAt: '',
+        createdAt: '',
         money: 0,
         account: '',
         status: ''
@@ -97,7 +97,7 @@ export default class EditableTable extends React.Component {
     this.columns = [
       {
         title: '申请时间',
-        dataIndex: 'createAt',
+        dataIndex: 'createdAt',
         render: text => <span>{text ? moment.unix(parseInt(text.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss') : '--'}</span>
       },
       {
@@ -145,7 +145,7 @@ export default class EditableTable extends React.Component {
         message.success(msg)
         this.getUserList()
       } else {
-        let msg = response.state.stateMessage || '打款成功'
+        let msg = response.state.stateMessage || '打款失败，请重试'
         message.error(msg)
         this.getUserList()
       }

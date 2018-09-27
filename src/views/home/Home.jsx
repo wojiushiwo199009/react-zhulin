@@ -116,7 +116,7 @@ export class Home extends Component {
                 this.state.userType === 2 ? <Menu.Item key='dealt'>账号信息</Menu.Item> : ''
               }
               {
-                (this.state.userType !== 1) ? <Menu.Item key='account'>财务对账</Menu.Item> : ''
+                (this.state.userType !== 1) ? <Menu.Item key='account'>交易记录</Menu.Item> : ''
               }
               {
                 (this.state.userType === 2 || this.state.userType === 4) ? <Menu.Item key='cash'>提现列表</Menu.Item> : ''
@@ -125,7 +125,7 @@ export class Home extends Component {
                 this.state.userType === 2 ? <Menu.Item key='admin-set'>设置</Menu.Item> : ''
               }
               {
-                this.state.userType === 1 ? <Menu.Item key='authority'>权限管理</Menu.Item> : ''
+                this.state.userType === 1 ? <Menu.Item key='authority'>用户管理</Menu.Item> : ''
               }
 
             </Menu>

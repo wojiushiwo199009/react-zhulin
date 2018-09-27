@@ -55,7 +55,7 @@ export default class Message extends Component {
         this.setState({
           name: resData.name,
           qq: resData.qq,
-          weChat: resData.wechat,
+          weChat: resData.weChat,
           email: resData.email,
           address: resData.address,
           sex: resData.sex,

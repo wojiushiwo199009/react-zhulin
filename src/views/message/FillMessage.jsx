@@ -9,6 +9,7 @@ const RadioGroup = Radio.Group
 export class MessageForm extends Component {
     state = {
       modalObj: {
+        name: '',
         qq: '',
         weChat: '',
         email: '',
@@ -40,7 +41,7 @@ export class MessageForm extends Component {
         ajax.getUserAdd(params, response => {
           if (response.state.stateCode === 0) {
             message.success(response.state.stateMessage || '修改成功')
-            this.props.history.push('/message-info')
+            this.props.history.push('/login')
           } else {
             message.error('修改失败，请重新填写')
           }
@@ -128,8 +129,9 @@ export class MessageForm extends Component {
         let resData = response.data
         this.setState({
           modalObj: {
+            name: resData.name,
             qq: resData.qq,
-            weChat: resData.wechat,
+            weChat: resData.weChat,
             email: resData.email,
             creditLevel: resData.creditLevel,
             address: resData.address,
@@ -183,6 +185,14 @@ export class MessageForm extends Component {
     return (
       <div className='fill-message'>
         <Form onSubmit={this.handleSubmit} >
+          <FormItem {...formItemLayout} label='姓名'>
+            {getFieldDecorator('name', {
+              initialValue: this.state.modalObj.name,
+              rules: [{ required: true, message: '请输入姓名!' }]
+            })(
+              <Input placeholder='请输入姓名' />
+            )}
+          </FormItem>
           <FormItem {...formItemLayout} label='qq号'>
             {getFieldDecorator('qq', {
               initialValue: this.state.modalObj.qq,

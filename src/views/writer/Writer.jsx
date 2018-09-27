@@ -48,7 +48,7 @@ export class WriterForm extends Component {
       {
         key: '1',
         orderCode: '',
-        essayTitle: '',
+        orderTitle: '',
         reserveTotal: 0,
         createdAt: '2018-02-07',
         adminPrice: 33,
@@ -63,7 +63,7 @@ export class WriterForm extends Component {
         render: text => <a href='javascript:;'>{text || '--'}</a>
       }, {
         title: '订单标题',
-        dataIndex: 'essayTitle',
+        dataIndex: 'orderTitle',
         render: text => <span>{text || '--'}</span>
       }, {
         title: '预约数量',

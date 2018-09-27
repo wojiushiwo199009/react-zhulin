@@ -150,7 +150,7 @@ export class WriterForm extends Component {
       <div className='account'>
         <div className='top'>
           <Row>
-            <Col span={8}>总金额:{this.state.money}</Col>
+            <Col span={8}>总余额:{this.state.money}</Col>
             <Col span={8}>收入:{this.state.income}</Col>
             <Col span={8}>支出:{this.state.expend}</Col>
           </Row>

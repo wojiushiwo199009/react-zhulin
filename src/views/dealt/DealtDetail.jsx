@@ -6,7 +6,7 @@ import ajax from '../../api'
 export default class DealtDetail extends Component {
   state = {
     userType: '',
-    orderCode: '',
+    // orderCode: '',
     name: '',
     sex: '',
     email: '',
@@ -16,7 +16,7 @@ export default class DealtDetail extends Component {
     creditLevel: '',
     good: '',
     result: '',
-    require: '',
+    // payPicture: '',
     columns: [
       {
         title: '文章标题',
@@ -94,7 +94,7 @@ export default class DealtDetail extends Component {
       if (response.state.stateCode === 0) {
         let resData = response.data
         this.setState({
-          orderCode: resData.orderRecord.orderCode,
+          // orderCode: resData.orderRecord.orderCode,
           eassyTotal: resData.orderRecord.eassyTotal,
           merchantPrice: resData.orderRecord.merchantPrice,
           eassyType: resData.orderRecord.eassyType,
@@ -131,7 +131,7 @@ export default class DealtDetail extends Component {
     ajax.AdminUserDetail({id: location.hash.split('=')[1]}, response => {
       if (response.state.stateCode === 0) {
         this.setState({
-          orderCode: response.data.code,
+          // orderCode: response.data.code,
           name: response.data.name,
           sex: response.data.sex,
           email: response.data.email,
@@ -140,7 +140,7 @@ export default class DealtDetail extends Component {
           qq: response.data.qq,
           creditLevel: response.data.creditLevel,
           good: response.data.good,
-          require: response.data.require,
+          // payPicture: response.data.payPicture,
           result: response.data.result === '1' ? '待提交信息' : (response.data.result === '2') ? '待审核' : (response.data.result === '3') ? '审核成功' : (response.data.result === '4') ? '审核失败' : (response.data.result === '5') ? '禁用' : ''
         })
       } else {
@@ -171,7 +171,8 @@ export default class DealtDetail extends Component {
     return (
       <div className='detail-order' >
         <div className='title'>
-          <h3>订单号:{this.state.orderCode}</h3>
+          {/* <h3>账号详情:{this.state.orderCode}</h3> */}
+          <h3>账号详情</h3>
           <Row>
             <Col span={8}>姓名:{this.state.name}</Col>
             <Col span={8}>性别:
@@ -195,7 +196,8 @@ export default class DealtDetail extends Component {
             <Col span={8}>审核结果:{this.state.result}</Col>
           </Row>
           <Row>
-            <Col span={8}>订单要求:{this.state.require}</Col>
+            {/* <Col span={8}>订单要求:{this.state.payPicture}</Col> */}
+            <Col span={8}>支付宝照片:{this.state.payPicture}</Col>
           </Row>
         </div>
         {
