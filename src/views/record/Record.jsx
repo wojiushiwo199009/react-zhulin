@@ -97,6 +97,7 @@ export class RecordForm extends Component {
         total: 2,
         appointTotal: 1,
         merchantPrice: 33,
+        account: 0,
         adminPrice: 33,
         createdAt: '2018-02-03',
         endTime: '2018-02-07',
@@ -438,11 +439,15 @@ export class RecordForm extends Component {
           userRole: response.data.type
         }, () => {
           if (this.state.userRole === 2) {
-            this.state.columns.splice(4, 0, {
+            this.state.columns.splice(1, 0, {
+              title: '来自商家',
+              dataIndex: 'account'
+            })
+            this.state.columns.splice(5, 0, {
               title: '商家定价',
               dataIndex: 'merchantPrice'
             })
-            this.state.columns.splice(8, 0, {
+            this.state.columns.splice(9, 0, {
               title: '商家的截稿时间',
               dataIndex: 'endTime',
               render: text => <span>{text ? moment.unix(parseInt(text.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss') : '--'}</span>

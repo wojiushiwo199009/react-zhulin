@@ -21,7 +21,7 @@ export class AddOrderForm extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err && !this.state.isEdit) {
         // let endTime = moment(values.endTime).format('YYYY-MM-DD')
-        let params = {...values, endTime: values.endTime ? moment(values.endTime).format('YYYY-MM-DD') : moment.unix(parseInt(this.state.verifyObj.endTime.toString().slice(0, 10))).format('YYYY-MM-DD')}
+        let params = {...values, endTime: values.endTime ? moment(values.endTime).format('YYYY-MM-DD HH:mm:ss') : moment.unix(parseInt(this.state.verifyObj.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss')}
         // console.log(params)
         // let formData = new FormData()
         // for (let i in values) {
@@ -43,7 +43,7 @@ export class AddOrderForm extends Component {
           this.props.getOrder()
         })
       } else if (!err && this.state.isEdit) {
-        let params = { ...values, endTime: values.endTime ? moment(values.endTime).format('YYYY-MM-DD') : moment.unix(parseInt(this.state.verifyObj.endTime.toString().slice(0, 10))).format('YYYY-MM-DD'), id: this.state.modalObj.id }
+        let params = { ...values, endTime: values.endTime ? moment(values.endTime).format('YYYY-MM-DD HH:mm:ss') : moment.unix(parseInt(this.state.verifyObj.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'), id: this.state.modalObj.id }
 
         ajax.updateOrder(params, response => {
           if (response.state.stateCode === 0) {
@@ -122,7 +122,7 @@ export class AddOrderForm extends Component {
     }
   }
   render () {
-    console.log(this.props, moment.unix(parseInt(this.state.modalObj.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'))
+    console.log(this.props, this.state.modalObj, moment.unix(parseInt(this.state.modalObj.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'))
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -158,8 +158,8 @@ export class AddOrderForm extends Component {
           )}
         </FormItem>
         <FormItem {...formItemLayout} label='文章领域'>
-          {getFieldDecorator('essayType', {
-            initialValue: this.state.modalObj.essayType,
+          {getFieldDecorator('eassyType', {
+            initialValue: this.state.modalObj.eassyType,
             rules: [{
               required: true, message: '请输入文章领域!'
             }]
@@ -194,12 +194,7 @@ export class AddOrderForm extends Component {
               validator: this.validateOriginalLevel
             }]
           })(
-            <div>
-              <InputNumber style={{width: '180px', marginRight: '10px'}} placeholder='请输入原创度要求' disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : true} />
-              <Tooltip placement='bottom' title={text}>
-                <Icon type='question-circle' theme='outlined' />
-              </Tooltip>
-            </div>
+            <Input placeholder='请输入原创度要求' disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : true} />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label='图片数量要求'>
@@ -227,12 +222,12 @@ export class AddOrderForm extends Component {
         </FormItem>
         <FormItem {...formItemLayout} label='截止交稿时间'>
           {getFieldDecorator('endTime', {
-            initialValue: this.state.modalObj.endTime ? moment(moment.unix(parseInt(this.state.modalObj.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'), 'YYYY-MM-DD') : moment('2018-01-01', 'YYYY-MM-DD'),
+            initialValue: this.state.modalObj.endTime ? moment(moment.unix(parseInt(this.state.modalObj.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'), 'YYYY-MM-DD HH:mm:ss') : moment('2018-01-01 00:00:00', 'YYYY-MM-DD HH:mm:ss'),
             rules: [{
               required: true, message: '请选择截止交稿时间!'
             }]
           })(
-            <DatePicker onChange={this.onChange} disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : true} />
+            <DatePicker onChange={this.onChange} disabled={this.state.modalTitle === '发布订单' ? this.state.isEdit : true} format='YYYY-MM-DD HH:mm:ss' showTime />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label='要求'>

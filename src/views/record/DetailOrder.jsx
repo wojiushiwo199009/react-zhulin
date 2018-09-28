@@ -1,18 +1,23 @@
 import React, { Component } from 'react'
 // import Cookies from 'js-cookie'
-import { Row, Col, Table, Divider, Button, message, Modal } from 'antd'
+import { Row, Col, Table, Divider, Button, message, Modal, Form, Input } from 'antd'
+import PropTypes from 'prop-types'
 import moment from 'moment'
 import ajax from '../../api'
 import { axiosUrl } from '../../api/axios'
 import SeePic from '../writer/SeePic'
 import VertifyResult from './VertifyResult'
 import './detailOrder.scss'
-export default class DetailOrder extends Component {
+const FormItem = Form.Item
+export class detailOrderForm extends Component {
   state = {
+    selectedRowKeys: [],
+    loading: false,
     picVisable: false,
     vertifyVisable: false,
     verifyStatus: '',
     userType: '',
+    fileName: '',
     orderCode: '',
     require: '',
     eassyTotal: 1,
@@ -28,6 +33,9 @@ export default class DetailOrder extends Component {
       {
         title: '文章标题',
         dataIndex: 'essayTitle'
+      }, {
+        title: '文章名称',
+        dataIndex: 'essayfile'
       }, {
         title: '原创度',
         dataIndex: 'originalLevel'
@@ -72,6 +80,7 @@ export default class DetailOrder extends Component {
         key: '1',
         id: '',
         essayTitle: 'John Brown',
+        essayfile: '',
         originalLevel: 32,
         pictureTotal: 32,
         status: 'New York No. 1 Lake Park',
@@ -132,7 +141,7 @@ export default class DetailOrder extends Component {
           endTime: resData.orderRecord.endTime ? moment.unix(parseInt(resData.orderRecord.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss') : '--',
           wordCount: resData.orderRecord.wordCount,
           userId: resData.orderRecord.userId,
-          require: resData.require
+          require: resData.orderRecord.require
         })
       } else {
         message.error('请求失败，请稍后再试')
@@ -164,7 +173,7 @@ export default class DetailOrder extends Component {
           endTime: moment.unix(parseInt(resData.orderRecord.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'),
           wordCount: resData.orderRecord.wordCount,
           userId: resData.orderRecord.userId,
-          require: resData.require
+          require: resData.orderRecord.require
         })
       } else {
         message.error('请求失败，请稍后再试')
@@ -221,12 +230,110 @@ export default class DetailOrder extends Component {
       console.log(error)
     })
   }
+  getOrderSearch = () => {
+    let params = {
+      fileName: this.state.fileName
+    }
+    ajax.getOrderSearch({params}, response => {
+      if (response.state.stateCode === 0) {
+        let resData = response.data
+        resData.orderEssayRecords.length > 0 && resData.orderEssayRecords.map((item, index) => {
+          item.key = index + 1 + ''
+        })
+        this.setState({
+          orderEssayRecords: resData.orderEssayRecords,
+          orderCode: resData.orderRecord.orderCode,
+          eassyTotal: resData.orderRecord.eassyTotal,
+          merchantPrice: resData.orderRecord.merchantPrice,
+          eassyType: resData.orderRecord.eassyType,
+          orderTitle: resData.orderRecord.orderTitle,
+          originalLevel: resData.orderRecord.originalLevel,
+          picture: resData.orderRecord.picture,
+          type: resData.orderRecord.type === 1 ? '养号文' : '流量文',
+          endTime: moment.unix(parseInt(resData.orderRecord.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'),
+          wordCount: resData.orderRecord.wordCount,
+          userId: resData.orderRecord.userId,
+          require: resData.require
+        })
+      } else {
+        message.error('请求失败，请稍后再试')
+      }
+    }, error => {
+      console.log(error)
+    })
+  }
+  handleSubmit = (e) => {
+    e.preventDefault()
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        this.getOrderSearch()
+      }
+    })
+  }
+  InpChange = (e) => {
+    this.setState({
+      fileName: e.target.value
+    })
+  }
+  getOrderDownLoad = () => {
+    let params = {
+      id: this.state.selectedRowKeys.join(',')
+    }
+    window.open(axiosUrl + '/order/essay/downloads?id=' + params.id, '_self')
+  }
+  onSelectChange = (selectedRowKeys, selectedRows) => {
+    console.log('selectedRowKeys changed: ', selectedRowKeys, selectedRows)
+    if (selectedRowKeys.length >= 0) {
+      this.setState({
+        loading: true
+      })
+    }
+    this.state.selectedRowKeys.push(selectedRows.id)
+  }
+
   componentDidMount () {
     this.getUserInfo()
   }
   render () {
+    const { loading, selectedRowKeys } = this.state
+    const rowSelection = {
+      selectedRowKeys,
+      onChange: this.onSelectChange
+    }
+    const hasSelected = selectedRowKeys.length > 0
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 6 }
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 15 }
+      }
+    }
+    const { getFieldDecorator } = this.props.form
     return (
       <div className='detail-order' >
+        {
+          (this.state.userType === 2 || this.state.userType === 3) ? <div style={{overflow: 'hidden', marginBottom: '20px'}}><Form layout='inline' onSubmit={this.handleSubmit} className='record-form' style={{float: 'right'}}>
+            <FormItem
+              {...formItemLayout}
+              label=''
+            >
+              {getFieldDecorator('fileName', { initialValue: '' })(
+                <Input placeholder='请输入压缩文件名称' onChange={this.InpChange} style={{width: '260px'}} />
+              )}
+            </FormItem>
+            <FormItem>
+              <Button
+                type='primary'
+                htmlType='submit'
+              >
+                查询
+              </Button>
+            </FormItem>
+          </Form></div> : ''
+        }
         <div className='title'>
           <h3>订单号:{this.state.orderCode}</h3>
           <Row>
@@ -250,7 +357,9 @@ export default class DetailOrder extends Component {
         </div>
         {
           this.state.userType === 4 ? '' : <div className='content'>
-            <Table columns={this.state.columns} dataSource={this.state.orderEssayRecords} pagination={false} />
+            <Button type='primary' disabled={!hasSelected}
+              loading={loading} onClick={this.getOrderDownLoad}>批量下载</Button>
+            <Table columns={this.state.columns} dataSource={this.state.orderEssayRecords} pagination={false} rowSelection={rowSelection} />
           </div>
         }
         <Modal title={null}
@@ -274,3 +383,8 @@ export default class DetailOrder extends Component {
     )
   }
 }
+const detailOrder = Form.create()(detailOrderForm)
+detailOrderForm.propTypes = {
+  form: PropTypes.object
+}
+export default detailOrder

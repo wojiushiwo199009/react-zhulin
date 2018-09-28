@@ -236,5 +236,13 @@ export default {
   // 商家催稿
   MerchantOrderUrge: (params, sucFn, errFn) => {
     ajax('post', '/merchant/order/urge/email', params, sucFn, errFn)
+  },
+  // 商家和管理员查询压缩文件
+  getOrderSearch: (params, sucFn, errFn) => {
+    ajax('get', '/merchant/order/search', params, sucFn, errFn)
+  },
+  // 批量下载
+  getOrderDownLoad: (params, sucFn, errFn) => {
+    ajax('get', '/order/essay/downloads', params, sucFn, errFn)
   }
 }

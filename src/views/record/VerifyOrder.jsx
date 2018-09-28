@@ -15,13 +15,14 @@ export class AddOrderForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
+      console.log(values, 'vv')
       if (!err) {
         let params = {
           id: this.state.verifyObj.id,
           status: this.state.noPass ? 8 : 1,
           result: (this.state.noPass ? values.nopass : ''),
           price: values.price || this.state.verifyObj.merchantPrice,
-          endTime: values.endTime ? moment(values.endTime).format('YYYY-MM-DD') : moment.unix(parseInt(this.state.verifyObj.endTime.toString().slice(0, 10))).format('YYYY-MM-DD')
+          endTime: values.endTime ? moment(values.endTime).format('YYYY-MM-DD HH:mm:ss') : moment.unix(parseInt(this.state.verifyObj.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss')
         }
         console.log(params, 'params')
         ajax.getAdminMerchantOrder(params, response => {
@@ -67,9 +68,17 @@ export class AddOrderForm extends Component {
       callback()
     }
   }
-  onChange = (date, dateString) => {
+  onChange = (value, dateString) => {
+    console.log('Selected Time: ', value)
+    console.log('Formatted Selected Time: ', dateString)
     this.setState({
-      endTime: dateString
+      // endTime: dateString
+    })
+  }
+  onOk = (value) => {
+    console.log('onOk: ', value, moment(value).format(('YYYY-MM-DD HH:mm:ss')))
+    this.setState({
+      endTime: moment(value).format(('YYYY-MM-DD HH:mm:ss'))
     })
   }
   componentWillReceiveProps (nextProps) {
@@ -108,12 +117,12 @@ export class AddOrderForm extends Component {
         {
           this.state.noPass ? '' : <FormItem {...formItemLayout} label='截止交稿时间'>
             {getFieldDecorator('endTime', {
-              initialValue: this.state.verifyObj.endTime ? moment(moment.unix(parseInt(this.state.verifyObj.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'), 'YYYY-MM-DD') : moment('2018-01-01', 'YYYY-MM-DD'),
+              initialValue: this.state.verifyObj.endTime ? moment(moment.unix(parseInt(this.state.verifyObj.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'), 'YYYY-MM-DD') : moment('2018-01-01 00:00:00', 'YYYY-MM-DD HH:mm:ss'),
               rules: [{
                 required: true, message: '请选择截止交稿时间!'
               }]
             })(
-              <DatePicker onChange={this.onChange} />
+              <DatePicker onChange={this.onChange} onOk={this.onOk} format='YYYY-MM-DD HH:mm:ss' showTime />
             )}
           </FormItem>
         }
