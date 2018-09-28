@@ -580,6 +580,7 @@ export class RecordForm extends Component {
           visible={this.state.visible}
           footer={null}
           onCancel={this.onCancel}
+          destroyOnClose
         >
           <AddOrder modalObj={this.state.modalObj} onCancel={this.onCancel} isEdit={this.state.isEdit} getOrder={this.getOrder} modalTitle={this.state.modalTitle} />
         </Modal>
@@ -588,6 +589,7 @@ export class RecordForm extends Component {
           visible={this.state.verifyVisible}
           footer={null}
           onCancel={this.verifyOnCancel}
+          destroyOnClose
         >
           <VerifyOrder verifyObj={this.state.verifyObj} onCancel={this.verifyOnCancel} getOrder={this.getOrder} />
         </Modal>
@@ -596,6 +598,7 @@ export class RecordForm extends Component {
           visible={this.state.distributeVisible}
           footer={null}
           onCancel={this.distributeOnCancel}
+          destroyOnClose
         >
           <DistributeOrder distributeObj={this.state.distributeObj} onCancel={this.distributeOnCancel} getOrder={this.getOrder} />
         </Modal>
@@ -604,6 +607,7 @@ export class RecordForm extends Component {
           visible={this.state.orderVisible}
           footer={null}
           onCancel={this.orderOnCancel}
+          destroyOnClose
         >
           <WriterOrder orderObj={this.state.orderObj} onCancel={this.orderOnCancel} getOrder={this.getOrder} />
         </Modal>
@@ -612,6 +616,7 @@ export class RecordForm extends Component {
           visible={this.state.MoneyVisible}
           footer={null}
           onCancel={this.moneyOnCancel}
+          destroyOnClose
         >
           <Money moneyOrderId={this.state.moneyOrderId} onCancel={this.moneyOnCancel} getOrder={this.getOrder} />
         </Modal>

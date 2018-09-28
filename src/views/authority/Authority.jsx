@@ -339,6 +339,7 @@ export default class EditableTable extends React.Component {
           visible={visible}
           onCancel={this.handleCancel}
           footer={null}
+          destroyOnClose={true} 
         >
           <AddRow handleOk={this.handleOk} onCancel={this.handleCancel} getUserList={this.getUserList} />
         </Modal>
@@ -360,6 +361,7 @@ export default class EditableTable extends React.Component {
           visible={this.state.assignVisible}
           onCancel={this.handleAssignCancel}
           footer={null}
+          destroyOnClose={true} 
         >
           <Assign userId={this.state.userId} onCancel={this.handleAssignCancel} getUserList={this.getUserList} />
         </Modal>

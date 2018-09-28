@@ -370,6 +370,7 @@ export class HomePageForm extends Component {
         <Modal title='重置密码'
           visible={this.state.visible}
           footer={null}
+          destroyOnClose
         >
           <ForgetPass handleOk={this.handleOk} onCancel={this.handleCancel} />
         </Modal>

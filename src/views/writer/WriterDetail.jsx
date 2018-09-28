@@ -385,6 +385,7 @@ export default class EditableTable extends React.Component {
           visible={visible}
           onCancel={this.handleCancel}
           footer={null}
+          destroyOnClose
         >
           <CreateEssay getWriterEssayList={this.getWriterEssayList} userOrderId={this.state.userOrderId} onCancel={this.handleCancel} upDateCreate={this.state.upDateCreate} />
         </Modal>
@@ -392,6 +393,7 @@ export default class EditableTable extends React.Component {
           visible={this.state.editVisible}
           onCancel={this.handleEditCancel}
           footer={null}
+          destroyOnClose
         >
           <EditOrder getWriterEssayList={this.getWriterEssayList} essayTitle={this.state.essayTitle} filename={this.state.filename} essayOrderId={this.state.essayOrderId} onCancel={this.handleEditCancel} />
         </Modal>
@@ -401,6 +403,7 @@ export default class EditableTable extends React.Component {
           footer={null}
           width={800}
           height={460}
+          destroyOnClose
           bodyStyle={{'background': '#1f2630', color: 'red'}}
         >
           <SeePic orderEssayId={this.state.orderEssayId} onCancel={this.handlePicCancel} />

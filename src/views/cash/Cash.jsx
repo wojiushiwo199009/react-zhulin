@@ -277,6 +277,7 @@ export default class EditableTable extends React.Component {
            visible={visible}
            onCancel={this.handleCancel}
            footer={null}
+           destroyOnClose={true} 
          >
            <AddRow onCancel={this.handleCancel} WriterCashList={this.WriterCashList} />
          </Modal>

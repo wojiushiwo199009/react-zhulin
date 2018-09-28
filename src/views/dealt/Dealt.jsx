@@ -280,6 +280,7 @@ export class WriterForm extends Component {
           visible={this.state.visible}
           footer={null}
           onCancel={this.OnCancel}
+          destroyOnClose
         >
           <Auditing userId={this.state.id} onCancel={this.OnCancel} AdminUserList={this.AdminUserList} />
         </Modal>

@@ -366,6 +366,7 @@ export class detailOrderForm extends Component {
           visible={this.state.vertifyVisable}
           onCancel={this.handleVertifyCancel}
           footer={null}
+          destroyOnClose
         >
           <VertifyResult verifyStatus={this.state.verifyStatus} orderEssayId={this.state.orderEssayId} onCancel={this.handleVertifyCancel} userId={this.state.userId} getUserInfo={this.getUserInfo} />
         </Modal>
@@ -375,6 +376,7 @@ export class detailOrderForm extends Component {
           footer={null}
           width={800}
           height={460}
+          destroyOnClose
           bodyStyle={{ 'background': '#1f2630', color: 'red' }}
         >
           <SeePic orderEssayId={this.state.orderEssayId} onCancel={this.handlePicCancel} />

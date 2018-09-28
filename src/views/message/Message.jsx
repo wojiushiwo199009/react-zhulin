@@ -197,7 +197,7 @@ export default class Message extends Component {
                 onPreview={this.handlePreview}
                 onChange={this.handleChange}
               />
-              <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+              <Modal destroyOnClose visible={previewVisible} footer={null} onCancel={this.handleCancel}>
                 <img alt='二维码图片' style={{ width: '100%' }} src={this.state.payPicture} />
               </Modal>
             </div>

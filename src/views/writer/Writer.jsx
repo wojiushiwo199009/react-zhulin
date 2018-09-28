@@ -323,6 +323,7 @@ export class WriterForm extends Component {
            visible={this.state.deleteOrderVisible}
            footer={null}
            onCancel={this.OnCancel}
+           destroyOnClose
          >
            <DeleteOrder orderNum={this.state.orderNum} userOrderId={this.state.userOrderId} onCancel={this.OnCancel} getWriterOrder={this.getWriterOrder} />
          </Modal>
