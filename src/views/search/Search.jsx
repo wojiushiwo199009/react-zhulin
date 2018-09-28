@@ -16,19 +16,6 @@ export class detailOrderForm extends Component {
     picVisable: false,
     vertifyVisable: false,
     verifyStatus: '',
-    userType: '',
-    fileName: '',
-    orderCode: '',
-    require: '',
-    eassyTotal: 1,
-    merchantPrice: '200',
-    eassyType: 1,
-    orderTitle: 'ss',
-    originalLevel: '2',
-    picture: 2,
-    type: 1,
-    endTime: '2018-03-08',
-    wordCount: 3000,
     columns: [
       {
         title: '文章标题',
@@ -103,7 +90,7 @@ export class detailOrderForm extends Component {
   downLoad = (record) => {
     window.open(axiosUrl + '/order/essay/download?fileName=' + record.eassyFile, '_self')
   }
-  verify=(record) => {
+  verify = (record) => {
     this.setState({
       orderEssayId: record.id,
       verifyStatus: record.status,
@@ -118,7 +105,7 @@ export class detailOrderForm extends Component {
     })
   }
 
-  getMerchantDetail=() => {
+  getMerchantDetail = () => {
     let params = {
       id: location.hash.split('=')[1]
     }
@@ -128,21 +115,6 @@ export class detailOrderForm extends Component {
         resData.orderEssayRecords.map((item, index) => {
           item.key = index + 1 + ''
         })
-        this.setState({
-          orderEssayRecords: resData.orderEssayRecords,
-          orderCode: resData.orderRecord.orderCode,
-          eassyTotal: resData.orderRecord.eassyTotal,
-          merchantPrice: resData.orderRecord.merchantPrice,
-          eassyType: resData.orderRecord.eassyType,
-          orderTitle: resData.orderRecord.orderTitle,
-          originalLevel: resData.orderRecord.originalLevel,
-          picture: resData.orderRecord.picture,
-          type: resData.orderRecord.type === 1 ? '养号文' : '流量文',
-          endTime: resData.orderRecord.endTime ? moment.unix(parseInt(resData.orderRecord.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss') : '--',
-          wordCount: resData.orderRecord.wordCount,
-          userId: resData.orderRecord.userId,
-          require: resData.orderRecord.require
-        })
       } else {
         message.error('请求失败，请稍后再试')
       }
@@ -150,7 +122,7 @@ export class detailOrderForm extends Component {
       console.log(error)
     })
   }
-  getAdminMerchantDetail=() => {
+  getAdminMerchantDetail = () => {
     let params = {
       id: location.hash.split('=')[1]
     }
@@ -159,47 +131,6 @@ export class detailOrderForm extends Component {
         let resData = response.data
         resData.orderEssayRecords.map((item, index) => {
           item.key = index + 1 + ''
-        })
-        this.setState({
-          orderEssayRecords: resData.orderEssayRecords,
-          orderCode: resData.orderRecord.orderCode,
-          eassyTotal: resData.orderRecord.eassyTotal,
-          merchantPrice: resData.orderRecord.merchantPrice,
-          eassyType: resData.orderRecord.eassyType,
-          orderTitle: resData.orderRecord.orderTitle,
-          originalLevel: resData.orderRecord.originalLevel,
-          picture: resData.orderRecord.picture,
-          type: resData.orderRecord.type === 1 ? '养号文' : '流量文',
-          endTime: moment.unix(parseInt(resData.orderRecord.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'),
-          wordCount: resData.orderRecord.wordCount,
-          userId: resData.orderRecord.userId,
-          require: resData.orderRecord.require
-        })
-      } else {
-        message.error('请求失败，请稍后再试')
-      }
-    }, error => {
-      console.log(error)
-    })
-  }
-  getWriterDetail=() => {
-    ajax.getWriterDetail({id: location.hash.split('=')[1]}, response => {
-      if (response.state.stateCode === 0) {
-        let resData = response.data
-        this.setState({
-          orderEssayRecords: resData.orderEssayRecords,
-          orderCode: resData.orderCode,
-          eassyTotal: resData.eassyTotal,
-          merchantPrice: resData.merchantPrice,
-          eassyType: resData.eassyType,
-          orderTitle: resData.orderTitle,
-          originalLevel: resData.originalLevel,
-          picture: resData.picture,
-          type: resData.type === 1 ? '养号文' : '流量文',
-          endTime: moment.unix(parseInt(resData.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'),
-          wordCount: resData.wordCount,
-          userId: resData.userId,
-          require: resData.require
         })
       } else {
         message.error('请求失败，请稍后再试')
@@ -219,8 +150,6 @@ export class detailOrderForm extends Component {
             this.getMerchantDetail()
           } else if (this.state.userType === 2) {
             this.getAdminMerchantDetail()
-          } else if (this.state.userType === 4) {
-            this.getWriterDetail()
           }
         })
       } else {
@@ -234,26 +163,11 @@ export class detailOrderForm extends Component {
     let params = {
       fileName: this.state.fileName
     }
-    ajax.getOrderSearch({params}, response => {
+    ajax.getOrderSearch({ params }, response => {
       if (response.state.stateCode === 0) {
         let resData = response.data
         resData.orderEssayRecords.length > 0 && resData.orderEssayRecords.map((item, index) => {
           item.key = index + 1 + ''
-        })
-        this.setState({
-          orderEssayRecords: resData.orderEssayRecords,
-          orderCode: resData.orderRecord.orderCode,
-          eassyTotal: resData.orderRecord.eassyTotal,
-          merchantPrice: resData.orderRecord.merchantPrice,
-          eassyType: resData.orderRecord.eassyType,
-          orderTitle: resData.orderRecord.orderTitle,
-          originalLevel: resData.orderRecord.originalLevel,
-          picture: resData.orderRecord.picture,
-          type: resData.orderRecord.type === 1 ? '养号文' : '流量文',
-          endTime: moment.unix(parseInt(resData.orderRecord.endTime.toString().slice(0, 10))).format('YYYY-MM-DD HH:mm:ss'),
-          wordCount: resData.orderRecord.wordCount,
-          userId: resData.orderRecord.userId,
-          require: resData.require
         })
       } else {
         message.error('请求失败，请稍后再试')
@@ -301,27 +215,27 @@ export class detailOrderForm extends Component {
       onChange: this.onSelectChange
     }
     const hasSelected = selectedRowKeys.length > 0
-    // const formItemLayout = {
-    //   labelCol: {
-    //     xs: { span: 24 },
-    //     sm: { span: 6 }
-    //   },
-    //   wrapperCol: {
-    //     xs: { span: 24 },
-    //     sm: { span: 15 }
-    //   }
-    // }
-    // const { getFieldDecorator } = this.props.form
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 6 }
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 15 }
+      }
+    }
+    const { getFieldDecorator } = this.props.form
     return (
       <div className='detail-order' >
-        {/* {
-          (this.state.userType === 2 || this.state.userType === 3) ? <div style={{overflow: 'hidden', marginBottom: '20px'}}><Form layout='inline' onSubmit={this.handleSubmit} className='record-form' style={{float: 'right'}}>
+        {
+          (this.state.userType === 2 || this.state.userType === 3) ? <div style={{ overflow: 'hidden', marginBottom: '20px' }}><Form layout='inline' onSubmit={this.handleSubmit} className='record-form' style={{ float: 'right' }}>
             <FormItem
               {...formItemLayout}
               label=''
             >
               {getFieldDecorator('fileName', { initialValue: '' })(
-                <Input placeholder='请输入压缩文件名称' onChange={this.InpChange} style={{width: '260px'}} />
+                <Input placeholder='请输入压缩文件名称' onChange={this.InpChange} style={{ width: '260px' }} />
               )}
             </FormItem>
             <FormItem>
@@ -333,35 +247,13 @@ export class detailOrderForm extends Component {
               </Button>
             </FormItem>
           </Form></div> : ''
-        } */}
-        <div className='title'>
-          <h3>订单号:{this.state.orderCode}</h3>
-          <Row>
-            <Col span={8}>订单标题:{this.state.orderTitle}</Col>
-            <Col span={8}>商户定价:{this.state.merchantPrice}</Col>
-            <Col span={8}>文章领域:{this.state.eassyType}</Col>
-          </Row>
-          <Row>
-            <Col span={8}>文章数量:{this.state.eassyTotal}</Col>
-            <Col span={8}>原创度要求:{this.state.originalLevel}</Col>
-            <Col span={8}>图片数量要求:{this.state.picture}</Col>
-          </Row>
-          <Row>
-            <Col span={8}>字数要求:{this.state.wordCount}</Col>
-            <Col span={8}>文章类型:{this.state.type}</Col>
-            <Col span={8}>截止交稿时间:{this.state.endTime}</Col>
-          </Row>
-          <Row>
-            <Col span={8}>订单要求:{this.state.require}</Col>
-          </Row>
-        </div>
-        {
-          this.state.userType === 4 ? '' : <div className='content'>
-            <Button type='primary' disabled={!hasSelected}
-              loading={loading} onClick={this.getOrderDownLoad}>批量下载</Button>
-            <Table columns={this.state.columns} dataSource={this.state.orderEssayRecords} pagination={false} rowSelection={rowSelection} />
-          </div>
         }
+        <div className='content'>
+          <Button type='primary' disabled={!hasSelected}
+            loading={loading} onClick={this.getOrderDownLoad}>批量下载</Button>
+          <Table columns={this.state.columns} dataSource={this.state.orderEssayRecords} pagination={false} rowSelection={rowSelection} />
+        </div>
+
         <Modal title={null}
           visible={this.state.vertifyVisable}
           onCancel={this.handleVertifyCancel}

@@ -13,6 +13,7 @@ import Accounting from '../views/accounting/Accounting'
 import Cash from '../views/cash/Cash'
 import MessageInfo from '../views/message-info/MessageInfo'
 import AdminSet from '../views/admin-set/AdminSet'
+import Search from '../views/search/Search'
 import { Redirect } from 'react-router-dom'
 import React from 'react'
 
@@ -44,6 +45,10 @@ export default [
     path: '/',
     component: Home,
     childRoutes: [
+      {
+        path: 'search',
+        component: Search
+      },
       {
         path: '/admin-set',
         component: AdminSet

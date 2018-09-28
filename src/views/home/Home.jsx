@@ -18,7 +18,7 @@ export class Home extends Component {
     current: 'index',
     userType: '',
     userName: '',
-    menuArr: ['dealt', 'index', 'writer', 'authority', 'account', 'cash', 'admin-set']
+    menuArr: ['dealt', 'index', 'writer', 'authority', 'account', 'cash', 'admin-set', 'search']
   };
   toggle = () => {
     this.setState({
@@ -120,6 +120,9 @@ export class Home extends Component {
               }
               {
                 (this.state.userType === 2 || this.state.userType === 4) ? <Menu.Item key='cash'>提现列表</Menu.Item> : ''
+              }
+              {
+                (this.state.userType === 2 || this.state.userType === 3) ? <Menu.Item key='search'>搜索</Menu.Item> : ''
               }
               {
                 this.state.userType === 2 ? <Menu.Item key='admin-set'>设置</Menu.Item> : ''
