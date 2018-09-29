@@ -46,7 +46,7 @@ export default [
     component: Home,
     childRoutes: [
       {
-        path: 'search',
+        path: '/search',
         component: Search
       },
       {

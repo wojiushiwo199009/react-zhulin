@@ -89,7 +89,7 @@ export default class EditableTable extends React.Component {
         id: '',
         key: '1',
         essayTitle: 'John Brown',
-        eassyFile: '',
+        essayFile: '',
         originalLevel: 32,
         pictureTotal: 32,
         status: 'New York No. 1 Lake Park',
@@ -108,7 +108,7 @@ export default class EditableTable extends React.Component {
       },
       {
         title: '文件名称',
-        dataIndex: 'eassyFile'
+        dataIndex: 'essayFile'
       },
       {
         title: '原创度',
@@ -187,7 +187,7 @@ export default class EditableTable extends React.Component {
   }
 
   downLoad = (record) => {
-    window.open(axiosUrl + '/order/essay/download?fileName=' + record.eassyFile, '_self')
+    window.open(axiosUrl + '/order/essay/download?fileName=' + record.essayFile, '_self')
   }
 
   handleDelete = (record) => {
@@ -220,7 +220,7 @@ export default class EditableTable extends React.Component {
   };
 
   edit (record) {
-    this.setState({editVisible: true, essayOrderId: record.id, filename: record.eassyFile, essayTitle: record.essayTitle})
+    this.setState({editVisible: true, essayOrderId: record.id, filename: record.essayFile, essayTitle: record.essayTitle})
   }
 
   save (form, key) {
@@ -231,7 +231,7 @@ export default class EditableTable extends React.Component {
       if (error) {
         return
       }
-      let params = { essayOrderId: this.state.essayOrderId, filename: row.eassyFile, essayTitle: row.essayTitle }
+      let params = { essayOrderId: this.state.essayOrderId, filename: row.essayFile, essayTitle: row.essayTitle }
       console.log(params, 'ppp')
       ajax.WriterUpdateEssay(params, response => {
         if (response.state.stateCode === 0) {
@@ -289,9 +289,9 @@ export default class EditableTable extends React.Component {
         })
         this.setState({
           orderCode: resData.orderCode,
-          eassyTotal: resData.eassyTotal,
+          essayTotal: resData.essayTotal,
           merchantPrice: resData.merchantPrice,
-          eassyType: resData.eassyType,
+          essayType: resData.essayType,
           orderTitle: resData.orderTitle,
           originalLevel: resData.originalLevel,
           picture: resData.picture,
@@ -300,7 +300,7 @@ export default class EditableTable extends React.Component {
           wordCount: resData.wordCount,
           require: resData.require,
           userOrderId: location.hash.split('=')[1],
-          data: response.data.orderEssayRecords
+          orderEssayRecords: response.data.orderEssayRecords
         })
       } else {
         message.error('查询失败，请重试')
@@ -357,10 +357,10 @@ export default class EditableTable extends React.Component {
           <Row>
             <Col span={8}>订单标题:{this.state.orderTitle}</Col>
             <Col span={8}>商户定价:{this.state.merchantPrice}</Col>
-            <Col span={8}>文章领域:{this.state.eassyType}</Col>
+            <Col span={8}>文章领域:{this.state.essayType}</Col>
           </Row>
           <Row>
-            <Col span={8}>文章数量:{this.state.eassyTotal}</Col>
+            <Col span={8}>文章数量:{this.state.essayTotal}</Col>
             <Col span={8}>原创度要求:{this.state.originalLevel}</Col>
             <Col span={8}>图片数量要求:{this.state.picture}</Col>
           </Row>
@@ -376,7 +376,7 @@ export default class EditableTable extends React.Component {
         <Table
           components={components}
           bordered
-          dataSource={this.state.data}
+          dataSource={this.state.orderEssayRecords}
           columns={columns}
           rowClassName='editable-row'
           pagination={false}

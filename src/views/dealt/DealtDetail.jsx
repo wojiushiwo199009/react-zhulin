@@ -98,9 +98,9 @@ export default class DealtDetail extends Component {
         let resData = response.data
         this.setState({
           // orderCode: resData.orderRecord.orderCode,
-          eassyTotal: resData.orderRecord.eassyTotal,
+          essayTotal: resData.orderRecord.essayTotal,
           merchantPrice: resData.orderRecord.merchantPrice,
-          eassyType: resData.orderRecord.eassyType,
+          essayType: resData.orderRecord.essayType,
           orderTitle: resData.orderRecord.orderTitle,
           originalLevel: resData.orderRecord.originalLevel,
           picture: resData.orderRecord.picture,

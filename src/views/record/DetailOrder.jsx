@@ -12,7 +12,7 @@ const FormItem = Form.Item
 export class detailOrderForm extends Component {
   state = {
     selectedRowKeys: [],
-    loading: false,
+    idArr: [],
     picVisable: false,
     vertifyVisable: false,
     verifyStatus: '',
@@ -20,9 +20,9 @@ export class detailOrderForm extends Component {
     fileName: '',
     orderCode: '',
     require: '',
-    eassyTotal: 1,
+    essayTotal: 1,
     merchantPrice: '200',
-    eassyType: 1,
+    essayType: 1,
     orderTitle: 'ss',
     originalLevel: '2',
     picture: 2,
@@ -35,7 +35,7 @@ export class detailOrderForm extends Component {
         dataIndex: 'essayTitle'
       }, {
         title: '文章名称',
-        dataIndex: 'essayfile'
+        dataIndex: 'essayFile'
       }, {
         title: '原创度',
         dataIndex: 'originalLevel'
@@ -80,7 +80,7 @@ export class detailOrderForm extends Component {
         key: '1',
         id: '',
         essayTitle: 'John Brown',
-        essayfile: '',
+        essayFile: '',
         originalLevel: 32,
         pictureTotal: 32,
         status: 'New York No. 1 Lake Park',
@@ -101,7 +101,7 @@ export class detailOrderForm extends Component {
     })
   }
   downLoad = (record) => {
-    window.open(axiosUrl + '/order/essay/download?fileName=' + record.eassyFile, '_self')
+    window.open(axiosUrl + '/order/essay/download?fileName=' + record.essayFile, '_self')
   }
   verify=(record) => {
     this.setState({
@@ -131,9 +131,9 @@ export class detailOrderForm extends Component {
         this.setState({
           orderEssayRecords: resData.orderEssayRecords,
           orderCode: resData.orderRecord.orderCode,
-          eassyTotal: resData.orderRecord.eassyTotal,
+          essayTotal: resData.orderRecord.essayTotal,
           merchantPrice: resData.orderRecord.merchantPrice,
-          eassyType: resData.orderRecord.eassyType,
+          essayType: resData.orderRecord.essayType,
           orderTitle: resData.orderRecord.orderTitle,
           originalLevel: resData.orderRecord.originalLevel,
           picture: resData.orderRecord.picture,
@@ -163,9 +163,9 @@ export class detailOrderForm extends Component {
         this.setState({
           orderEssayRecords: resData.orderEssayRecords,
           orderCode: resData.orderRecord.orderCode,
-          eassyTotal: resData.orderRecord.eassyTotal,
+          essayTotal: resData.orderRecord.essayTotal,
           merchantPrice: resData.orderRecord.merchantPrice,
-          eassyType: resData.orderRecord.eassyType,
+          essayType: resData.orderRecord.essayType,
           orderTitle: resData.orderRecord.orderTitle,
           originalLevel: resData.orderRecord.originalLevel,
           picture: resData.orderRecord.picture,
@@ -189,9 +189,9 @@ export class detailOrderForm extends Component {
         this.setState({
           orderEssayRecords: resData.orderEssayRecords,
           orderCode: resData.orderCode,
-          eassyTotal: resData.eassyTotal,
+          essayTotal: resData.essayTotal,
           merchantPrice: resData.merchantPrice,
-          eassyType: resData.eassyType,
+          essayType: resData.essayType,
           orderTitle: resData.orderTitle,
           originalLevel: resData.originalLevel,
           picture: resData.picture,
@@ -243,9 +243,9 @@ export class detailOrderForm extends Component {
         this.setState({
           orderEssayRecords: resData.orderEssayRecords,
           orderCode: resData.orderRecord.orderCode,
-          eassyTotal: resData.orderRecord.eassyTotal,
+          essayTotal: resData.orderRecord.essayTotal,
           merchantPrice: resData.orderRecord.merchantPrice,
-          eassyType: resData.orderRecord.eassyType,
+          essayType: resData.orderRecord.essayType,
           orderTitle: resData.orderRecord.orderTitle,
           originalLevel: resData.orderRecord.originalLevel,
           picture: resData.orderRecord.picture,
@@ -277,16 +277,22 @@ export class detailOrderForm extends Component {
   }
   getOrderDownLoad = () => {
     let params = {
-      id: this.state.selectedRowKeys.join(',')
+      id: this.state.idArr.join(',')
     }
     window.open(axiosUrl + '/order/essay/downloads?id=' + params.id, '_self')
   }
   onSelectChange = (selectedRowKeys, selectedRows) => {
     console.log('selectedRowKeys changed: ', selectedRowKeys, selectedRows)
+    let paramArr = []
     if (selectedRowKeys.length >= 0) {
-      this.setState({
-        loading: true
+      selectedRows.map((item, index) => {
+        paramArr.push(item.id)
       })
+      this.setState({
+        selectedRowKeys,
+        idArr: paramArr
+      })
+      console.log(this.state.idArr)
     }
     this.state.selectedRowKeys.push(selectedRows.id)
   }
@@ -295,7 +301,7 @@ export class detailOrderForm extends Component {
     this.getUserInfo()
   }
   render () {
-    const { loading, selectedRowKeys } = this.state
+    const { selectedRowKeys } = this.state
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
@@ -339,10 +345,10 @@ export class detailOrderForm extends Component {
           <Row>
             <Col span={8}>订单标题:{this.state.orderTitle}</Col>
             <Col span={8}>商户定价:{this.state.merchantPrice}</Col>
-            <Col span={8}>文章领域:{this.state.eassyType}</Col>
+            <Col span={8}>文章领域:{this.state.essayType}</Col>
           </Row>
           <Row>
-            <Col span={8}>文章数量:{this.state.eassyTotal}</Col>
+            <Col span={8}>文章数量:{this.state.essayTotal}</Col>
             <Col span={8}>原创度要求:{this.state.originalLevel}</Col>
             <Col span={8}>图片数量要求:{this.state.picture}</Col>
           </Row>
@@ -357,8 +363,7 @@ export class detailOrderForm extends Component {
         </div>
         {
           this.state.userType === 4 ? '' : <div className='content'>
-            <Button type='primary' disabled={!hasSelected}
-              loading={loading} onClick={this.getOrderDownLoad}>批量下载</Button>
+            <Button type='primary' disabled={!hasSelected} onClick={this.getOrderDownLoad} sytle={{marginBottom: '20px'}}>批量下载</Button>
             <Table columns={this.state.columns} dataSource={this.state.orderEssayRecords} pagination={false} rowSelection={rowSelection} />
           </div>
         }

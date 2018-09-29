@@ -24,7 +24,7 @@ export class SearchOrderForm extends Component {
         dataIndex: 'essayTitle'
       }, {
         title: '文章名称',
-        dataIndex: 'essayfile'
+        dataIndex: 'essayFile'
       }, {
         title: '原创度',
         dataIndex: 'originalLevel'
@@ -55,7 +55,7 @@ export class SearchOrderForm extends Component {
           return (
             <div>
               {
-                ((this.state.userType === 2 || this.state.userType === 3) && (record.status === 0 || record.status === 4)) ? <a href='javascript:;' onClick={() => this.verify(record)}>审核<Divider type='vertical' /></a> : ''
+                (record.status === 0 || record.status === 4) ? <a href='javascript:;' onClick={() => this.verify(record)}>审核<Divider type='vertical' /></a> : ''
               }
               <a href='javascript:;' onClick={() => this.downLoad(record)}>下载<Divider type='vertical' /></a>
               <a href='javascript:;' onClick={() => this.seePic(record)}>查看图片</a>
@@ -79,7 +79,7 @@ export class SearchOrderForm extends Component {
     })
   }
   downLoad = (record) => {
-    window.open(axiosUrl + '/order/essay/download?fileName=' + record.essayfile, '_self')
+    window.open(axiosUrl + '/order/essay/download?fileName=' + record.essayFile, '_self')
   }
   verify = (record) => {
     this.setState({
@@ -161,8 +161,7 @@ export class SearchOrderForm extends Component {
           item.key = index + 1 + ''
         })
         this.setState({
-          orderEssayRecords: resData.userOrder,
-          userId: response.data.orderRecord.userId
+          orderEssayRecords: resData.userOrder
         })
       } else {
         message.error('请求失败，请稍后再试')
@@ -250,9 +249,11 @@ export class SearchOrderForm extends Component {
           </Form>
         </div>
         <div className='content'>
-          <Button type='primary' disabled={!hasSelected}
-            onClick={this.getOrderDownLoad}>批量下载</Button>
-          <Table columns={this.state.columns} dataSource={this.state.orderEssayRecords} pagination={false} rowSelection={rowSelection} />
+          {/* <Button type='primary' disabled={!hasSelected}
+            onClick={this.getOrderDownLoad}>批量下载</Button> */}
+          <Table columns={this.state.columns} dataSource={this.state.orderEssayRecords} pagination={false}
+          // rowSelection={rowSelection}
+          />
         </div>
 
         <Modal title={null}
@@ -261,7 +262,7 @@ export class SearchOrderForm extends Component {
           footer={null}
           destroyOnClose
         >
-          <VertifyResult verifyStatus={this.state.verifyStatus} orderEssayId={this.state.orderEssayId} onCancel={this.handleVertifyCancel} userId={this.state.userId} getUserInfo={this.getOrderSearch} />
+          <VertifyResult verifyStatus={this.state.verifyStatus} orderEssayId={this.state.orderEssayId} onCancel={this.handleVertifyCancel} getUserInfo={this.getOrderSearch} />
         </Modal>
         <Modal title={null}
           visible={this.state.picVisable}

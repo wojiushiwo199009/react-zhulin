@@ -18,7 +18,6 @@ export class AuditFormForm extends Component {
         let params = {
           id: this.props.orderEssayId,
           status: values.status,
-          userId: this.props.userId,
           result: values.result,
           originalLevel: values.originalLevel
         }
