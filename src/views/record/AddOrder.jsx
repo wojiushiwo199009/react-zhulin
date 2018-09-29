@@ -158,8 +158,8 @@ export class AddOrderForm extends Component {
           )}
         </FormItem>
         <FormItem {...formItemLayout} label='文章领域'>
-          {getFieldDecorator('eassyType', {
-            initialValue: this.state.modalObj.eassyType,
+          {getFieldDecorator('essayType', {
+            initialValue: this.state.modalObj.essayType,
             rules: [{
               required: true, message: '请输入文章领域!'
             }]

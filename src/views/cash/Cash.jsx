@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, Input, InputNumber, Popconfirm, Form, Button, Modal, message, Divider } from 'antd'
+import { Table, Input, InputNumber, Popconfirm, Form, Button, Modal, message } from 'antd'
 import AddRow from './AddRow'
 import moment from 'moment'
 import ajax from '../../api'
@@ -277,7 +277,7 @@ export default class EditableTable extends React.Component {
            visible={visible}
            onCancel={this.handleCancel}
            footer={null}
-           destroyOnClose={true} 
+           destroyOnClose
          >
            <AddRow onCancel={this.handleCancel} WriterCashList={this.WriterCashList} />
          </Modal>

@@ -1,22 +1,24 @@
 import React, { Component } from 'react'
 // import Cookies from 'js-cookie'
-import { Row, Col, Table, Divider, Button, message, Modal, Form, Input } from 'antd'
+import { Table, Divider, Button, message, Modal, Form, Input } from 'antd'
 import PropTypes from 'prop-types'
-import moment from 'moment'
 import ajax from '../../api'
 import { axiosUrl } from '../../api/axios'
 import SeePic from '../writer/SeePic'
 import VertifyResult from './VertifyResult'
-import './detailOrder.scss'
 const FormItem = Form.Item
-export class detailOrderForm extends Component {
+export class SearchOrderForm extends Component {
   state = {
     selectedRowKeys: [],
-    loading: false,
+    idArr: [],
     picVisable: false,
     vertifyVisable: false,
     verifyStatus: '',
     columns: [
+      {
+        title: '订单号',
+        dataIndex: 'orderCode'
+      },
       {
         title: '文章标题',
         dataIndex: 'essayTitle'
@@ -62,18 +64,7 @@ export class detailOrderForm extends Component {
         }
       }
     ],
-    orderEssayRecords: [
-      {
-        key: '1',
-        id: '',
-        essayTitle: 'John Brown',
-        essayfile: '',
-        originalLevel: 32,
-        pictureTotal: 32,
-        status: 'New York No. 1 Lake Park',
-        result: 'lll'
-      }]
-
+    orderEssayRecords: []
   }
 
   handlePicCancel = () => {
@@ -88,7 +79,7 @@ export class detailOrderForm extends Component {
     })
   }
   downLoad = (record) => {
-    window.open(axiosUrl + '/order/essay/download?fileName=' + record.eassyFile, '_self')
+    window.open(axiosUrl + '/order/essay/download?fileName=' + record.essayfile, '_self')
   }
   verify = (record) => {
     this.setState({
@@ -163,11 +154,15 @@ export class detailOrderForm extends Component {
     let params = {
       fileName: this.state.fileName
     }
-    ajax.getOrderSearch({ params }, response => {
+    ajax.getOrderSearch(params, response => {
       if (response.state.stateCode === 0) {
         let resData = response.data
-        resData.orderEssayRecords.length > 0 && resData.orderEssayRecords.map((item, index) => {
+        resData.userOrder.length > 0 && resData.userOrder.map((item, index) => {
           item.key = index + 1 + ''
+        })
+        this.setState({
+          orderEssayRecords: resData.userOrder,
+          userId: response.data.orderRecord.userId
         })
       } else {
         message.error('请求失败，请稍后再试')
@@ -190,26 +185,32 @@ export class detailOrderForm extends Component {
     })
   }
   getOrderDownLoad = () => {
+    console.log(this.state.idArr)
     let params = {
-      id: this.state.selectedRowKeys.join(',')
+      id: this.state.idArr.join(',')
     }
     window.open(axiosUrl + '/order/essay/downloads?id=' + params.id, '_self')
   }
   onSelectChange = (selectedRowKeys, selectedRows) => {
+    let paramArr = []
     console.log('selectedRowKeys changed: ', selectedRowKeys, selectedRows)
     if (selectedRowKeys.length >= 0) {
-      this.setState({
-        loading: true
+      selectedRows.map((item, index) => {
+        paramArr.push(item.id)
       })
+      this.setState({
+        selectedRowKeys,
+        idArr: paramArr
+      })
+      console.log(this.state.idArr)
     }
-    this.state.selectedRowKeys.push(selectedRows.id)
   }
 
   componentDidMount () {
-    this.getUserInfo()
+    // this.getUserInfo()
   }
   render () {
-    const { loading, selectedRowKeys } = this.state
+    const { selectedRowKeys } = this.state
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
@@ -228,8 +229,8 @@ export class detailOrderForm extends Component {
     const { getFieldDecorator } = this.props.form
     return (
       <div className='detail-order' >
-        {
-          (this.state.userType === 2 || this.state.userType === 3) ? <div style={{ overflow: 'hidden', marginBottom: '20px' }}><Form layout='inline' onSubmit={this.handleSubmit} className='record-form' style={{ float: 'right' }}>
+        <div style={{ overflow: 'hidden', marginBottom: '20px' }}>
+          <Form layout='inline' onSubmit={this.handleSubmit} className='record-form' style={{ float: 'right' }}>
             <FormItem
               {...formItemLayout}
               label=''
@@ -246,11 +247,11 @@ export class detailOrderForm extends Component {
                 查询
               </Button>
             </FormItem>
-          </Form></div> : ''
-        }
+          </Form>
+        </div>
         <div className='content'>
           <Button type='primary' disabled={!hasSelected}
-            loading={loading} onClick={this.getOrderDownLoad}>批量下载</Button>
+            onClick={this.getOrderDownLoad}>批量下载</Button>
           <Table columns={this.state.columns} dataSource={this.state.orderEssayRecords} pagination={false} rowSelection={rowSelection} />
         </div>
 
@@ -260,7 +261,7 @@ export class detailOrderForm extends Component {
           footer={null}
           destroyOnClose
         >
-          <VertifyResult verifyStatus={this.state.verifyStatus} orderEssayId={this.state.orderEssayId} onCancel={this.handleVertifyCancel} userId={this.state.userId} getUserInfo={this.getUserInfo} />
+          <VertifyResult verifyStatus={this.state.verifyStatus} orderEssayId={this.state.orderEssayId} onCancel={this.handleVertifyCancel} userId={this.state.userId} getUserInfo={this.getOrderSearch} />
         </Modal>
         <Modal title={null}
           visible={this.state.picVisable}
@@ -277,8 +278,8 @@ export class detailOrderForm extends Component {
     )
   }
 }
-const detailOrder = Form.create()(detailOrderForm)
-detailOrderForm.propTypes = {
+const SearchOrder = Form.create()(SearchOrderForm)
+SearchOrderForm.propTypes = {
   form: PropTypes.object
 }
-export default detailOrder
+export default SearchOrder
